@@ -3,7 +3,6 @@ public class Label {
     private int labelID;
     private String labelName;
 
-    
     Label() {
 
     }
