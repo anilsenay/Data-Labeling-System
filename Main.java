@@ -10,6 +10,27 @@ public class Main {
       
 
     JSONParser parser = new JSONParser();
+
+    try {
+        Object obj = parser.parse(new FileReader("config.json"));
+
+        JSONObject jsonObject = (JSONObject) obj;
+
+        JSONArray userList = (JSONArray) jsonObject.get("users");
+
+        Iterator<JSONObject> userListIterator = userList.iterator();
+
+        while (userListIterator.hasNext()) {
+            JSONObject userObj = (userListIterator.next());
+            System.out.println(userObj.get("user name")); 
+            System.out.println(userObj.get("user id"));
+            System.out.println(userObj.get("user type"));
+        }
+    
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
     try {
         Object obj = parser.parse(new FileReader("input.json"));
 
