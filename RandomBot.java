@@ -32,10 +32,8 @@ public class RandomBot extends User implements Assign {
             labels.add(getRandomLabel);
             }
             //returns to assignmentList in dataset
-            Assignment assignment = new Assignment(instance, this, labels, dateTime);
+            Assignment assignment = new Assignment(instance, this, labels);
             dataset.assignmentList.add(assignment);
-
-
 
     }
 
