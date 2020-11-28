@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class RandomBot extends User implements Assign {
 
-    Dataset dataset;
-
     public RandomBot(String userName, int userID, String userType) {
         super(userName, userID, userType);
     }
@@ -12,9 +10,6 @@ public class RandomBot extends User implements Assign {
         super();
     }
 
-    public RandomBot(Dataset dataset) {
-        this.dataset = dataset;
-    }
 
     // Method below assigns labels to an instance by maximum of maxLabelPerInstance
     // then returns to assignmentList in dataset
