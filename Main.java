@@ -9,7 +9,7 @@ public class Main {
     
     public static void main (String args[]) {
           
-    ArrayList<User> userList = createUsers("config.json");
+    ArrayList<RandomBot> userList = createUsers("config.json");
     Dataset dataset = createDataset("input.json");
 
     if(dataset == null) {
@@ -32,9 +32,24 @@ public class Main {
     for(int i = 0; i < userList.size(); i++) {
         System.out.println(userList.get(i).getUserName());
     }
+
+    for(int i = 0; i < instanceList.size(); i++){
+        for(int j = 0; j < userList.size(); j++){
+            userList.get(j).assign(dataset, instanceList.get(i));
+        }
+    }
+
+    ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
+    for(int i = 0; i < assignmentList.size(); i++) {
+        System.out.println(
+            "Instance: " + assignmentList.get(i).getInstance().getInstanceID() + " " +
+            "User: " + assignmentList.get(i).getUser().getUserID() + " " + 
+            "Label: " + assignmentList.get(i).getAssignedLabel().get(0).getLabelName()
+        );
+    }
  }
-    public static ArrayList<User> createUsers(String fileName) {
-        ArrayList<User> userList = new ArrayList<User>();
+    public static ArrayList<RandomBot> createUsers(String fileName) {
+        ArrayList<RandomBot> userList = new ArrayList<RandomBot>();
 
         try {
             JSONParser parser = new JSONParser();
@@ -55,7 +70,7 @@ public class Main {
                 String userName = (String) userObj.get("user name");
                 String userType = (String) userObj.get("user type");
                 
-                userList.add(new User(userName, userID, userType));
+                userList.add(new RandomBot(userName, userID, userType));
             }
 
         } catch (Exception e) {
@@ -109,5 +124,3 @@ public class Main {
         return dataset;
     }
 }
-    
-
