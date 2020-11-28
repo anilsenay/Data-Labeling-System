@@ -12,6 +12,7 @@ public class Main {
         JSONParser parser = new JSONParser();
 
         try {
+
             Object obj = parser.parse(new FileReader("config.json"));
 
             JSONObject jsonObject = (JSONObject) obj;
