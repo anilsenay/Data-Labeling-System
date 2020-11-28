@@ -9,7 +9,7 @@ public class Main {
     
     public static void main (String args[]) {
           
-    createUsers("config.json");
+    ArrayList<User> userList = createUsers("config.json");
     Dataset dataset = createDataset("input.json");
 
     if(dataset == null) {
@@ -28,8 +28,14 @@ public class Main {
     for(int i = 0; i < labelList.size(); i++) {
         System.out.println(labelList.get(i).getLabelName());
     }
+
+    for(int i = 0; i < userList.size(); i++) {
+        System.out.println(userList.get(i).getUserName());
+    }
  }
-    public static void createUsers(String fileName) {
+    public static ArrayList<User> createUsers(String fileName) {
+        ArrayList<User> userList = new ArrayList<User>();
+
         try {
             JSONParser parser = new JSONParser();
     
@@ -37,26 +43,30 @@ public class Main {
     
             JSONObject jsonObject = (JSONObject) obj;
     
-            JSONArray userList = (JSONArray) jsonObject.get("users");
+            JSONArray userObjects = (JSONArray) jsonObject.get("users");
             
             @SuppressWarnings("unchecked")
-            Iterator<JSONObject> userListIterator = userList.iterator();
+            Iterator<JSONObject> userListIterator = userObjects.iterator();
             while (userListIterator.hasNext()) {
-                
+
                 JSONObject userObj = (userListIterator.next());
-                System.out.println(userObj.get("user name")); 
-                System.out.println(userObj.get("user id"));
-                System.out.println(userObj.get("user type"));
-                // create user
+                
+                int userID = ((Long) userObj.get("user id")).intValue();
+                String userName = (String) userObj.get("user name");
+                String userType = (String) userObj.get("user type");
+                
+                userList.add(new User(userName, userID, userType));
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return userList;
     }
 
     public static Dataset createDataset(String fileName) {
         Dataset dataset = null;
+        
         try {
             JSONParser parser = new JSONParser();
     
@@ -98,8 +108,6 @@ public class Main {
         }
         return dataset;
     }
-
-
 }
     
 
