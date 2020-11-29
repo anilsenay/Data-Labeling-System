@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class Assignment {
 	// Instance and User objects are created
@@ -37,7 +38,7 @@ public class Assignment {
 		return user;
 	}
 
-	public ArrayList<Label> getAssignedLabel() {
+	public ArrayList<Label> getAssignedLabels() {
 		return assignedLabels;
 	}
 
@@ -45,4 +46,7 @@ public class Assignment {
 		return dateTime;
 	}
 
+	public String getFormattedTime() {
+		return new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").format(this.dateTime);
+	}
 }
