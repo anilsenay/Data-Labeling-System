@@ -1,34 +1,27 @@
 import java.util.ArrayList;
 
-public class RandomBot extends User implements Assign {
+public class Main {
 
-    public RandomBot(String userName, int userID, String userType) {
-        super(userName, userID, userType);
-    }
+    public static void main(String args[]) {
 
-    public RandomBot() {
-        super();
-    }
+        DataLabelingSystem DLS = new DataLabelingSystem();
+        DLS.createDataset("input.json");
+        DLS.loadUsers("config.json");
 
+        // Random assignment for iteration-1
 
-    // Method below assigns labels to an instance by maximum of maxLabelPerInstance
-    // then returns to assignmentList in dataset
-    @Override
-    public void assign(Dataset dataset, Instance instance) {
+        ArrayList<Instance> instanceList = DLS.getDataset().getInstances();
+        ArrayList<User> userList = DLS.getUserList();
+        Dataset dataset = DLS.getDataset();
 
-        // getting a random value between 1 and max labels per instance
-        int maxLabelRandom = (int) (1 + (Math.random() * dataset.maxLabelPerInstance));
-
-        ArrayList<Label> labels = new ArrayList<Label>(); // creates a local label arraylist to store labels to assign
-        // Chooses a random label from classLabel arraylist in dataset
-        for (int j = 0; j < maxLabelRandom; j++) {
-            Label getRandomLabel = dataset.classLabels.get((int) ((Math.random() * dataset.classLabels.size())));
-            labels.add(getRandomLabel);
+        for (int i = 0; i < instanceList.size(); i++) {
+            for (int j = 0; j < userList.size(); j++) {
+                RandomBot user = (RandomBot) userList.get(j);
+                user.assign(dataset, instanceList.get(i));
+            }
         }
-        // returns to assignmentList in dataset
-        Assignment assignment = new Assignment(instance, this, labels);
-        dataset.addAssignment(assignment);
+
+        DLS.writeOutputFile();
 
     }
-
 }
