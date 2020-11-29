@@ -1,4 +1,4 @@
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 
 public class Assignment {
@@ -16,12 +16,12 @@ public class Assignment {
 	}
 
 	// Assignment object is defined with arguments.
-	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabel, Date dateTime) {
+	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels) {
 		super();
 		this.instance = instance;
 		this.user = user;
-		this.assignedLabels = assignedLabel;
-		this.dateTime = dateTime;
+		this.assignedLabels = assignedLabels;
+		this.dateTime = new Date();
 	}
 	
 	// Adds Label object to assignedLabels array list
@@ -29,20 +29,20 @@ public class Assignment {
 		this.assignedLabels.add(label);
 	}
 	
-	private Instance getInstance() {
+	public Instance getInstance() {
 		return instance;
 	}
 
-	private User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	private ArrayList<Label> getAssignedLabel() {
+	public ArrayList<Label> getAssignedLabel() {
 		return assignedLabels;
 	}
 
-	private Date getDateTime() {
+	public Date getDateTime() {
 		return dateTime;
 	}
-	
+
 }

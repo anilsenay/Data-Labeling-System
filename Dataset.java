@@ -10,10 +10,9 @@ public class Dataset {
 	ArrayList<Label> classLabels = new ArrayList<Label>();
 	ArrayList<Instance> instances = new ArrayList<Instance>();
 	ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
-	
-	// Logger object is created
-	Logger log;
 
+	// logger will be added later
+	
 	// no arg constructor
 	public Dataset() {
 		super();
@@ -37,27 +36,27 @@ public class Dataset {
 		this.classLabels.add(label);
 	}
 
-	private int getDatasetID() {
+	public int getDatasetID() {
 		return datasetID;
 	}
 
-	private String getDatasetName() {
+	public String getDatasetName() {
 		return datasetName;
 	}
 
-	private int getMaxLabelPerInstance() {
+	public int getMaxLabelPerInstance() {
 		return maxLabelPerInstance;
 	}
 
-	private ArrayList<Label> getClassLabels() {
+	public ArrayList<Label> getClassLabels() {
 		return classLabels;
 	}
 
-	private ArrayList<Instance> getInstances() {
+	public ArrayList<Instance> getInstances() {
 		return instances;
 	}
 
-	private ArrayList<Assignment> getAssignmentList() {
+	public ArrayList<Assignment> getAssignmentList() {
 		return assignmentList;
 	}
 
