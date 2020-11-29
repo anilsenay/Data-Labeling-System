@@ -36,11 +36,14 @@ public class Dataset {
 		this.classLabels.add(label);
 	}
 
+<<<<<<< HEAD
+=======
 		// Adds instance object to instances array list
 		protected void addAssignment(Assignment assingment) {
 			this.assignmentList.add(assingment);
 		}
 
+>>>>>>> 121017b35ae0ae21fefd5484dcfc996faf02e0f0
 	public int getDatasetID() {
 		return datasetID;
 	}
