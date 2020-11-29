@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 public class Dataset {
 	// The variables datasetID, datasetName, maxLabelPerInstance are created.
-	int datasetID; 
-	String datasetName;
-	int maxLabelPerInstance;
+	private int datasetID; 
+	private String datasetName;
+	private int maxLabelPerInstance;
 	
 	// ClassLabels, instances, assignmentList Lists are created.
-	ArrayList<Label> classLabels = new ArrayList<Label>();
-	ArrayList<Instance> instances = new ArrayList<Instance>();
-	ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
+	private ArrayList<Label> classLabels = new ArrayList<Label>();
+	private ArrayList<Instance> instances = new ArrayList<Instance>();
+	private ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
 
 	// logger will be added later
 	
@@ -36,36 +36,33 @@ public class Dataset {
 		this.classLabels.add(label);
 	}
 
-<<<<<<< HEAD
-=======
 		// Adds instance object to instances array list
 		protected void addAssignment(Assignment assingment) {
 			this.assignmentList.add(assingment);
 		}
 
->>>>>>> 121017b35ae0ae21fefd5484dcfc996faf02e0f0
 	public int getDatasetID() {
-		return datasetID;
+		return this.datasetID;
 	}
 
 	public String getDatasetName() {
-		return datasetName;
+		return this.datasetName;
 	}
 
 	public int getMaxLabelPerInstance() {
-		return maxLabelPerInstance;
+		return this.maxLabelPerInstance;
 	}
 
 	public ArrayList<Label> getClassLabels() {
-		return classLabels;
+		return this.classLabels;
 	}
 
 	public ArrayList<Instance> getInstances() {
-		return instances;
+		return this.instances;
 	}
 
 	public ArrayList<Assignment> getAssignmentList() {
-		return assignmentList;
+		return this.assignmentList;
 	}
 
 }
