@@ -18,11 +18,11 @@ public class Instance {
 	}
 
 	public String getContent() {
-		return content;
+		return this.content;
 	}
 
 	public int getInstanceID() {
-		return instanceID;
+		return this.instanceID;
 	}
 
 	public void setContent(String content) {
