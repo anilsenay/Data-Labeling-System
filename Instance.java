@@ -1,6 +1,6 @@
 
 public class Instance {
-	
+
 	// The variables content, instanceID are created.
 	String content;
 	int instanceID;
@@ -9,7 +9,7 @@ public class Instance {
 	public Instance() {
 		super();
 	}
-	
+
 	// Instance object is defined with arguments.
 	public Instance(String content, int instanceID) {
 		super();
@@ -20,7 +20,17 @@ public class Instance {
 	public String getContent() {
 		return content;
 	}
+
 	public int getInstanceID() {
 		return instanceID;
 	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public void setInstanceID(int instanceID) {
+		this.instanceID = instanceID;
+	}
+
 }
