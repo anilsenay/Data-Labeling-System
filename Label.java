@@ -13,7 +13,7 @@ public class Label {
     }
 
     public int getLabelID() {
-        return labelID;
+        return this.labelID;
     }
 
     public void setLabelID(int labelID) {
@@ -21,7 +21,7 @@ public class Label {
     }
 
     public String getLabelName() {
-        return labelName;
+        return this.labelName;
     }
 
     public void setLabelName(String labelName) {
