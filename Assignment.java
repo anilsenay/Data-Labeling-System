@@ -31,19 +31,19 @@ public class Assignment {
 	}
 
 	public Instance getInstance() {
-		return instance;
+		return this.instance;
 	}
 
 	public User getUser() {
-		return user;
+		return this.user;
 	}
 
 	public ArrayList<Label> getAssignedLabels() {
-		return assignedLabels;
+		return this.assignedLabels;
 	}
 
 	public Date getDateTime() {
-		return dateTime;
+		return this.dateTime;
 	}
 
 	public String getFormattedTime() {
