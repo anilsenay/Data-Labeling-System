@@ -22,13 +22,14 @@ public class RandomBot extends User implements Assign {
         ArrayList<Label> labels = new ArrayList<Label>(); // creates a local label arraylist to store labels to assign
         // Chooses a random label from classLabel arraylist in dataset
         for (int j = 0; j < maxLabelRandom; j++) {
-            Label getRandomLabel = dataset.getClassLabels().get((int) ((Math.random() * dataset.getClassLabels().size())));
+            Label getRandomLabel = dataset.getClassLabels()
+                    .get((int) ((Math.random() * dataset.getClassLabels().size())));
             labels.add(getRandomLabel);
 
-            Logger.getInstance().print(new Date(), "[Assignment] INFO user id:" + this.getUserID() + " " + 
-            this.getUserName() + " tagged instance id:" + instance.getInstanceID() + " " + 
-            "with class label " + getRandomLabel.getLabelID() + ":" + getRandomLabel.getLabelName() + " "
-            + " instance: \"" + instance.getContent() + "\"");
+            Logger.getInstance().print(new Date(),
+                    "[Assignment] INFO user id:" + this.getUserID() + " " + this.getUserName() + " tagged instance id:"
+                            + instance.getInstanceID() + " " + "with class label " + getRandomLabel.getLabelID() + ":"
+                            + getRandomLabel.getLabelName() + " " + " instance: \"" + instance.getContent() + "\"");
         }
 
         // returns to assignmentList in dataset
