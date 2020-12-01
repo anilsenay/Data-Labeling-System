@@ -141,7 +141,6 @@ public class DataLabelingSystem {
             assignmentObject.put("class label ids:", classLabelIds);
             assignmentObject.put("user id:", assignmentList.get(j).getUser().getUserID());
             assignmentObject.put("datetime:", assignmentList.get(j).getFormattedTime());
-            System.out.println(assignmentList.get(j).getFormattedTime());
 
             assignmentJSONList.add(assignmentObject);
         }
@@ -167,11 +166,6 @@ public class DataLabelingSystem {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < assignmentList.size(); i++) {
-            System.out.println("Instance: " + assignmentList.get(i).getInstance().getInstanceID() + " " + "User: "
-                    + assignmentList.get(i).getUser().getUserID() + " " + "Label: "
-                    + assignmentList.get(i).getAssignedLabels().get(0).getLabelName());
-        }
     }
 
     public Dataset getDataset() {
