@@ -7,6 +7,7 @@ public class User {
     public User() {
 
     }
+
     public User(String userName, int userID, String userType) {
         this.userName = userName;
         this.userID = userID;
@@ -14,19 +15,19 @@ public class User {
     }
 
     public String getUserName() {
-        return userName;
+        return this.userName;
     }
 
     public String getUserType() {
-        return userType;
+        return this.userType;
+    }
+
+    public int getUserID() {
+        return this.userID;
     }
 
     public void setUserType(String userType) {
         this.userType = userType;
-    }
-
-    public int getUserID() {
-        return userID;
     }
 
     public void setUserID(int userID) {

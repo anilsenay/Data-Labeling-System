@@ -4,7 +4,7 @@ public class Label {
     private String labelName;
 
     Label() {
-
+        super();
     }
 
     public Label(int labelID, String labelName) {
@@ -13,15 +13,15 @@ public class Label {
     }
 
     public int getLabelID() {
-        return labelID;
+        return this.labelID;
+    }
+
+    public String getLabelName() {
+        return this.labelName;
     }
 
     public void setLabelID(int labelID) {
         this.labelID = labelID;
-    }
-
-    public String getLabelName() {
-        return labelName;
     }
 
     public void setLabelName(String labelName) {
