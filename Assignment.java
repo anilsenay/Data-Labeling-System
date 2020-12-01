@@ -6,7 +6,7 @@ public class Assignment {
 	// Instance and User objects are created
 	Instance instance = new Instance();
 	User user;
-	
+
 	// assignedLabels list is created.
 	ArrayList<Label> assignedLabels = new ArrayList<Label>();
 	Date dateTime;
@@ -24,12 +24,12 @@ public class Assignment {
 		this.assignedLabels = assignedLabels;
 		this.dateTime = new Date();
 	}
-	
+
 	// Adds Label object to assignedLabels array list
 	protected void addLabel(Label label) {
 		this.assignedLabels.add(label);
 	}
-	
+
 	public Instance getInstance() {
 		return instance;
 	}
@@ -49,4 +49,21 @@ public class Assignment {
 	public String getFormattedTime() {
 		return new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").format(this.dateTime);
 	}
+
+	public void setInstance(Instance instance) {
+		this.instance = instance;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public void setAssignedLabels(ArrayList<Label> assignedLabels) {
+		this.assignedLabels = assignedLabels;
+	}
+
+	public void setDateTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+
 }
