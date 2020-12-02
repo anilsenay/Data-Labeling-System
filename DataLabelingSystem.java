@@ -102,6 +102,7 @@ public class DataLabelingSystem {
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
         ArrayList<Instance> instanceList = dataset.getInstances();
         ArrayList<Label> labelList = dataset.getClassLabels();
+        
 
         JSONObject datasetObject = new JSONObject();
         datasetObject.put("dataset id", dataset.getDatasetID());
@@ -135,12 +136,16 @@ public class DataLabelingSystem {
             assignmentObject.put("instance id:", assignmentList.get(j).getInstance().getInstanceID());
             JSONArray classLabelIds = new JSONArray();
 
-            for (int i = 0; i < assignmentList.get(j).getAssignedLabels().size(); i++)
-                classLabelIds.add(assignmentList.get(j).getAssignedLabels().get(i).getLabelID());
-
+            for (int i = 0; i < assignmentList.get(j).getAssignedLabels().size(); i++)                
+            	classLabelIds.add(assignmentList.get(j).getAssignedLabels().get(i).getLabelID());
+            
+            String date = assignmentList.get(j).getFormattedTime();
+            String formattedDate = date.replace('/','.');
+   
             assignmentObject.put("class label ids:", classLabelIds);
             assignmentObject.put("user id:", assignmentList.get(j).getUser().getUserID());
-            assignmentObject.put("datetime:", assignmentList.get(j).getFormattedTime());
+            assignmentObject.put("datetime:", formattedDate);
+            
 
             assignmentJSONList.add(assignmentObject);
         }
@@ -156,6 +161,12 @@ public class DataLabelingSystem {
             userArray.add(userObject);
         }
         datasetObject.put("users", userArray);
+        
+        
+        
+        
+        
+        
 
         try (FileWriter file = new FileWriter(fileName)) {
 
@@ -166,6 +177,11 @@ public class DataLabelingSystem {
             e.printStackTrace();
         }
 
+        for (int i = 0; i < assignmentList.size(); i++) {
+            System.out.println("Instance: " + assignmentList.get(i).getInstance().getInstanceID() + " " + "User: "
+                    + assignmentList.get(i).getUser().getUserID() + " " + "Label: "
+                    + assignmentList.get(i).getAssignedLabels().get(0).getLabelName());
+        }
     }
 
     public Dataset getDataset() {
