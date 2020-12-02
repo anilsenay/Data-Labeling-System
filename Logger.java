@@ -8,9 +8,10 @@ import java.text.SimpleDateFormat;
 public class Logger {
 
 	private static Logger logger;
+	private final String dateToString;
 
 	private Logger() {
-
+		this.dateToString =(new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss.SS").format(new Date()));
 	}
 
 	public static synchronized Logger getInstance() { // getInstance method for singleton pattern
@@ -24,8 +25,8 @@ public class Logger {
 	}
 
 	public void print(Date date, String message) { // printing related information to console
-		System.out.println(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS").format(date) + " " + message);
-		File logFile = new File("info.log");	
+		System.out.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
+		File logFile = new File("info_"+dateToString+".log");
 		
 		
 		try {
@@ -39,17 +40,17 @@ public class Logger {
 			
 			// Open given file in append mode.
 			BufferedWriter outInfo = new BufferedWriter(new FileWriter(logFile, true));
-			outInfo.write(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS").format(date) + " " + message + "\n");
+			outInfo.write(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message + "\n");
 			outInfo.close();
 		} catch (IOException e) {
-			System.out.println("exception occoured" + e);
+			System.out.println("exception occurred" + e);
 		}
 
 	}
 
 	public void error(Date date, String message) { // printing related error to console
-		System.err.println(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS").format(date) + " " + message);
-		File errorFile = new File("error.log");
+		System.err.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
+		File errorFile = new File("error_"+dateToString+".log");
 		//System.out.println("file created");
 		try {
 			errorFile.createNewFile();
@@ -62,10 +63,10 @@ public class Logger {
 
 			// Open given file in append mode.
 			BufferedWriter outError = new BufferedWriter(new FileWriter(errorFile, true));
-			outError.write(new SimpleDateFormat("MM/dd/yyyy HH:mm:ss.SS").format(date) + " " + message + "\n");
+			outError.write(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message + "\n");
 			outError.close();
 		} catch (IOException e) {
-			System.out.println("exception occoured" + e);
+			System.out.println("exception occurred" + e);
 		}
 
 
