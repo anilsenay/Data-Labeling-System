@@ -64,29 +64,4 @@ public class Dataset {
 	public ArrayList<Assignment> getAssignmentList() {
 		return this.assignmentList;
 	}
-
-	public void setDatasetID(int datasetID) {
-		this.datasetID = datasetID;
-	}
-
-	public void setDatasetName(String datasetName) {
-		this.datasetName = datasetName;
-	}
-
-	public void setMaxLabelPerInstance(int maxLabelPerInstance) {
-		this.maxLabelPerInstance = maxLabelPerInstance;
-	}
-
-	public void setClassLabels(ArrayList<Label> classLabels) {
-		this.classLabels = classLabels;
-	}
-
-	public void setInstances(ArrayList<Instance> instances) {
-		this.instances = instances;
-	}
-
-	public void setAssignmentList(ArrayList<Assignment> assignmentList) {
-		this.assignmentList = assignmentList;
-	}
-
 }
