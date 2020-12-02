@@ -11,7 +11,7 @@ public class Logger {
 	private final String dateToString;
 
 	private Logger() {
-		this.dateToString =(new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss.SS").format(new Date()));
+		this.dateToString =(new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date()));
 	}
 
 	public static synchronized Logger getInstance() { // getInstance method for singleton pattern
@@ -26,7 +26,7 @@ public class Logger {
 
 	public void print(Date date, String message) { // printing related information to console
 		System.out.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
-		File logFile = new File("info_"+dateToString+".log");
+		File logFile = new File("info_"+this.dateToString+".log");
 		
 		
 		try {
@@ -50,7 +50,7 @@ public class Logger {
 
 	public void error(Date date, String message) { // printing related error to console
 		System.err.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
-		File errorFile = new File("error_"+dateToString+".log");
+		File errorFile = new File("error_"+this.dateToString+".log");
 		//System.out.println("file created");
 		try {
 			errorFile.createNewFile();
