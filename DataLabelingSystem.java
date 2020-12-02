@@ -176,20 +176,12 @@ public class DataLabelingSystem {
         return this.userList;
     }
 
-    public Logger getLogger() {
-        return logger;
-    }
-
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
     }
 
     public void setUserList(ArrayList<User> userList) {
         this.userList = userList;
-    }
-
-    public void setLogger(Logger logger) {
-        this.logger = logger;
     }
 
 }
