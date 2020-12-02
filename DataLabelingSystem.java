@@ -162,12 +162,6 @@ public class DataLabelingSystem {
         }
         datasetObject.put("users", userArray);
         
-        
-        
-        
-        
-        
-
         try (FileWriter file = new FileWriter(fileName)) {
 
             file.write(datasetObject.toJSONString());
@@ -177,11 +171,6 @@ public class DataLabelingSystem {
             e.printStackTrace();
         }
 
-        for (int i = 0; i < assignmentList.size(); i++) {
-            System.out.println("Instance: " + assignmentList.get(i).getInstance().getInstanceID() + " " + "User: "
-                    + assignmentList.get(i).getUser().getUserID() + " " + "Label: "
-                    + assignmentList.get(i).getAssignedLabels().get(0).getLabelName());
-        }
     }
 
     public Dataset getDataset() {
