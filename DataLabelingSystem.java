@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.FileReader;
@@ -12,6 +13,7 @@ public class DataLabelingSystem {
 
     private Dataset dataset = null;
     private ArrayList<User> userList = null;
+    private Logger logger = Logger.getInstance();
 
     public void createDataset(String fileName) {
         Dataset dataset = null;
@@ -22,13 +24,15 @@ public class DataLabelingSystem {
             Object obj = parser.parse(new FileReader(fileName));
 
             JSONObject jsonObject = (JSONObject) obj;
-
+            
             int datasetId = ((Long) jsonObject.get("dataset id")).intValue();
 
             String datasetName = (String) jsonObject.get("dataset name");
 
             int maxNumberPerInstance = ((Long) jsonObject.get("maximum number of labels per instance")).intValue();
-
+            if(maxNumberPerInstance < 1) {
+            	throw new Exception ("Maximum number of labels per instance is not valid.");
+            }
             dataset = new Dataset(datasetId, datasetName, maxNumberPerInstance);
 
             JSONArray classLabelList = (JSONArray) jsonObject.get("class labels");
@@ -43,7 +47,7 @@ public class DataLabelingSystem {
                 JSONObject instanceObj = (instanceIterator.next());
                 String instanceText = (String) instanceObj.get("instance");
                 int instanceID = ((Long) instanceObj.get("id")).intValue();
-
+               
                 dataset.addInstance(new Instance(instanceText, instanceID));
             }
 
@@ -51,12 +55,13 @@ public class DataLabelingSystem {
                 JSONObject labelObj = (labelIterator.next());
                 String labelText = (String) labelObj.get("label text");
                 int labelID = ((Long) labelObj.get("label id")).intValue();
-
+                
                 dataset.addLabel(new Label(labelID, labelText));
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.error(new Date(),e.toString());
+        	System.exit(0);
         }
 
         this.dataset = dataset;
@@ -83,22 +88,23 @@ public class DataLabelingSystem {
                 String userType = (String) userObj.get("user type");
 
                 userList.add(new RandomBot(userName, userID, userType));
-
+                
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.error(new Date(),e.toString());
+        	System.exit(1);
         }
 
         this.userList = userList;
     }
 
     public void writeOutputFile(String fileName) {
-        // test
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
         ArrayList<Instance> instanceList = dataset.getInstances();
         ArrayList<Label> labelList = dataset.getClassLabels();
-
+        
+        
         JSONObject datasetObject = new JSONObject();
         datasetObject.put("dataset id", dataset.getDatasetID());
         datasetObject.put("dataset name", dataset.getDatasetName());
@@ -131,15 +137,16 @@ public class DataLabelingSystem {
             assignmentObject.put("instance id:", assignmentList.get(j).getInstance().getInstanceID());
             JSONArray classLabelIds = new JSONArray();
 
-            for (int i = 0; i < assignmentList.get(j).getAssignedLabels().size(); i++)
-                classLabelIds.add(assignmentList.get(j).getAssignedLabels().get(i).getLabelID());
-
+            for (int i = 0; i < assignmentList.get(j).getAssignedLabels().size(); i++)                
+            	classLabelIds.add(assignmentList.get(j).getAssignedLabels().get(i).getLabelID());
+            
             String date = assignmentList.get(j).getFormattedTime();
-            String formattedDate = date.replace('/', '.');
-
+            String formattedDate = date.replace('/','.');
+   
             assignmentObject.put("class label ids:", classLabelIds);
             assignmentObject.put("user id:", assignmentList.get(j).getUser().getUserID());
             assignmentObject.put("datetime:", formattedDate);
+            
 
             assignmentJSONList.add(assignmentObject);
         }
@@ -155,14 +162,15 @@ public class DataLabelingSystem {
             userArray.add(userObject);
         }
         datasetObject.put("users", userArray);
-
+        
         try (FileWriter file = new FileWriter(fileName)) {
 
             file.write(datasetObject.toJSONString());
             file.flush();
 
         } catch (IOException e) {
-            e.printStackTrace();
+        	logger.error(new Date(),e.toString());
+        	System.exit(2);
         }
 
     }
