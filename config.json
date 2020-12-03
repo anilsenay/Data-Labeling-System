@@ -1,4 +1,6 @@
 {
+  "input_name": "input.json",
+  "output_name": "output.json",
   "users": [
     {
       "user id": 1,
@@ -17,4 +19,3 @@
     }
   ]
 }
-
