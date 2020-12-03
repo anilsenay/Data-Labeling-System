@@ -9,16 +9,15 @@ public class Instance {
 
 	// No arg constructor.
 	public Instance() {
-		super();
+
 	}
 
 	// Instance object is defined with arguments.
 	public Instance(String content, int instanceID) {
-		super();
 		this.content = content;
 		this.instanceID = instanceID;
 		
-        // Print the created dataset file to the log file.
+        // Print the created instance to the log file.
 		Logger.getInstance().print(new Date(),
 				"[Instance] INFO instance: created \"" + content + "\" with id: " + instanceID);
 	}
