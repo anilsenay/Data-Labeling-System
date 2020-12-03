@@ -5,16 +5,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+// Logger class for printing every kind of operations to log file and console. 
+// Implemented Singleton Pattern.
 public class Logger {
 
-	private static Logger logger;
+	// Variables for logger class.
+	private static Logger logger; // For singleton pattern it has a static keyword.
 	private final String dateToString;
-
+	
+	// No arg constructor. 
 	private Logger() {
 		this.dateToString =(new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date()));
 	}
-
-	public static synchronized Logger getInstance() { // getInstance method for singleton pattern
+	
+	// getInstance method for singleton pattern.
+	public static synchronized Logger getInstance() { 
 
 		if (logger == null) {
 
@@ -23,19 +28,22 @@ public class Logger {
 
 		return logger;
 	}
+	
+	// Printing related information to console.
+	public void print(Date date, String message) { 
 
-	public void print(Date date, String message) { // printing related information to console
 		System.out.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
 		File logFile = new File("info_"+this.dateToString+".log");
-		
 		
 		try {
 			logFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			System.out.println("file doesn't exist");
 			e.printStackTrace();
-		} // if file already exists will do nothing
+		} 
+
+		// If file already exists will do nothing.
 		try {
 			
 			// Open given file in append mode.
@@ -47,18 +55,21 @@ public class Logger {
 		}
 
 	}
-
-	public void error(Date date, String message) { // printing related error to console
+	
+	// Printing related error to console.
+	public void error(Date date, String message) { 
 		System.err.println(new SimpleDateFormat("dd/MM/yyyy HH:mm:ss.SS").format(date) + " " + message);
 		File errorFile = new File("error_"+this.dateToString+".log");
-		//System.out.println("file created");
+		
 		try {
 			errorFile.createNewFile();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 			
-		} // if file already exists will do nothing
+		} 
+
+		// If file already exists will do nothing.
 		try {
 
 			// Open given file in append mode.
