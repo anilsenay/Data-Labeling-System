@@ -1,12 +1,13 @@
 import java.util.Date;
 
+// Instance class for storing content and id of the given instance.
 public class Instance {
 
 	// The variables content, instanceID are created.
 	String content;
 	int instanceID;
 
-	// no arg constructor
+	// No arg constructor.
 	public Instance() {
 		super();
 	}
@@ -16,10 +17,13 @@ public class Instance {
 		super();
 		this.content = content;
 		this.instanceID = instanceID;
+		
+        // Print the created dataset file to the log file.
 		Logger.getInstance().print(new Date(),
 				"[Instance] INFO instance: created \"" + content + "\" with id: " + instanceID);
 	}
-
+	
+	// Getter and setter methods for Instance class.
 	public String getContent() {
 		return this.content;
 	}
