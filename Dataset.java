@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Dataset {
 	// The variables datasetID, datasetName, maxLabelPerInstance are created.
@@ -11,8 +12,6 @@ public class Dataset {
 	private ArrayList<Instance> instances = new ArrayList<Instance>();
 	private ArrayList<Assignment> assignmentList = new ArrayList<Assignment>();
 
-	// logger will be added later
-
 	// no arg constructor
 	public Dataset() {
 		super();
@@ -24,6 +23,9 @@ public class Dataset {
 		this.datasetID = datasetID;
 		this.datasetName = datasetName;
 		this.maxLabelPerInstance = maxLabelPerInstance;
+
+		Logger.getInstance().print(new Date(),
+				"[Dataset] INFO dataset: created \"" + datasetName + "\" with id: " + datasetID);
 	}
 
 	// Adds instance object to instances array list

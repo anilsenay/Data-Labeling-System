@@ -1,3 +1,4 @@
+import java.util.Date;
 
 public class Instance {
 
@@ -15,6 +16,8 @@ public class Instance {
 		super();
 		this.content = content;
 		this.instanceID = instanceID;
+		Logger.getInstance().print(new Date(),
+				"[Instance] INFO instance: created \"" + content + "\" with id: " + instanceID);
 	}
 
 	public String getContent() {
