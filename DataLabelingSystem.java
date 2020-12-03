@@ -14,14 +14,15 @@ public class DataLabelingSystem {
     private Dataset dataset = null;
     private ArrayList<User> userList = null;
     private Logger logger = Logger.getInstance();
+    private String inputName,outputName;
 
-    public void createDataset(String fileName) {
+    public void createDataset() {
         Dataset dataset = null;
 
         try {
             JSONParser parser = new JSONParser();
 
-            Object obj = parser.parse(new FileReader(fileName));
+            Object obj = parser.parse(new FileReader(this.inputName));
 
             JSONObject jsonObject = (JSONObject) obj;
             
@@ -67,7 +68,7 @@ public class DataLabelingSystem {
         this.dataset = dataset;
     }
 
-    public void loadUsers(String fileName) {
+    public void loadConfig(String fileName) {
         ArrayList<User> userList = new ArrayList<User>();
         try {
             JSONParser parser = new JSONParser();
@@ -77,6 +78,8 @@ public class DataLabelingSystem {
             JSONObject jsonObject = (JSONObject) obj;
 
             JSONArray userObjects = (JSONArray) jsonObject.get("users");
+            this.inputName =(String)jsonObject.get("input_name");
+            this.outputName = (String) jsonObject.get("output_name");
 
             @SuppressWarnings("unchecked")
             Iterator<JSONObject> userListIterator = userObjects.iterator();
@@ -95,14 +98,17 @@ public class DataLabelingSystem {
         	logger.error(new Date(),e.toString());
         	System.exit(1);
         }
-
+        
         this.userList = userList;
     }
 
-    public void writeOutputFile(String fileName) {
+    public void writeOutputFile() {
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
         ArrayList<Instance> instanceList = dataset.getInstances();
         ArrayList<Label> labelList = dataset.getClassLabels();
+        
+        
+        
         
         
         JSONObject datasetObject = new JSONObject();
@@ -150,7 +156,7 @@ public class DataLabelingSystem {
 
             assignmentJSONList.add(assignmentObject);
         }
-        datasetObject.put("class label assignments", assignmentJSONList);
+        datasetObject.put("class label assigfinments", assignmentJSONList);
 
         JSONArray userArray = new JSONArray();
 
@@ -163,7 +169,7 @@ public class DataLabelingSystem {
         }
         datasetObject.put("users", userArray);
         
-        try (FileWriter file = new FileWriter(fileName)) {
+        try (FileWriter file = new FileWriter(this.outputName)) {
 
             file.write(datasetObject.toJSONString());
             file.flush();
@@ -190,5 +196,21 @@ public class DataLabelingSystem {
     public void setUserList(ArrayList<User> userList) {
         this.userList = userList;
     }
+
+	public String getInputName() {
+		return inputName;
+	}
+
+	public void setInputName(String inputName) {
+		this.inputName = inputName;
+	}
+
+	public String getOutputName() {
+		return outputName;
+	}
+
+	public void setOutputName(String outputName) {
+		this.outputName = outputName;
+	}
 
 }
