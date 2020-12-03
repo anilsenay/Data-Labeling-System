@@ -2,16 +2,18 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 
+// Assignment class for assign given labels to the instances from.
 public class Assignment {
-	// Instance and User objects are created
+
+	// Instance and User objects are created.
 	Instance instance = new Instance();
 	User user;
 
-	// assignedLabels list is created.
+	// AssignedLabels list is created.
 	ArrayList<Label> assignedLabels = new ArrayList<Label>();
 	Date dateTime;
 
-	// no arg constructor
+	// No arg constructor.
 	public Assignment() {
 		super();
 	}
@@ -25,11 +27,17 @@ public class Assignment {
 		this.dateTime = new Date();
 	}
 
-	// Adds Label object to assignedLabels array list
+	// Adds Label object to assignedLabels array list.
 	protected void addLabel(Label label) {
 		this.assignedLabels.add(label);
 	}
 
+    // Format the time for the assigned instance.
+	public String getFormattedTime() {
+		return new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").format(this.dateTime);
+	}
+
+	// Getter and setter methods for Assignment class.
 	public Instance getInstance() {
 		return this.instance;
 	}
@@ -44,10 +52,6 @@ public class Assignment {
 
 	public Date getDateTime() {
 		return this.dateTime;
-	}
-
-	public String getFormattedTime() {
-		return new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").format(this.dateTime);
 	}
 
 	public void setInstance(Instance instance) {
