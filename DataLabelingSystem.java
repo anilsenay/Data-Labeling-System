@@ -156,7 +156,7 @@ public class DataLabelingSystem {
 
             assignmentJSONList.add(assignmentObject);
         }
-        datasetObject.put("class label assigfinments", assignmentJSONList);
+        datasetObject.put("class label assignments", assignmentJSONList);
 
         JSONArray userArray = new JSONArray();
 
