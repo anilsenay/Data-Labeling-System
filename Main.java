@@ -4,13 +4,13 @@ public class Main {
     
     public static void main (String args[]) {
 
+        // Read config file and create dataset.
         DataLabelingSystem DLS = new DataLabelingSystem();
-        DLS.loadConfig("config.json");
+        DLS.loadConfig("config.json"); // Get user from config.json.
         DLS.createDataset();
        
 
-        // Random assignment for iteration-1
-        
+        // Random assignment for iteration-1.
         ArrayList<Instance> instanceList = DLS.getDataset().getInstances();
         ArrayList<User> userList = DLS.getUserList();
         Dataset dataset = DLS.getDataset();
@@ -24,6 +24,7 @@ public class Main {
             }
         }
         
+        //Print results to the console and log file.
         DLS.writeOutputFile();
 
     }
