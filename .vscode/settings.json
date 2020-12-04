@@ -1,6 +1,11 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "json-20201115.jar"
-    ]
+    ],
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    }
 }
