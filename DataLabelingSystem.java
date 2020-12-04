@@ -177,11 +177,10 @@ public class DataLabelingSystem {
 				classLabelIds.add(assignmentList.get(j).getAssignedLabels().get(i).getLabelID());
 
 			String date = assignmentList.get(j).getFormattedTime();
-			String formattedDate = date.replace('/', '.');
 
 			assignmentObject.add("class label ids:", classLabelIds);
 			assignmentObject.addProperty("user id:", assignmentList.get(j).getUser().getUserID());
-			assignmentObject.addProperty("datetime:", formattedDate);
+			assignmentObject.addProperty("datetime:", date);
 
 			assignmentJSONList.add(assignmentObject);
 		}
