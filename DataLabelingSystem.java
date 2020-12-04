@@ -56,9 +56,9 @@ public class DataLabelingSystem {
 			JSONArray instanceList = (JSONArray) jsonObject.get("instances");
 
 			// Main iterators.
-			@SuppressWarnings("unchecked")
+
 			Iterator<JSONObject> instanceIterator = instanceList.iterator();
-			@SuppressWarnings("unchecked")
+
 			Iterator<JSONObject> labelIterator = classLabelList.iterator();
 
 			// Get instances from Iterator Object and store them to JSON object.
@@ -108,7 +108,7 @@ public class DataLabelingSystem {
 			this.outputName = (String) jsonObject.get("output_name");
 
 			// Get users from Iterator Object and store them to JSON object.
-			@SuppressWarnings("unchecked")
+
 			Iterator<JSONObject> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
 
