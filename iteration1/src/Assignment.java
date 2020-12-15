@@ -6,12 +6,12 @@ import java.text.SimpleDateFormat;
 public class Assignment {
 
 	// Instance and User objects are created.
-	Instance instance = new Instance();
-	User user;
+	private Instance instance = new Instance();
+	private User user;
 
 	// AssignedLabels list is created.
-	ArrayList<Label> assignedLabels = new ArrayList<Label>();
-	Date dateTime;
+	private ArrayList<Label> assignedLabels = new ArrayList<Label>();
+	private Date dateTime;
 
 	// No arg constructor.
 	public Assignment() {
