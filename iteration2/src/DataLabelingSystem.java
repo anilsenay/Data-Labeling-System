@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.util.Iterator;
 
+
 // Gson package is used to print output only
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -92,6 +93,7 @@ public class DataLabelingSystem {
 	// Get users from given file and store them to JSON object.
 	public void loadConfig(String fileName) {
 		ArrayList<User> userList = new ArrayList<User>();
+		ArrayList<Integer> userIDs = new ArrayList<Integer>();
 
 		try { // Read and parse.
 			JSONParser parser = new JSONParser();
@@ -103,23 +105,42 @@ public class DataLabelingSystem {
 			// Get users from input file and store them to the JSON Array.
 			JSONArray userObjects = (JSONArray) jsonObject.get("users");
 
-			// Get file names to the class variables.
-			this.inputName = (String) jsonObject.get("input_name");
-			this.outputName = (String) jsonObject.get("output_name");
+			int currentDatasetID = ((Long) jsonObject.get("currentDatasetId")).intValue();
+			JSONArray datasets = (JSONArray) jsonObject.get("datasets");
+			Iterator<JSONObject> datasetIterator = datasets.iterator();
+
+			while (datasetIterator.hasNext()) {
+				
+				JSONObject datasetObj = (datasetIterator.next());
+				int datasetId = ((Long) datasetObj.get("dataset_id")).intValue();
+				if(datasetId != currentDatasetID) continue;
+				
+				String datasetName = (String) datasetObj.get("dataset_name");
+				String datasetPath = (String) datasetObj.get("path");
+				this.inputName = datasetPath;
+				this.outputName = datasetName + "_output.json";
+
+				JSONArray users = (JSONArray) datasetObj.get("users");
+				Iterator<Long> usersIterator = users.iterator();
+				while (usersIterator.hasNext()) {
+					Long userId = usersIterator.next();
+					userIDs.add(userId.intValue());
+				}
+			}
 
 			// Get users from Iterator Object and store them to JSON object.
-
 			Iterator<JSONObject> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
 
 				JSONObject userObj = (userListIterator.next());
 				int userID = ((Long) userObj.get("user id")).intValue();
+				if(!userIDs.contains(userID)) continue;
+				double consistencyCheckProbability = ((Double) userObj.get("ConsistencyCheckProbability")).doubleValue();
 				String userName = (String) userObj.get("user name");
 				String userType = (String) userObj.get("user type");
 
 				// Create users from given parameters.
-				userList.add(new RandomBot(userName, userID, userType));
-
+				userList.add(new RandomBot(userName, userID, userType, consistencyCheckProbability));
 			}
 
 		} catch (Exception e) {
