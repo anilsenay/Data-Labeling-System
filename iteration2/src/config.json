@@ -1,0 +1,21 @@
+{
+  "input_name": "input.json",
+  "output_name": "output.json",
+  "users": [
+    {
+      "user id": 1,
+      "user name": "RandomLabelingMechanism1",
+      "user type": "RandomBot"
+    },
+    {
+      "user id": 2,
+      "user name": "RandomLabelingMechanism2",
+      "user type": "RandomBot"
+    },
+    {
+      "user id": 3,
+      "user name": "RandomLabelingMechanism3",
+      "user type": "RandomBot"
+    }
+  ]
+}
