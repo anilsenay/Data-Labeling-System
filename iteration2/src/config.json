@@ -1,21 +1,78 @@
 {
-  "input_name": "input.json",
-  "output_name": "output.json",
   "users": [
     {
       "user id": 1,
       "user name": "RandomLabelingMechanism1",
-      "user type": "RandomBot"
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
     },
     {
       "user id": 2,
       "user name": "RandomLabelingMechanism2",
-      "user type": "RandomBot"
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
     },
     {
       "user id": 3,
       "user name": "RandomLabelingMechanism3",
-      "user type": "RandomBot"
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
+    },
+    {
+      "user id": 4,
+      "user name": "RandomLabelingMechanism4",
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
+    },
+    {
+      "user id": 5,
+      "user name": "RandomLabelingMechanism5",
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
+    },
+    {
+      "user id": 6,
+      "user name": "RandomLabelingMechanism6",
+      "user type": "RandomBot",
+      "ConsistencyCheckProbability": 0.1
     }
-  ]
+  ],
+  "datasets": [
+    {
+      "dataset_id": 1,
+      "dataset_name": "dataset1",
+      "path": "input1.json",
+      "users": [
+        1,
+        2
+      ]
+    },
+    {
+      "dataset_id": 2,
+      "dataset_name": "dataset2",
+      "path": "input2.json",
+      "users": [
+        2,
+        3
+      ]
+    },
+    {
+      "dataset_id": 3,
+      "dataset_name": "dataset3",
+      "path": "input3.json",
+      "users": [
+        1,
+        2
+      ]
+    },
+    {
+      "dataset_id": 4,
+      "dataset_name": "dataset4",
+      "path": "input4.json",
+      "users": [
+        2
+      ]
+    }
+  ],
+  "current_dataset": 2
 }
