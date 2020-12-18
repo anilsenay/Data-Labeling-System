@@ -8,7 +8,7 @@ public class Dataset {
 	private int datasetID;
 	private String datasetName;
 	private int maxLabelPerInstance;
-     
+
 	// ClassLabels, instances, assignmentList Lists are created.
 	private ArrayList<Label> classLabels = new ArrayList<Label>();
 	private ArrayList<Instance> instances = new ArrayList<Instance>();
@@ -25,7 +25,7 @@ public class Dataset {
 		this.datasetID = datasetID;
 		this.datasetName = datasetName;
 		this.maxLabelPerInstance = maxLabelPerInstance;
-		
+
 		// Print the created dataset file to the log file.
 		Logger.getInstance().print(new Date(),
 				"[Dataset] INFO dataset: created \"" + datasetName + "\" with id: " + datasetID);
@@ -42,11 +42,11 @@ public class Dataset {
 	}
 
 	// Adds instance object to instances array list.
-	protected void addAssignment(Assignment assingment) {
-		this.assignmentList.add(assingment);
+	protected void addAssignment(Assignment assignment) {
+		this.assignmentList.add(assignment);
 	}
-	
-	//Getter methods for Dataset class.
+
+	// Getter methods for Dataset class.
 	public int getDatasetID() {
 		return this.datasetID;
 	}
