@@ -4,8 +4,8 @@ import java.util.Date;
 public class Instance {
 
 	// The variables content, instanceID are created.
-	private String content;
-	private int instanceID;
+	String content;
+	int instanceID;
 
 	// No arg constructor.
 	public Instance() {
