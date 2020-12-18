@@ -88,9 +88,7 @@ public class DataLabelingSystem {
 				String userType = (String) userObj.get("user type");
 
 				// Create users from given parameters.
-				userList.add(new RandomBot(userName, userID, userType));
-				// userList.add(new RandomBot(userName, userID, userType,
-				// consistencyCheckProbability));
+				userList.add(new RandomBot(userName, userID, userType, consistencyCheckProbability));
 			}
 
 		} catch (Exception e) {
