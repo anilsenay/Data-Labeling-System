@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.File;
 import java.io.FileReader;
 import java.util.Iterator;
-
 
 // Gson package is used to print output only
 import com.google.gson.Gson;
@@ -26,68 +26,14 @@ public class DataLabelingSystem {
 	private ArrayList<User> userList = null;
 	private Logger logger = Logger.getInstance();
 	private String inputName, outputName;
+	private DatasetLoader datasetLoader = new DatasetLoader();
 
-	// Create dataset from given input file.
-	public void createDataset() {
-		Dataset dataset = null;
-
-		try { // Read and parse the input file.
-			JSONParser parser = new JSONParser();
-
-			Object obj = parser.parse(new FileReader(this.inputName));
-
-			JSONObject jsonObject = (JSONObject) obj;
-
-			// Get settings information of dataset.
-			int datasetId = ((Long) jsonObject.get("dataset id")).intValue();
-
-			String datasetName = (String) jsonObject.get("dataset name");
-
-			int maxNumberPerInstance = ((Long) jsonObject.get("maximum number of labels per instance")).intValue();
-
-			// Error handling for maximum number of labels per instance.
-			if (maxNumberPerInstance < 1) {
-				throw new Exception("Maximum number of labels per instance is not valid.");
-			}
-			// Create dataset from given parameters.
-			dataset = new Dataset(datasetId, datasetName, maxNumberPerInstance);
-
-			// Get labels and instances from input file to the JSON Array.
-			JSONArray classLabelList = (JSONArray) jsonObject.get("class labels");
-			JSONArray instanceList = (JSONArray) jsonObject.get("instances");
-
-			// Main iterators.
-
-			Iterator<JSONObject> instanceIterator = instanceList.iterator();
-
-			Iterator<JSONObject> labelIterator = classLabelList.iterator();
-
-			// Get instances from Iterator Object and store them to JSON object.
-			while (instanceIterator.hasNext()) {
-				JSONObject instanceObj = (instanceIterator.next());
-				String instanceText = (String) instanceObj.get("instance");
-				int instanceID = ((Long) instanceObj.get("id")).intValue();
-
-				// Create instance from given parameters.
-				dataset.addInstance(new Instance(instanceText, instanceID));
-			}
-
-			// Get labels from Iterator Object and store them to JSON object.
-			while (labelIterator.hasNext()) {
-				JSONObject labelObj = (labelIterator.next());
-				String labelText = (String) labelObj.get("label text");
-				int labelID = ((Long) labelObj.get("label id")).intValue();
-
-				// Create labels from given parameters.
-				dataset.addLabel(new Label(labelID, labelText));
-			}
-
-		} catch (Exception e) {
-			logger.error(new Date(), e.toString());
-			System.exit(0);
-		}
-
-		this.dataset = dataset;
+	public void handleDataset() {
+		File outputFile = new File(this.outputName);
+		if (outputFile.exists()) { // dataset output u varsa
+			datasetLoader.loadDataset(this);
+		} else
+			datasetLoader.createDataset(this);
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -110,15 +56,16 @@ public class DataLabelingSystem {
 			Iterator<JSONObject> datasetIterator = datasets.iterator();
 
 			while (datasetIterator.hasNext()) {
-				
+
 				JSONObject datasetObj = (datasetIterator.next());
 				int datasetId = ((Long) datasetObj.get("dataset_id")).intValue();
-				if(datasetId != currentDatasetID) continue;
-				
+				if (datasetId != currentDatasetID)
+					continue;
+
 				String datasetName = (String) datasetObj.get("dataset_name");
 				String datasetPath = (String) datasetObj.get("path");
 				this.inputName = datasetPath;
-				this.outputName = datasetName + "_output.json";
+				this.outputName = datasetId + "_" + datasetName + "_output.json";
 
 				JSONArray users = (JSONArray) datasetObj.get("users");
 				Iterator<Long> usersIterator = users.iterator();
@@ -134,13 +81,16 @@ public class DataLabelingSystem {
 
 				JSONObject userObj = (userListIterator.next());
 				int userID = ((Long) userObj.get("user id")).intValue();
-				if(!userIDs.contains(userID)) continue;
+				if (!userIDs.contains(userID))
+					continue;
 				double consistencyCheckProbability = ((Double) userObj.get("ConsistencyCheckProbability")).doubleValue();
 				String userName = (String) userObj.get("user name");
 				String userType = (String) userObj.get("user type");
 
 				// Create users from given parameters.
-				userList.add(new RandomBot(userName, userID, userType, consistencyCheckProbability));
+				userList.add(new RandomBot(userName, userID, userType));
+				// userList.add(new RandomBot(userName, userID, userType,
+				// consistencyCheckProbability));
 			}
 
 		} catch (Exception e) {
@@ -169,8 +119,8 @@ public class DataLabelingSystem {
 		// Take labels information to the JSON object.
 		for (int j = 0; j < labelList.size(); j++) {
 			JsonObject classLabelObject = new JsonObject();
-			classLabelObject.addProperty("label id: ", labelList.get(j).getLabelID());
-			classLabelObject.addProperty("label text: ", labelList.get(j).getLabelName());
+			classLabelObject.addProperty("label id", labelList.get(j).getLabelID());
+			classLabelObject.addProperty("label text", labelList.get(j).getLabelName());
 			classLabelArray.add(classLabelObject);
 		}
 		datasetObject.add("class labels", classLabelArray);
@@ -180,8 +130,8 @@ public class DataLabelingSystem {
 		// Take instance information to the JSON object.
 		for (int j = 0; j < instanceList.size(); j++) {
 			JsonObject instanceObject = new JsonObject();
-			instanceObject.addProperty("id: ", instanceList.get(j).getInstanceID());
-			instanceObject.addProperty("instance : ", instanceList.get(j).getContent());
+			instanceObject.addProperty("id", instanceList.get(j).getInstanceID());
+			instanceObject.addProperty("instance", instanceList.get(j).getContent());
 			instanceArray.add(instanceObject);
 		}
 		datasetObject.add("instances", instanceArray);
@@ -191,7 +141,7 @@ public class DataLabelingSystem {
 		// Take assignment information to the JSON object.
 		for (int j = 0; j < assignmentList.size(); j++) {
 			JsonObject assignmentObject = new JsonObject();
-			assignmentObject.addProperty("instance id:", assignmentList.get(j).getInstance().getInstanceID());
+			assignmentObject.addProperty("instance id", assignmentList.get(j).getInstance().getInstanceID());
 			JsonArray classLabelIds = new JsonArray();
 
 			for (int i = 0; i < assignmentList.get(j).getAssignedLabels().size(); i++)
@@ -199,9 +149,9 @@ public class DataLabelingSystem {
 
 			String date = assignmentList.get(j).getFormattedTime();
 
-			assignmentObject.add("class label ids:", classLabelIds);
-			assignmentObject.addProperty("user id:", assignmentList.get(j).getUser().getUserID());
-			assignmentObject.addProperty("datetime:", date);
+			assignmentObject.add("class label ids", classLabelIds);
+			assignmentObject.addProperty("user id", assignmentList.get(j).getUser().getUserID());
+			assignmentObject.addProperty("datetime", date);
 
 			assignmentJSONList.add(assignmentObject);
 		}
@@ -212,9 +162,9 @@ public class DataLabelingSystem {
 		// Take users information to the JSON object.
 		for (int j = 0; j < userList.size(); j++) {
 			JsonObject userObject = new JsonObject();
-			userObject.addProperty("user id: ", userList.get(j).getUserID());
-			userObject.addProperty("user name: ", userList.get(j).getUserName());
-			userObject.addProperty("user type: ", userList.get(j).getUserType());
+			userObject.addProperty("user id", userList.get(j).getUserID());
+			userObject.addProperty("user name", userList.get(j).getUserName());
+			userObject.addProperty("user type", userList.get(j).getUserType());
 			userArray.add(userObject);
 		}
 		datasetObject.add("users", userArray);
@@ -242,6 +192,14 @@ public class DataLabelingSystem {
 
 	public ArrayList<User> getUserList() {
 		return this.userList;
+	}
+
+	public String getInputName() {
+		return this.inputName;
+	}
+
+	public String getOutputName() {
+		return this.outputName;
 	}
 
 	public void setDataset(Dataset dataset) {

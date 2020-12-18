@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.util.ArrayList;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 // Assignment class for assign given labels to the instances from.
@@ -27,12 +28,20 @@ public class Assignment {
 		this.dateTime = new Date();
 	}
 
+	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels, String date) throws ParseException {
+		super();
+		this.instance = instance;
+		this.user = user;
+		this.assignedLabels = assignedLabels;
+		this.dateTime = new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").parse(date);
+	}
+
 	// Adds Label object to assignedLabels array list.
 	protected void addLabel(Label label) {
 		this.assignedLabels.add(label);
 	}
 
-    // Format the time for the assigned instance.
+	// Format the time for the assigned instance.
 	public String getFormattedTime() {
 		return new SimpleDateFormat("MM/dd/yyyy, HH:mm:ss.SS").format(this.dateTime);
 	}
