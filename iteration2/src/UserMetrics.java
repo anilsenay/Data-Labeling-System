@@ -37,8 +37,8 @@ public class UserMetrics {
             Iterator<JsonElement> usersIterator = users.iterator();
 
             while (usersIterator.hasNext()) {
-                Long userId = (Long) usersIterator.next();
-                if (userId == this.user.getUserID()) {
+                JsonObject userObj = (JsonObject) usersIterator.next();
+                if (userObj.get("user_id").getAsInt() == this.user.getUserID()) {
                     int datasetID = (datasetObj.get("dataset_id").getAsInt());
                     datasetIds.add(datasetID);
                     count++;
@@ -54,25 +54,25 @@ public class UserMetrics {
     // A-2 List of all datasets with their completeness percentage
     public float datasetCompletenessPer(JsonObject report) {
         JsonArray userObjects = (JsonArray) report.get("users");
-        Iterator<JsonObject> userListIterator = userObjects.iterator();
+        Iterator<JsonElement> userListIterator = userObjects.iterator();
         int instanceCount = 0;
         ArrayList<Integer> assignedInstanceID = new ArrayList<Integer>();
 
         while (userListIterator.hasNext()) {
-            JsonObject userObj = (userListIterator.next());
+            JsonObject userObj = (JsonObject) (userListIterator.next());
             int userID = userObj.get("user id").getAsInt();
 
             if (userID != this.user.getUserID())
                 continue;
 
             JsonArray datasetStatus = (JsonArray) userObj.get("datasets_status");
-            Iterator<JsonObject> datasetStatusIterator = datasetStatus.iterator();
+            Iterator<JsonElement> datasetStatusIterator = datasetStatus.iterator();
 
             while (datasetStatusIterator.hasNext()) {
                 Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
                 int currentDatasetID = currentDataset.getDatasetID();
 
-                JsonObject datasetObj = (datasetStatusIterator.next());
+                JsonObject datasetObj = (JsonObject) (datasetStatusIterator.next());
                 int datasetId = (datasetObj.get("dataset_id").getAsInt());
 
                 if (datasetId != currentDatasetID)
