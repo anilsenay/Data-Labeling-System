@@ -20,9 +20,11 @@ public class Main {
             for (int j = 0; j < userList.size(); j++) {
                 if (userList.get(j).getUserType().equalsIgnoreCase("RandomBot")) {
                     RandomBot user = (RandomBot) userList.get(j);
-                    user.assign(dataset, instanceList.get(i));
+                    Assignment assignment = user.assign(dataset, instanceList.get(i));
                     // Print results to the console and log file.
+
                     DLS.writeOutputFile();
+
                 }
             }
         }

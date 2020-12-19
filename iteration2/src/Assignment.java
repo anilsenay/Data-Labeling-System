@@ -28,7 +28,8 @@ public class Assignment {
 		this.dateTime = new Date();
 	}
 
-	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels, String date) throws ParseException {
+	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels, String date)
+			throws ParseException {
 		super();
 		this.instance = instance;
 		this.user = user;

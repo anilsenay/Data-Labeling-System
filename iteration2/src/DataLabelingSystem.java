@@ -1,10 +1,10 @@
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.io.File;
 
 // Gson package is used to print output only
 import com.google.gson.Gson;
@@ -27,6 +27,7 @@ public class DataLabelingSystem {
 	private Logger logger = Logger.getInstance();
 	private String inputName, outputName;
 	private DatasetLoader datasetLoader = new DatasetLoader();
+	private ReportingMechanism reportingMechanism = ReportingMechanism.getInstance();
 
 	public void handleDataset() {
 		File outputFile = new File(this.outputName);
@@ -34,6 +35,8 @@ public class DataLabelingSystem {
 			datasetLoader.loadDataset(this);
 		} else
 			datasetLoader.createDataset(this);
+
+		reportingMechanism.setDataset(this.dataset);
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -83,7 +86,9 @@ public class DataLabelingSystem {
 				int userID = ((Long) userObj.get("user id")).intValue();
 				if (!userIDs.contains(userID))
 					continue;
-				double consistencyCheckProbability = ((Double) userObj.get("ConsistencyCheckProbability")).doubleValue();
+				double consistencyCheckProbability = ((Double) userObj.get("ConsistencyCheckProbability"))
+						.doubleValue();
+
 				String userName = (String) userObj.get("user name");
 				String userType = (String) userObj.get("user type");
 

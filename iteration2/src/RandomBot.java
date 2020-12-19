@@ -17,8 +17,8 @@ public class RandomBot extends User {
     }
 
     // Performs userType specified assign process.
-    public void assign(Dataset dataset, Instance instance) {
-        RandomLabelingMechanism.getInstance().assign(dataset, instance, this);
+    public Assignment assign(Dataset dataset, Instance instance) {
+        return RandomLabelingMechanism.getInstance().assign(dataset, instance, this);
     }
 
 }
