@@ -35,7 +35,7 @@ public class ReportingMechanism {
     public void updateReport(Assignment assignment) {
         updateUser(assignment.getUser(), assignment);
         updateInstance(assignment.getInstance());
-        updateDataset(this.dataset);
+        updateDataset(this.dataset, assignment.getUser());
         this.report.writeReport();
     }
 
@@ -53,7 +53,6 @@ public class ReportingMechanism {
         int totalNumberOfInstances = userMetric.numberOfInstancesLabeled();
         int numberOfUniqueInstances = userMetric.uniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
                 newAssignment);
-
         double avgTime = userMetric.averageTimeSpent(dataset.getAssignmentList());
         double stdDev = userMetric.standartDev(dataset.getAssignmentList());
 
@@ -79,12 +78,21 @@ public class ReportingMechanism {
 
             JsonArray userDatasets = (JsonArray) userObj.get("datasets_status");
             Iterator<JsonElement> userDatasetIterator = userDatasets.iterator();
+
+            if (!userDatasetIterator.hasNext()) {
+                for (int i = 0; i < userMetric.getAssignedDatasets().size(); i++) {
+                    JsonObject datasetStatusObj = new JsonObject();
+                    datasetStatusObj.addProperty("dataset_id", userMetric.getAssignedDatasets().get(i));
+                    datasetStatusObj.addProperty("status", 0);
+                    userDatasets.add(datasetStatusObj);
+                }
+            }
+
             while (userDatasetIterator.hasNext()) {
                 JsonObject datasetObj = (JsonObject) (userDatasetIterator.next());
                 if (this.dataset.getDatasetID() != (datasetObj.get("dataset_id").getAsInt()))
                     continue;
                 datasetObj.addProperty("status", currentDatasetStatus);
-
             }
 
         }
@@ -123,9 +131,9 @@ public class ReportingMechanism {
 
     }
 
-    public void updateDataset(Dataset dataset) {
-        int completeness = 0;
-        int numberOfUsers = 0;
+    public void updateDataset(Dataset dataset, User user) {
+        float completeness = this.datasetMetrics.completenessPercentage();
+        int numberOfUsers = this.datasetMetrics.numberOfUserAssigned();
 
         JsonObject reportObject = report.getJsonObject();
         JsonArray datasets = (JsonArray) reportObject.get("datasets");
@@ -138,22 +146,85 @@ public class ReportingMechanism {
             datasetObj.addProperty("number_of_users", numberOfUsers);
             datasetObj.addProperty("completeness", completeness);
 
-            // guncellencek
+            // final instace labels part
+            JsonArray finalLabels = ()reportObject.get("final_instance_labels");
+            int finalLabelsListSize = datasetMetrics.distributionInstance().size();
+            for (int i = 0; i < finalLabelsListSize; i++) {
+                JsonObject finalLabelObj = new JsonObject();
+                finalLabelObj.addProperty("instance", i);
+                finalLabelObj.addProperty("percentage", datasetMetrics.distributionInstance().get(i));
+                finalLabels.add(finalLabelObj);
+
+            }
+
+            UserMetrics userMetric = null;
+            for (int i = 0; i < userMetrics.size(); i++) {
+                if (userMetrics.get(i).getUser().getUserID() == user.getUserID()) {
+                    userMetric = userMetrics.get(i);
+                    break;
+                }
+            }
+
+            // user completeness for datasets in report
+            // --------------------------------------------
+
+            JsonArray userCompleteness = (JsonArray) datasetObj.get("user_completeness");
+            Iterator<JsonElement> userCompIterator = userCompleteness.iterator();
+
+            if (!userCompIterator.hasNext()) {
+                for (int i = 0; i < userMetrics.size(); i++) {
+                    JsonObject completenessObject = new JsonObject();
+                    completenessObject.addProperty("user_id", userMetrics.get(i).getUser().getUserID());
+                    completenessObject.addProperty("percentage", 0);
+                    userCompleteness.add(completenessObject);
+                }
+            }
+
+            while (userCompIterator.hasNext()) {
+                JsonObject completenessObj = (JsonObject) (userCompIterator.next());
+                if (completenessObj.get("user_id").getAsInt() == user.getUserID()) {
+                    completenessObj.addProperty("percentage",
+                            userMetric.datasetCompletenessPer(this.report.getJsonObject()));
+                }
+            }
+
+            // -------------------------------------------- user completeness for datasets
+            // in report
+
+            // user consistency for datasets in report ----------------------------------
+
+            JsonArray userConsistency = (JsonArray) datasetObj.get("user_consistency");
+            Iterator<JsonElement> userConsIterator = userConsistency.iterator();
+
+            if (!userConsIterator.hasNext()) {
+                for (int i = 0; i < userMetrics.size(); i++) {
+                    JsonObject consistencyObject = new JsonObject();
+                    consistencyObject.addProperty("user_id", userMetrics.get(i).getUser().getUserID());
+                    consistencyObject.addProperty("consistency_percentages", 0);
+                    userCompleteness.add(consistencyObject);
+                }
+            }
+
+            while (userConsIterator.hasNext()) {
+                JsonObject consistencyObj = (JsonObject) (userConsIterator.next());
+                if (consistencyObj.get("user_id").getAsInt() == user.getUserID()) {
+                    JsonArray users = (JsonArray) reportObject.get("users");
+                    Iterator<JsonElement> userIterator = users.iterator();
+                    while (userIterator.hasNext()) {
+                        JsonObject userObj = (JsonObject) (userIterator.next());
+                        if (userObj.get("user_id").getAsInt() == user.getUserID()) {
+                            consistencyObj.addProperty("consistency_percentages",
+                                    userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
+                                            userObj.get("consistency_percentages").getAsDouble()));
+                        }
+                    }
+
+                }
+            }
+
+            // ---------------------------------- user consistency for datasets in report
 
         }
-
-    }
-
-    public void printPartA(Assignment a) {
-        // report.getDatasetNumber()
-    }
-
-    public void printPartB(Assignment a) {
-        // report.getDatasetNumber()
-    }
-
-    public void printPartC(Assignment a) {
-        // report.getDatasetNumber()
 
     }
 

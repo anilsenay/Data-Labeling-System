@@ -180,8 +180,6 @@ public class UserMetrics {
     }
 
     // A-7
-
-    // A-7
     public double standartDev(ArrayList<Assignment> assignmentList) {
 
         double standartDeviation = 0.0;

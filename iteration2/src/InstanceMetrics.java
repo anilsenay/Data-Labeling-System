@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import jdk.jfr.Frequency;
+
 public class InstanceMetrics {
 
     private Instance instance;
@@ -58,32 +60,69 @@ public class InstanceMetrics {
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
                 }
-
-                Map<String, Long> occurrences = labels.stream()
-                        .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
-                String label = occurrences.entrySet().stream()
-                        .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
-                Long frequency = occurrences.entrySet().stream()
-                        .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getValue();
-
-                Long percentage = ((frequency / labels.size()) * 100);
-                result.put(label, percentage);
-
             }
+        }
+        Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+        String label = occurrences.entrySet().stream()
+                .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
 
+        Long frequency = occurrences.entrySet().stream()
+                .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getValue();
+
+        int size = ReportingMechanism.getInstance().getDataset().getClassLabels().size();
+        Label finalLabel;
+        for (int j = 0; j < size; j++) {
+            if (label.equals(ReportingMechanism.getInstance().getDataset().getClassLabels().get(j).getLabelName())) {
+                finalLabel = ReportingMechanism.getInstance().getDataset().getClassLabels().get(j);
+                this.instance.setfinalLabel(finalLabel);
+                break;
+            }
+        }
+        Long percentage = ((frequency / labels.size()) * 100);
+        result.put(label, percentage);
+        return result;
+    }
+
+    // B-5
+    public HashMap<String, Long> listClassLabels(ArrayList<Assignment> assignmentList) {
+        ArrayList<String> labels = new ArrayList<String>();
+        HashMap<String, Long> result = new HashMap<String, Long>();
+        for (int i = 0; i < assignmentList.size(); i++) {
+            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+
+                for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
+                    labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
+                }
+            }
+        }
+        Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+
+        for (int j = 0; j < labels.size(); j++) {
+            Long frequency = occurrences.get(labels.get(j));
+            Long percentage = ((frequency / labels.size()) * 100);
+            result.put(labels.get(j), percentage);
         }
         return result;
     }
 
-    // 5-B
-    public void listClassLabels() {
-    }
+    // B-6
+    public double entropy(ArrayList<Assignment> assignmentList) {
+        ArrayList<String> labels = new ArrayList<String>();
+        for (int i = 0; i < assignmentList.size(); i++) {
+            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
-    // 6-B
-    public double entropy() {
-
-        return 0;
-
+                for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
+                    labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
+                }
+            }
+        }
+        Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+        double result = 0;
+        for (int j = 0; j < labels.size(); j++) {
+            Long frequency = occurrences.get(labels.get(j));
+            result -= ((frequency / labels.size()) * ((Math.log(frequency / labels.size())) / Math.log(2)));
+        }
+        return result;
     }
 
     public Instance getInstance() {
