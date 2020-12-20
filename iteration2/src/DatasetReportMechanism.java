@@ -14,7 +14,7 @@ public class DatasetReportMechanism {
     }
 
     public DatasetReportMechanism(Dataset dataset) {
-        datasetPerformance = new DatasetPerformance(dataset);
+        this.datasetPerformance = new DatasetPerformance(dataset);
     }
 
     public void updateDataset(Dataset dataset, User user) {
@@ -40,10 +40,8 @@ public class DatasetReportMechanism {
             int finalLabelsListSize = finalLabels.size();
 
             // flush final labels array
-            Iterator<JsonElement> finalLabelsIterator = finalLabels.iterator();
-            while (finalLabelsIterator.hasNext()) {
-                JsonObject finalLabelObj = (JsonObject) (finalLabelsIterator.next());
-                finalLabels.remove(finalLabelObj);
+            for (int z = 0; z < finalLabels.size(); z++) {
+                finalLabels.remove(z);
             }
             // recreate final labels
             for (int i = 0; i < finalLabelsListSize; i = i + 2) {
@@ -58,10 +56,8 @@ public class DatasetReportMechanism {
             JsonArray uniqueInstances = (JsonArray) datasetObj.get("unique_instance_number_for_each_label");
 
             // flush unique instance labels array
-            Iterator<JsonElement> uniqueInstanceIterator = uniqueInstances.iterator();
-            while (uniqueInstanceIterator.hasNext()) {
-                JsonObject labelObj = (JsonObject) (uniqueInstanceIterator.next());
-                uniqueInstances.remove(labelObj);
+            for (int z = 0; z < uniqueInstances.size(); z++) {
+                uniqueInstances.remove(z);
             }
 
             ArrayList<Label> labels = datasetPerformance.getDataset().getClassLabels();
@@ -101,6 +97,7 @@ public class DatasetReportMechanism {
                 }
             }
 
+            userCompIterator = userCompleteness.iterator();
             boolean isFound = false;
             while (userCompIterator.hasNext()) {
                 JsonObject completenessObj = (JsonObject) (userCompIterator.next());
@@ -139,6 +136,7 @@ public class DatasetReportMechanism {
                 }
             }
 
+            userConsIterator = userConsistency.iterator();
             isFound = false;
             while (userConsIterator.hasNext()) {
                 JsonObject consistencyObj = (JsonObject) (userConsIterator.next());

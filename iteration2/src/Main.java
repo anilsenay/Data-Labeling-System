@@ -13,6 +13,11 @@ public class Main {
         ArrayList<Instance> instanceList = DLS.getDataset().getInstances();
         ArrayList<User> userList = DLS.getUserList();
         Dataset dataset = DLS.getDataset();
+        ArrayList<Label> labelList = DLS.getDataset().getClassLabels();
+
+        for (int i = 0; i < labelList.size(); i++) {
+            System.out.println("label id: " + labelList.get(i).getLabelID());
+        }
 
         // we should handle dataset status here, is it restored or newly created
 
@@ -22,10 +27,11 @@ public class Main {
                     RandomBot user = (RandomBot) userList.get(j);
                     Assignment assignment = user.assign(dataset, instanceList.get(i));
                     // Print results to the console and log file.
-                    DLS.writeOutputFile();
+                    // DLS.writeOutputFile();
                     ReportingMechanism.getInstance().updateReport(assignment);
                 }
             }
         }
+        DLS.writeOutputFile();
     }
 }

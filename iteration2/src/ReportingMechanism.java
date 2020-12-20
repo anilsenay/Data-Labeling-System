@@ -7,7 +7,7 @@ public class ReportingMechanism {
 
     private UserReportMechanism userReportMechanism = new UserReportMechanism();
     private InstanceReportMechanism instanceReportMechanism = new InstanceReportMechanism();
-    private DatasetReportMechanism datasetReportMechanism = null;
+    private DatasetReportMechanism datasetReportMechanism = new DatasetReportMechanism();
 
     private ReportingMechanism() {
     }

@@ -36,7 +36,7 @@ public class InstanceReportMechanism {
         Iterator<JsonElement> instanceIterator = instances.iterator();
         while (instanceIterator.hasNext()) {
             JsonObject instanceObj = (JsonObject) (instanceIterator.next());
-            if (instanceObj.get("user_id").getAsInt() != instance.getInstanceID())
+            if (instanceObj.get("instance_id").getAsInt() != instance.getInstanceID())
                 continue;
 
             instanceObj.addProperty("total_number_of_labels", totalNumOfLabels);
@@ -47,7 +47,8 @@ public class InstanceReportMechanism {
             // most freq labels for instances -------------------------------
 
             HashMap<String, Long> parameters = instancePerformance.getMostFreqLabelAndPerc(dataset.getAssignmentList());
-            String key = ((String[]) parameters.keySet().toArray())[0];
+            String key = parameters.keySet().toArray(new String[parameters.keySet().size()])[0];
+
             JsonObject mostFreqLabel = new JsonObject();
             mostFreqLabel.addProperty("label_name", key);
             mostFreqLabel.addProperty("frequency", parameters.get(key));
@@ -59,16 +60,15 @@ public class InstanceReportMechanism {
 
             JsonArray listLabels = (JsonArray) instanceObj.get("list_labels");
             HashMap<String, Long> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
-            String[] keys = (String[]) parameters.keySet().toArray();
+            String[] keys = parameters.keySet().toArray(new String[parameters.keySet().size()]);
 
             int labelsListSize = keys.length;
 
             // flush labels list array
-            Iterator<JsonElement> labelListIterator = listLabels.iterator();
-            while (labelListIterator.hasNext()) {
-                JsonObject labelListObj = (JsonObject) (labelListIterator.next());
-                listLabels.remove(labelListObj);
+            for (int z = 0; z < listLabels.size(); z++) {
+                listLabels.remove(z);
             }
+
             // recreate labels list
             for (int i = 0; i < labelsListSize; i++) {
                 JsonObject labelListObject = new JsonObject();

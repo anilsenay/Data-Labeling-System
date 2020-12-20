@@ -52,9 +52,11 @@ public class DatasetMetrics {
         // count the number of final labels
         size = instanceList.size();
         for (int i = 0; i < size; i++) {
-            String finalLabel = instanceList.get(i).getfinalLabel().getLabelName();
-            int temp = Integer.parseInt(result.get(result.indexOf(finalLabel) + 1)) + 1;
-            result.set(result.indexOf(finalLabel) + 1, String.valueOf(temp));
+            if (instanceList.get(i).getfinalLabel() != null) {
+                String finalLabel = instanceList.get(i).getfinalLabel().getLabelName();
+                int temp = Integer.parseInt(result.get(result.indexOf(finalLabel) + 1)) + 1;
+                result.set(result.indexOf(finalLabel) + 1, String.valueOf(temp));
+            }
         }
 
         int instanceListSize = instanceList.size();
@@ -78,9 +80,12 @@ public class DatasetMetrics {
 
         int size = instanceList.size();
         for (int i = 0; i < size; i++) {
-            if (label.getLabelID() == instanceList.get(i).getfinalLabel().getLabelID()) {
-                num++;
+            if (instanceList.get(i).getfinalLabel() != null) {
+                if (label.getLabelID() == instanceList.get(i).getfinalLabel().getLabelID()) {
+                    num++;
+                }
             }
+
         }
 
         return num;

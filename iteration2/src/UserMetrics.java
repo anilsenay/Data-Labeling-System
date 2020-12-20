@@ -47,7 +47,7 @@ public class UserMetrics {
 
             }
         }
-        System.out.println("datasetAssign \t" + count);
+
         return datasetIds;
     }
 
@@ -58,10 +58,11 @@ public class UserMetrics {
         Iterator<JsonElement> userListIterator = userObjects.iterator();
         int instanceCount = 0;
         ArrayList<Integer> assignedInstanceID = new ArrayList<Integer>();
+        ArrayList<Instance> instances = new ArrayList<Instance>();
 
         while (userListIterator.hasNext()) {
             JsonObject userObj = (JsonObject) (userListIterator.next());
-            int userID = userObj.get("user id").getAsInt();
+            int userID = userObj.get("user_id").getAsInt();
 
             if (userID != user.getUserID())
                 continue;
@@ -80,8 +81,7 @@ public class UserMetrics {
                     continue;
 
                 ArrayList<Assignment> assignments = currentDataset.getAssignmentList();
-                ArrayList<Instance> instances = currentDataset.getInstances();
-                instanceCount = instances.size();
+                instances = currentDataset.getInstances();
 
                 int size = assignments.size();
                 for (int i = 0; i < size; i++) {
@@ -94,11 +94,9 @@ public class UserMetrics {
                 }
             }
         }
-        instanceCount = assignedInstanceID.size();
 
-        if (instanceCount == 0) {
-            System.out.println("Datasetteki instance sayısı sıfır olarak döndürülmüş burada bir hata var"); //////////////
-        }
+        instanceCount = instances.size();
+
         float compPer = (float) ((1.0 * assignedInstanceID.size()) / instanceCount) * 100;
         return compPer;
     }
@@ -156,18 +154,27 @@ public class UserMetrics {
         for (int i = 0; i < assignmentList.size(); i++) {
             if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 thisUsersAssignments.add(assignmentList.get(i));
+                countUserAssignments++;
             }
-            countUserAssignments++;
+
         }
         for (int i = 0; i < thisUsersAssignments.size(); i++) {
             uniqueAssignedInstances.add(thisUsersAssignments.get(i).getInstance().getInstanceID());
         }
-        Integer uniqueAssignedInstancesArray[] = (Integer[]) uniqueAssignedInstances.toArray();
+
+        Integer[] uniqueAssignedInstancesArray = (uniqueAssignedInstances
+                .toArray(new Integer[uniqueAssignedInstances.size()]));
         Arrays.sort(uniqueAssignedInstancesArray);
+        for (int j2 = 0; j2 < uniqueAssignedInstancesArray.length; j2++) {
+            labelsOfEachInstance.add(new ArrayList<Integer>());
+        }
+
         for (int i = 0; i < uniqueAssignedInstances.size(); i++) {
             for (int j = 0; j < thisUsersAssignments.size(); j++) {
                 if (uniqueAssignedInstancesArray[i] == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
+
                     for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
+
                         labelsOfEachInstance.get(i)
                                 .add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
                     }
@@ -175,17 +182,18 @@ public class UserMetrics {
             }
         }
         double consistencyPerInstance = 0.0;
-        for (int k : uniqueAssignedInstancesArray) {
+        for (int k = 0; k < labelsOfEachInstance.size(); k++) {
+            double mostFreq = ((double) mostfrequent(
+                    labelsOfEachInstance.get(k).toArray(new Integer[labelsOfEachInstance.get(k).size()])));
+            consistencyPerInstance = mostFreq / labelsOfEachInstance.get(k).size();
 
-            consistencyPerInstance = ((double) mostfrequent(((Integer[]) labelsOfEachInstance.get(k).toArray())))
-                    / labelsOfEachInstance.get(k).size();
             if (prevPercentage != 0)
                 newPercentage = ((newPercentage * (countUserAssignments + 1)) + consistencyPerInstance) / (k + 2);
             else
                 newPercentage = ((newPercentage * (countUserAssignments)) + consistencyPerInstance) / (k + 1);
         }
         BigDecimal bd = new BigDecimal(newPercentage).setScale(2, RoundingMode.HALF_UP);
-
+        System.out.println("CONSISTENCY: " + consistencyPerInstance);
         return bd.doubleValue();
     }
 
