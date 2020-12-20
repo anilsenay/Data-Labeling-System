@@ -133,7 +133,6 @@ public class DatasetLoader {
         // Create labels from given parameters.
         dataset.addLabel(new Label(labelID, labelText));
       }
-
       // Restore assignments
       while (assignmentIterator.hasNext()) {
         JSONObject assignmentObj = (assignmentIterator.next());
@@ -173,11 +172,10 @@ public class DatasetLoader {
         int labelsSize = dataset.getClassLabels().size();
         for (int i = 0; i < labelIdsSize; i++) {
           for (int j = 0; j < labelsSize; j++) {
-            Label label = null;
             if (labelIds.get(i) == dataset.getClassLabels().get(j).getLabelID()) {
-              label = dataset.getClassLabels().get(j);
+              Label label = dataset.getClassLabels().get(j);
+              assignment.addLabel(label);
             }
-            assignment.addLabel(label);
           }
         }
 

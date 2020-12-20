@@ -56,6 +56,7 @@ public class InstanceMetrics {
     }
 
     // B-4.1 TESTE EN KADİR(:d) OLACAK METOTLARDAN BİRİ !!!
+
     public HashMap<String, Long> mostFreqLabelAndPerc(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         HashMap<String, Long> result = new HashMap<String, Long>();
@@ -63,7 +64,9 @@ public class InstanceMetrics {
             if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
-                    labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
+                    if (assignmentList.get(i).getAssignedLabels().get(j) != null) {
+                        labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
+                    }
                 }
             }
         }
@@ -74,6 +77,7 @@ public class InstanceMetrics {
         Long frequency = occurrences.entrySet().stream()
                 .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getValue();
 
+        System.out.println("dataset id \t" + ReportingMechanism.getInstance().getDataset().getDatasetID());
         int size = ReportingMechanism.getInstance().getDataset().getClassLabels().size();
         Label finalLabel;
         for (int j = 0; j < size; j++) {
@@ -123,11 +127,22 @@ public class InstanceMetrics {
             }
         }
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+        // occurrences.forEach((key, value) -> System.out.println(key + ":" + value));
+
         double result = 0;
         for (int j = 0; j < labels.size(); j++) {
             Long frequency = occurrences.get(labels.get(j));
-            result -= ((frequency / labels.size()) * ((Math.log(frequency / labels.size())) / Math.log(2)));
+
+            result -= (((1.0 * frequency) / labels.size())
+                    * ((Math.log((1.0 * frequency) / labels.size())) / (1.0 * Math.log(2))));
         }
         return result;
+    }
+
+    // Update all final labels
+    public void updateAllFinalLabels(ArrayList<Instance> instanceList, ArrayList<Assignment> assignmentList) {
+        for (int i = 0; i < instanceList.size(); i++) {
+            mostFreqLabelAndPerc(instanceList.get(i), assignmentList);
+        }
     }
 }

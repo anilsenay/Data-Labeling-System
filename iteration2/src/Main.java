@@ -14,10 +14,7 @@ public class Main {
         ArrayList<User> userList = DLS.getUserList();
         Dataset dataset = DLS.getDataset();
         ArrayList<Label> labelList = DLS.getDataset().getClassLabels();
-
-        for (int i = 0; i < labelList.size(); i++) {
-            System.out.println("label id: " + labelList.get(i).getLabelID());
-        }
+        ArrayList<Assignment> assignmentList = DLS.getDataset().getAssignmentList();
 
         // we should handle dataset status here, is it restored or newly created
 

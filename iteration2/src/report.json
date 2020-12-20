@@ -10,11 +10,11 @@
           "status": 100.0
         }
       ],
-      "labeled_instances": 20,
+      "labeled_instances": 48,
       "unique_labeled_instances": 0,
-      "consistency_percentages": 6.637166678838298E25,
-      "avg_time": 1.6084918969E9,
-      "std_dev": 0.30000000000001514
+      "consistency_percentages": 3.3809436842017705E293,
+      "avg_time": 1.608496565275862E9,
+      "std_dev": 1315.192680168606
     },
     {
       "user_id": 2,
@@ -26,91 +26,91 @@
           "status": 100.0
         }
       ],
-      "labeled_instances": 20,
+      "labeled_instances": 48,
       "unique_labeled_instances": 0,
-      "consistency_percentages": 6.637166678838298E25,
-      "avg_time": 1.608491897E9,
-      "std_dev": 0.0
+      "consistency_percentages": 3.3809436842017705E293,
+      "avg_time": 1.6084965652931035E9,
+      "std_dev": 1315.197481023427
     }
   ],
   "instances": [
     {
       "instance_id": 1,
       "instance name": "aldım eve gidince kutusundan çıkardım hasarlıydı",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 1,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Negative",
-        "frequency": 100
+        "label_name": "Positive",
+        "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Negative",
-          "percentage": 100
+          "label_name": "Positive",
+          "percentage": 0
         }
       ],
-      "entropy": 0.0
+      "entropy": 5.536885113116556
     },
     {
       "instance_id": 2,
       "instance name": "yöneticisi bizzat ilgilenerek gerekli özverili örneği göstererek güzel teşekkürler",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Notr",
+        "label_name": "Positive",
         "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Notr",
+          "label_name": "Positive",
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 6.244605013115279
     },
     {
       "instance_id": 3,
       "instance name": "mesela kamerası aldık yoktu",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Positive",
+        "label_name": "Notr",
         "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Positive",
+          "label_name": "Notr",
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 3.9619041620993447
     },
     {
       "instance_id": 4,
       "instance name": "siteniz çalışmıyor kaç gündür",
-      "total_number_of_labels": 2,
+      "total_number_of_labels": 12,
       "unique_number_of_labels": 2,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Notr",
+        "label_name": "Positive",
         "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Notr",
+          "label_name": "Positive",
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 5.23308333814104
     },
     {
       "instance_id": 5,
       "instance name": "şimdilik memnun kaldım umarım kararım değişmez",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
         "label_name": "Notr",
@@ -122,31 +122,31 @@
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 6.124297524547859
     },
     {
       "instance_id": 6,
       "instance name": "durduğu yerde sessiz moduna geçmesi başta fazla giden bataryasının ayda kapasitesinin ciddi anlamda düşmesi dışında fiyatı düşünüldüğünde iyi",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 1,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Notr",
-        "frequency": 100
+        "label_name": "Positive",
+        "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Notr",
-          "percentage": 100
+          "label_name": "Positive",
+          "percentage": 0
         }
       ],
-      "entropy": 0.0
+      "entropy": 6.244605013115279
     },
     {
       "instance_id": 7,
       "instance name": "filmin büyük artısı uzun zamandır görmediğimiz oyunculuğunu döktürmesini sağlamasıydı",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
         "label_name": "Notr",
@@ -158,13 +158,13 @@
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 6.244605013115278
     },
     {
       "instance_id": 8,
       "instance name": "şarjı hemen bitiriyor",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 12,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
         "label_name": "Notr",
@@ -176,43 +176,43 @@
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 6.12429752454786
     },
     {
       "instance_id": 9,
       "instance name": "in yeni kampanyasi cok basarili",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 10,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Positive",
+        "label_name": "Negative",
         "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Positive",
+          "label_name": "Negative",
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 4.947277761308516
     },
     {
       "instance_id": 10,
       "instance name": "kullanışlı fiyata alınabilecek güzel düsünmeden alabilirsiniz",
-      "total_number_of_labels": 2,
-      "unique_number_of_labels": 2,
+      "total_number_of_labels": 10,
+      "unique_number_of_labels": 3,
       "unique_number_of_users": 2,
       "most_freq_label": {
-        "label_name": "Positive",
+        "label_name": "Notr",
         "frequency": 0
       },
       "list_labels": [
         {
-          "label_name": "Positive",
+          "label_name": "Notr",
           "percentage": 0
         }
       ],
-      "entropy": NaN
+      "entropy": 3.782372594309497
     }
   ],
   "datasets": [
@@ -235,33 +235,33 @@
       "user_consistency": [
         {
           "user_id": 1,
-          "consistency_percentages": 4.312745768614667E28
+          "consistency_percentages": 4.3291470232120756E303
         },
         {
           "user_id": 2,
-          "consistency_percentages": 4.312745768614667E28
+          "consistency_percentages": 4.3291470232120756E303
         }
       ],
       "unique_instance_number_for_each_label": [
         {
           "label_id": 2,
-          "unique_instance_number": 1
+          "unique_instance_number": 0
         },
         {
           "label_id": 2,
-          "unique_instance_number": 2
+          "unique_instance_number": 1
         },
         {
           "label_id": 1,
-          "unique_instance_number": 3
+          "unique_instance_number": 4
         },
         {
           "label_id": 2,
-          "unique_instance_number": 1
+          "unique_instance_number": 0
         },
         {
           "label_id": 3,
-          "unique_instance_number": 6
+          "unique_instance_number": 4
         }
       ]
     }

@@ -30,9 +30,12 @@ public class DataLabelingSystem {
 		File outputFile = new File(this.outputName);
 		if (outputFile.exists()) { // dataset output u varsa
 			datasetLoader.loadDataset(this);
-		} else
+			// // restore final labels after loading dataset
+			// InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(),
+			// this.dataset.getAssignmentList());
+		} else {
 			datasetLoader.createDataset(this);
-
+		}
 		reportingMechanism.setDataset(this.dataset);
 		reportingMechanism.importReport(dataset, userList);
 	}

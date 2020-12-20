@@ -174,13 +174,14 @@ public class UserMetrics {
                 if (uniqueAssignedInstancesArray[i] == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
 
                     for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
-
                         labelsOfEachInstance.get(i)
                                 .add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
+
                     }
                 }
             }
         }
+
         double consistencyPerInstance = 0.0;
         for (int k = 0; k < labelsOfEachInstance.size(); k++) {
             double mostFreq = ((double) mostfrequent(
@@ -193,7 +194,7 @@ public class UserMetrics {
                 newPercentage = ((newPercentage * (countUserAssignments)) + consistencyPerInstance) / (k + 1);
         }
         BigDecimal bd = new BigDecimal(newPercentage).setScale(2, RoundingMode.HALF_UP);
-        System.out.println("CONSISTENCY: " + consistencyPerInstance);
+
         return bd.doubleValue();
     }
 
