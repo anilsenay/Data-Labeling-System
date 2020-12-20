@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.HashSet;
-import java.util.Map.Entry; // HEPSİ İÇİN KESİNLİKLE TEST LAZIMM. tamamdır elburuz :)
+import java.util.Map.Entry; // HEPSİ İÇİN KESİNLİKLE TEST LAZIMM.
 import java.util.Iterator;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -14,31 +14,32 @@ import com.google.gson.JsonElement;
 
 public class UserMetrics {
 
-    private User user;
-    private ArrayList<Integer> assignedDatasets = new ArrayList<Integer>();
+    private static UserMetrics userMetrics;
 
-    public UserMetrics(User u) {
-        this.user = u;
-        ReportingMechanism.getInstance().adduserMetrics(this);
+    private UserMetrics() {
+
     }
 
-    public UserMetrics() {
-
+    public static synchronized UserMetrics getInstance() {
+        if (userMetrics == null) {
+            userMetrics = new UserMetrics();
+        }
+        return userMetrics;
     }
 
     // A-1 Number of datasets assigned
-    public ArrayList<Integer> datasetAssign(Iterator<JsonObject> datasetIterator) {
+    public ArrayList<Integer> datasetAssign(User user, Iterator<JsonElement> datasetIterator) {
         int count = 0;
         ArrayList<Integer> datasetIds = new ArrayList<Integer>();
         while (datasetIterator.hasNext()) {
 
-            JsonObject datasetObj = (datasetIterator.next());
+            JsonObject datasetObj = (JsonObject) (datasetIterator.next());
             JsonArray users = (JsonArray) datasetObj.get("users");
             Iterator<JsonElement> usersIterator = users.iterator();
 
             while (usersIterator.hasNext()) {
                 JsonObject userObj = (JsonObject) usersIterator.next();
-                if (userObj.get("user_id").getAsInt() == this.user.getUserID()) {
+                if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                     int datasetID = (datasetObj.get("dataset_id").getAsInt());
                     datasetIds.add(datasetID);
                     count++;
@@ -52,7 +53,7 @@ public class UserMetrics {
 
     // Buraya rapordan çekilen dataset gönderilmeli /////////////////
     // A-2 List of all datasets with their completeness percentage
-    public float datasetCompletenessPer(JsonObject report) {
+    public float datasetCompletenessPer(User user, JsonObject report) {
         JsonArray userObjects = (JsonArray) report.get("users");
         Iterator<JsonElement> userListIterator = userObjects.iterator();
         int instanceCount = 0;
@@ -62,7 +63,7 @@ public class UserMetrics {
             JsonObject userObj = (JsonObject) (userListIterator.next());
             int userID = userObj.get("user id").getAsInt();
 
-            if (userID != this.user.getUserID())
+            if (userID != user.getUserID())
                 continue;
 
             JsonArray datasetStatus = (JsonArray) userObj.get("datasets_status");
@@ -102,16 +103,38 @@ public class UserMetrics {
         return compPer;
     }
 
+    public float datasetCompletenessPerCurrent(User user) {
+        Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
+        ArrayList<Assignment> assignments = currentDataset.getAssignmentList();
+        ArrayList<Instance> instances = currentDataset.getInstances();
+        ArrayList<Integer> assignedInstanceID = new ArrayList<Integer>();
+        int instanceCount = instances.size();
+
+        int size = assignments.size();
+        for (int i = 0; i < size; i++) {
+            if (assignments.get(i).getUser().getUserID() != user.getUserID())
+                continue;
+
+            int instanceID = assignments.get(i).getInstance().getInstanceID();
+            if (!assignedInstanceID.contains(instanceID)) {
+                assignedInstanceID.add(instanceID);
+            }
+        }
+
+        float compPerCurrent = (float) ((1.0 * assignedInstanceID.size()) / instanceCount) * 100;
+        return compPerCurrent;
+    }
+
     // A-3
     public int numberOfInstancesLabeled() {
         return 1;
     }
 
     // A-4 TEST EDİLMELİ ???
-    public int uniqueNumOfInstancesLabeled(ArrayList<Assignment> assignmentList, Assignment newAssignment) {
+    public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+            if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 if (newAssignment.getInstance().getInstanceID() == assignmentList.get(i).getInstance()
                         .getInstanceID()) {
                     return 0;
@@ -122,7 +145,8 @@ public class UserMetrics {
     }
 
     // A-5
-    public double consistencyPercentagesForUser(ArrayList<Assignment> assignmentList, double prevPercentage) {
+    public double consistencyPercentagesForUser(User user, ArrayList<Assignment> assignmentList,
+            double prevPercentage) {
         ArrayList<Assignment> thisUsersAssignments = new ArrayList<Assignment>();
         HashSet<Integer> uniqueAssignedInstances = new HashSet<Integer>();
         ArrayList<ArrayList<Integer>> labelsOfEachInstance = new ArrayList<ArrayList<Integer>>();
@@ -130,7 +154,7 @@ public class UserMetrics {
         int countUserAssignments = 0;
 
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+            if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 thisUsersAssignments.add(assignmentList.get(i));
             }
             countUserAssignments++;
@@ -147,7 +171,6 @@ public class UserMetrics {
                         labelsOfEachInstance.get(i)
                                 .add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
                     }
-
                 }
             }
         }
@@ -167,10 +190,10 @@ public class UserMetrics {
     }
 
     // A-6
-    public double averageTimeSpent(ArrayList<Assignment> assignmentList) {
+    public double averageTimeSpent(User user, ArrayList<Assignment> assignmentList) {
         ArrayList<Long> seconds = new ArrayList<Long>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getUser().getUserID() == this.user.getUserID()) {
+            if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
                 Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
                 seconds.add(sec);
             }
@@ -180,7 +203,7 @@ public class UserMetrics {
     }
 
     // A-7
-    public double standartDev(ArrayList<Assignment> assignmentList) {
+    public double standartDev(User user, ArrayList<Assignment> assignmentList) {
 
         double standartDeviation = 0.0;
         double sum = 0.0;
@@ -190,7 +213,7 @@ public class UserMetrics {
 
         ArrayList<Long> seconds = new ArrayList<Long>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getUser().getUserID() == this.user.getUserID()) {
+            if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
                 Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
                 seconds.add(sec);
             }
@@ -208,10 +231,6 @@ public class UserMetrics {
         result = Math.sqrt(sq);
 
         return result;
-    }
-
-    public User getUser() {
-        return this.user;
     }
 
     private int mostfrequent(Integer array[]) {
@@ -240,9 +259,5 @@ public class UserMetrics {
             }
         }
         return max_count;
-    }
-
-    public ArrayList<Integer> getAssignedDatasets() {
-        return this.assignedDatasets;
     }
 }

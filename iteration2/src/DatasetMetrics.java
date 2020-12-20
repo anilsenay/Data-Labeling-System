@@ -1,10 +1,18 @@
 import java.util.ArrayList;
 
 public class DatasetMetrics {
-    private Dataset dataset;
 
-    public DatasetMetrics(Dataset dataset) {
-        this.dataset = dataset;
+    private static DatasetMetrics datasetMetrics;
+
+    private DatasetMetrics() {
+
+    }
+
+    public static synchronized DatasetMetrics getInstance() {
+        if (datasetMetrics == null) {
+            datasetMetrics = new DatasetMetrics();
+        }
+        return datasetMetrics;
     }
 
     // C-1 Completeness percentage
@@ -97,13 +105,4 @@ public class DatasetMetrics {
 
         return count;
     }
-
-    public Dataset getDataset() {
-        return this.dataset;
-    }
-
-    public void setDataset(Dataset dataset) {
-        this.dataset = dataset;
-    }
-
 }

@@ -6,17 +6,24 @@ import java.util.stream.Collectors;
 
 public class InstanceMetrics {
 
-    private Instance instance;
+    private static InstanceMetrics instanceMetrics;
 
-    public InstanceMetrics(Instance instance) {
-        this.instance = instance;
+    private InstanceMetrics() {
+
+    }
+
+    public static synchronized InstanceMetrics getInstance() {
+        if (instanceMetrics == null) {
+            instanceMetrics = new InstanceMetrics();
+        }
+        return instanceMetrics;
     }
 
     // B-1
-    public int numberOfLabelAssignment(ArrayList<Assignment> assignmentList) {
+    public int numberOfLabelAssignment(Instance instance, ArrayList<Assignment> assignmentList) {
         int count = 0;
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getInstance().getInstanceID() == this.instance.getInstanceID()) {
+            if (assignmentList.get(i).getInstance().getInstanceID() == instance.getInstanceID()) {
                 count++;
             }
         }
@@ -24,11 +31,11 @@ public class InstanceMetrics {
     }
 
     // B-2
-    public int numberOfUniqueLabelAssignment(ArrayList<Assignment> assignmentList) {
+    public int numberOfUniqueLabelAssignment(Instance instance, ArrayList<Assignment> assignmentList) {
         HashSet<Integer> uniqueInstanceLabeled = new HashSet<Integer>();
         for (int i = 0; i < assignmentList.size(); i++) {
             // Instance-by-instance gitme.
-            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+            if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     uniqueInstanceLabeled.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelID());
                 }
@@ -38,10 +45,10 @@ public class InstanceMetrics {
     }
 
     // B-3
-    public int numberOfUniqueUsers(ArrayList<Assignment> assignmentList) {
+    public int numberOfUniqueUsers(Instance instance, ArrayList<Assignment> assignmentList) {
         HashSet<Integer> uniqueUsers = new HashSet<Integer>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+            if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
                 uniqueUsers.add(assignmentList.get(i).getUser().getUserID());
             }
         }
@@ -49,11 +56,11 @@ public class InstanceMetrics {
     }
 
     // B-4.1 TESTE EN KADİR(:d) OLACAK METOTLARDAN BİRİ !!!
-    public HashMap<String, Long> mostFreqLabelAndPerc(ArrayList<Assignment> assignmentList) {
+    public HashMap<String, Long> mostFreqLabelAndPerc(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         HashMap<String, Long> result = new HashMap<String, Long>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+            if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
@@ -72,7 +79,7 @@ public class InstanceMetrics {
         for (int j = 0; j < size; j++) {
             if (label.equals(ReportingMechanism.getInstance().getDataset().getClassLabels().get(j).getLabelName())) {
                 finalLabel = ReportingMechanism.getInstance().getDataset().getClassLabels().get(j);
-                this.instance.setfinalLabel(finalLabel);
+                instance.setfinalLabel(finalLabel);
                 break;
             }
         }
@@ -82,18 +89,18 @@ public class InstanceMetrics {
     }
 
     // B-5
-    public HashMap<String, Long> listClassLabels(ArrayList<Assignment> assignmentList) {
+    public HashMap<String, Long> listClassLabels(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         HashMap<String, Long> result = new HashMap<String, Long>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+            if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
                 }
             }
         }
-        
+
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
 
         for (int j = 0; j < labels.size(); j++) {
@@ -105,10 +112,10 @@ public class InstanceMetrics {
     }
 
     // B-6
-    public double entropy(ArrayList<Assignment> assignmentList) {
+    public double entropy(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         for (int i = 0; i < assignmentList.size(); i++) {
-            if (this.instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
+            if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
@@ -122,9 +129,5 @@ public class InstanceMetrics {
             result -= ((frequency / labels.size()) * ((Math.log(frequency / labels.size())) / Math.log(2)));
         }
         return result;
-    }
-
-    public Instance getInstance() {
-        return this.instance;
     }
 }

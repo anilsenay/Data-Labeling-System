@@ -22,12 +22,10 @@ public class Main {
                     RandomBot user = (RandomBot) userList.get(j);
                     Assignment assignment = user.assign(dataset, instanceList.get(i));
                     // Print results to the console and log file.
-
                     DLS.writeOutputFile();
-
+                    ReportingMechanism.getInstance().updateReport(assignment);
                 }
             }
         }
-
     }
 }

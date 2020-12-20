@@ -31,9 +31,10 @@ public class Report {
     }
 
     public void createReport(ReportingMechanism reportingMechanism) {
-        ArrayList<UserMetrics> userMetrics = reportingMechanism.getUserMetrics();
-        ArrayList<InstanceMetrics> instanceMetrics = reportingMechanism.getInstanceMetrics();
-        DatasetMetrics datasetMetrics = reportingMechanism.getDatasetMetrics();
+        ArrayList<UserPerformance> userMetrics = reportingMechanism.getUserReportMechanism().getUserPerformances();
+        ArrayList<InstancePerformance> instanceMetrics = reportingMechanism.getInstanceReportMechanism()
+                .getInstancePerformances();
+        DatasetPerformance datasetMetrics = reportingMechanism.getDatasetReportMechanism().getDatasetPerformance();
 
         JsonArray userArray = new JsonArray();
         JsonArray instanceArray = new JsonArray();
@@ -125,6 +126,16 @@ public class Report {
         }
         datasetObject.add("user_consistency", userConsistency);
 
+        JsonArray uniqueInstanceNumberEachLabel = new JsonArray();
+        ArrayList<Label> labels = datasetMetrics.getDataset().getClassLabels();
+        for (int j = 0; j < labels.size(); j++) {
+            JsonObject labelObject = new JsonObject();
+            labelObject.addProperty("label_id", labels.get(j).getLabelID());
+            labelObject.addProperty("unique_instance_number", 0);
+            uniqueInstanceNumberEachLabel.add(labelObject);
+        }
+        datasetObject.add("unique_instance_number_for_each_label", uniqueInstanceNumberEachLabel);
+
         datasetArray.add(datasetObject);
 
         reportObject.add("users", userArray);
@@ -153,108 +164,6 @@ public class Report {
             Logger.getInstance().error(new Date(), e.toString());
         }
     }
-
-    // public void loadReport() {
-    // JsonObject reportObj = null;
-
-    // try { // Read and parse the output file.
-    // JSONParser parser = new JSONParser();
-
-    // Object obj = parser.parse(new FileReader("report.json"));
-
-    // JSONObject jsonObject = (JSONObject) obj;
-
-    // JSONArray userList = (JSONArray) jsonObject.get("users");
-    // JSONArray instanceList = (JSONArray) jsonObject.get("instances");
-    // JSONArray datasetList = (JSONArray) jsonObject.get("datasets");
-
-    // Iterator<JSONObject> instanceIterator = instanceList.iterator();
-    // Iterator<JSONObject> userIterator = userList.iterator();
-    // Iterator<JSONObject> datasetIterator = datasetList.iterator();
-
-    // while (userIterator.hasNext()) {
-    // JSONObject userObj = (userIterator.next());
-    // int userId = ((Long) userObj.get("user_id")).intValue();
-    // String userName = (String) userObj.get("user_name");
-    // int noOfDatasets = ((Long) userObj.get("number_of_dataset")).intValue();
-
-    // JSONArray datasetsStatus = (JSONArray) jsonObject.get("datasets_status");
-    // Iterator<JSONObject> userDatasetIterator = datasetsStatus.iterator();
-    // while (userIterator.hasNext()) {
-
-    // }
-
-    // // Create instance from given parameters.
-    // userList.add(userObj)
-    // }
-
-    // // Get labels from Iterator Object and store them to JSON object.
-    // while (labelIterator.hasNext()) {
-    // JSONObject labelObj = (labelIterator.next());
-    // String labelText = (String) labelObj.get("label text");
-    // int labelID = ((Long) labelObj.get("label id")).intValue();
-
-    // // Create labels from given parameters.
-    // dataset.addLabel(new Label(labelID, labelText));
-    // }
-
-    // // Restore assignments
-    // while (assignmentIterator.hasNext()) {
-    // JSONObject assignmentObj = (assignmentIterator.next());
-    // int instanceId = ((Long) assignmentObj.get("instance id")).intValue();
-    // int userId = ((Long) assignmentObj.get("user id")).intValue();
-    // String date = (String) assignmentObj.get("datetime");
-
-    // // find user
-    // User user = null;
-    // int userListSize = dls.getUserList().size();
-    // for (int i = 0; i < userListSize; i++) {
-    // if (dls.getUserList().get(i).getUserID() == userId)
-    // user = dls.getUserList().get(i);
-    // }
-
-    // // find instance
-    // Instance instance = null;
-    // int instanceListSize = dataset.getInstances().size();
-    // for (int i = 0; i < instanceListSize; i++) {
-    // if (dataset.getInstances().get(i).getInstanceID() == instanceId)
-    // instance = dataset.getInstances().get(i);
-    // }
-
-    // Assignment assignment = new Assignment(instance, user, new
-    // ArrayList<Label>(), date);
-
-    // // get label ids
-    // ArrayList<Integer> labelIds = new ArrayList<Integer>();
-    // JSONArray labels = (JSONArray) assignmentObj.get("class label ids");
-    // Iterator<Long> labelsIterator = labels.iterator();
-    // while (labelsIterator.hasNext()) {
-    // Long id = labelsIterator.next();
-    // labelIds.add(id.intValue());
-    // }
-
-    // // find labels
-    // int labelIdsSize = labelIds.size();
-    // int labelsSize = dataset.getClassLabels().size();
-    // for (int i = 0; i < labelIdsSize; i++) {
-    // for (int j = 0; j < labelsSize; j++) {
-    // Label label = null;
-    // if (labelIds.get(i) == dataset.getClassLabels().get(j).getLabelID()) {
-    // label = dataset.getClassLabels().get(j);
-    // }
-    // assignment.addLabel(label);
-    // }
-    // }
-
-    // // Create labels from given parameters.
-    // dataset.addAssignment(assignment);
-    // }
-
-    // } catch (Exception e) {
-    // Logger.getInstance().error(new Date(), e.toString());
-    // System.exit(0);
-    // }
-    // }
 
     public JsonObject getJsonObject() {
         return this.reportObject;

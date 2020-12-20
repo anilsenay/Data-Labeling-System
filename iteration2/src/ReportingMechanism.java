@@ -1,22 +1,13 @@
 import java.util.ArrayList;
-import java.util.Iterator;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonElement;
 
 public class ReportingMechanism {
     private static ReportingMechanism reportingMechanism;
     private Report report = new Report();
-    private ArrayList<UserMetrics> userMetrics = new ArrayList<UserMetrics>();
-    private DatasetMetrics datasetMetrics;
-    private ArrayList<InstanceMetrics> instanceMetrics = new ArrayList<InstanceMetrics>();
     private Dataset dataset = null;
 
-    private ReportingMechanism(Dataset dataset) {
-        this.dataset = dataset;
-        this.datasetMetrics = new DatasetMetrics(this.dataset);
-    }
+    private UserReportMechanism userReportMechanism = new UserReportMechanism();
+    private InstanceReportMechanism instanceReportMechanism = new InstanceReportMechanism();
+    private DatasetReportMechanism datasetReportMechanism = null;
 
     private ReportingMechanism() {
     }
@@ -33,236 +24,319 @@ public class ReportingMechanism {
     }
 
     public void updateReport(Assignment assignment) {
-        updateUser(assignment.getUser(), assignment);
-        updateInstance(assignment.getInstance());
-        updateDataset(this.dataset, assignment.getUser());
+        userReportMechanism.updateUser(assignment.getUser(), assignment);
+        instanceReportMechanism.updateInstance(assignment.getInstance());
+        datasetReportMechanism.updateDataset(this.dataset, assignment.getUser());
         this.report.writeReport();
     }
 
-    public void updateUser(User user, Assignment newAssignment) {
-        UserMetrics userMetric = null;
-        for (int i = 0; i < userMetrics.size(); i++) {
-            if (userMetrics.get(i).getUser().getUserID() == user.getUserID()) {
-                userMetric = userMetrics.get(i);
-                break;
-            }
-        }
+    // public void updateUser(User user, Assignment newAssignment) {
+    // UserMetrics userMetric = null;
+    // for (int i = 0; i < userMetrics.size(); i++) {
+    // if (userMetrics.get(i).getUser().getUserID() == user.getUserID()) {
+    // userMetric = userMetrics.get(i);
+    // break;
+    // }
+    // }
 
-        int numberOfDatasets = userMetric.getAssignedDatasets().size();
-        float currentDatasetStatus = userMetric.datasetCompletenessPer(this.report.getJsonObject());
-        int totalNumberOfInstances = userMetric.numberOfInstancesLabeled();
-        int numberOfUniqueInstances = userMetric.uniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
-                newAssignment);
-        double avgTime = userMetric.averageTimeSpent(dataset.getAssignmentList());
-        double stdDev = userMetric.standartDev(dataset.getAssignmentList());
+    // int numberOfDatasets = userMetric.getAssignedDatasets().size();
+    // float currentDatasetStatus =
+    // userMetric.datasetCompletenessPer(this.report.getJsonObject());
+    // int totalNumberOfInstances = userMetric.numberOfInstancesLabeled();
+    // int numberOfUniqueInstances =
+    // userMetric.uniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
+    // newAssignment);
+    // double avgTime = userMetric.averageTimeSpent(dataset.getAssignmentList());
+    // double stdDev = userMetric.standartDev(dataset.getAssignmentList());
 
-        JsonObject reportObject = report.getJsonObject();
-        JsonArray users = (JsonArray) reportObject.get("users");
-        Iterator<JsonElement> userIterator = users.iterator();
-        while (userIterator.hasNext()) {
-            JsonObject userObj = (JsonObject) (userIterator.next());
-            if (userObj.get("user_id").getAsInt() != user.getUserID())
-                continue;
+    // JsonObject reportObject = report.getJsonObject();
+    // JsonArray users = (JsonArray) reportObject.get("users");
+    // Iterator<JsonElement> userIterator = users.iterator();
+    // while (userIterator.hasNext()) {
+    // JsonObject userObj = (JsonObject) (userIterator.next());
+    // if (userObj.get("user_id").getAsInt() != user.getUserID())
+    // continue;
 
-            userObj.addProperty("number_of_datasets", numberOfDatasets);
-            int labeled_instances = userObj.get("labeled_instances").getAsInt();
-            userObj.addProperty("labeled_instances", totalNumberOfInstances + labeled_instances);
-            int unique_labeled_instances = userObj.get("unique_labeled_instances").getAsInt();
-            userObj.addProperty("unique_labeled_instances", unique_labeled_instances + numberOfUniqueInstances);
-            double consistency_percentages = userObj.get("consistency_percentages").getAsDouble();
-            double consPercentage = userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
-                    consistency_percentages);
-            userObj.addProperty("consistency_percentages", consPercentage);
-            userObj.addProperty("avg_time", avgTime);
-            userObj.addProperty("std_dev", stdDev);
+    // userObj.addProperty("number_of_datasets", numberOfDatasets);
+    // int labeled_instances = userObj.get("labeled_instances").getAsInt();
+    // userObj.addProperty("labeled_instances", totalNumberOfInstances +
+    // labeled_instances);
+    // int unique_labeled_instances =
+    // userObj.get("unique_labeled_instances").getAsInt();
+    // userObj.addProperty("unique_labeled_instances", unique_labeled_instances +
+    // numberOfUniqueInstances);
+    // double consistency_percentages =
+    // userObj.get("consistency_percentages").getAsDouble();
+    // double consPercentage =
+    // userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
+    // consistency_percentages);
+    // userObj.addProperty("consistency_percentages", consPercentage);
+    // userObj.addProperty("avg_time", avgTime);
+    // userObj.addProperty("std_dev", stdDev);
 
-            JsonArray userDatasets = (JsonArray) userObj.get("datasets_status");
-            Iterator<JsonElement> userDatasetIterator = userDatasets.iterator();
+    // JsonArray userDatasets = (JsonArray) userObj.get("datasets_status");
+    // Iterator<JsonElement> userDatasetIterator = userDatasets.iterator();
 
-            if (!userDatasetIterator.hasNext()) {
-                for (int i = 0; i < userMetric.getAssignedDatasets().size(); i++) {
-                    JsonObject datasetStatusObj = new JsonObject();
-                    datasetStatusObj.addProperty("dataset_id", userMetric.getAssignedDatasets().get(i));
-                    datasetStatusObj.addProperty("status", 0);
-                    userDatasets.add(datasetStatusObj);
-                }
-            }
+    // // if there is no dataset added
+    // if (!userDatasetIterator.hasNext()) {
+    // for (int i = 0; i < userMetric.getAssignedDatasets().size(); i++) {
+    // JsonObject datasetStatusObj = new JsonObject();
+    // datasetStatusObj.addProperty("dataset_id",
+    // userMetric.getAssignedDatasets().get(i));
+    // datasetStatusObj.addProperty("status", 0);
+    // userDatasets.add(datasetStatusObj);
+    // }
+    // }
+    // // if dataset exists update its status
+    // boolean isFound = false;
+    // while (userDatasetIterator.hasNext()) {
+    // JsonObject datasetObj = (JsonObject) (userDatasetIterator.next());
+    // if (this.dataset.getDatasetID() != (datasetObj.get("dataset_id").getAsInt()))
+    // continue;
+    // datasetObj.addProperty("status", currentDatasetStatus);
+    // isFound = true;
+    // }
+    // // if new dataset added and could not be found in the list
+    // if (!isFound) {
+    // JsonObject datasetStatusObj = new JsonObject();
+    // datasetStatusObj.addProperty("dataset_id", this.dataset.getDatasetID());
+    // datasetStatusObj.addProperty("status", currentDatasetStatus);
+    // userDatasets.add(datasetStatusObj);
+    // }
 
-            while (userDatasetIterator.hasNext()) {
-                JsonObject datasetObj = (JsonObject) (userDatasetIterator.next());
-                if (this.dataset.getDatasetID() != (datasetObj.get("dataset_id").getAsInt()))
-                    continue;
-                datasetObj.addProperty("status", currentDatasetStatus);
-            }
+    // }
+    // }
 
-        }
-    }
+    // public void updateInstance(Instance instance) {
+    // InstanceMetrics instanceMetric = null;
+    // for (int i = 0; i < instanceMetrics.size(); i++) {
+    // if (instanceMetrics.get(i).getInstance().getInstanceID() ==
+    // instance.getInstanceID()) {
+    // instanceMetric = instanceMetrics.get(i);
+    // break;
+    // }
+    // }
 
-    public void updateInstance(Instance instance) {
-        InstanceMetrics instanceMetric = null;
-        for (int i = 0; i < instanceMetrics.size(); i++) {
-            if (instanceMetrics.get(i).getInstance().getInstanceID() == instance.getInstanceID()) {
-                instanceMetric = instanceMetrics.get(i);
-                break;
-            }
-        }
+    // int totalNumOfLabels =
+    // instanceMetric.numberOfLabelAssignment(dataset.getAssignmentList());
+    // int uniqueNumOfLabels =
+    // instanceMetric.numberOfUniqueLabelAssignment(dataset.getAssignmentList());
+    // int uniqueNumOfUsers =
+    // instanceMetric.numberOfUniqueUsers(dataset.getAssignmentList());
+    // double entropy = instanceMetric.entropy(dataset.getAssignmentList());
 
-        int totalNumOfLabels = instanceMetric.numberOfLabelAssignment(dataset.getAssignmentList());
-        int uniqueNumOfLabels = 0;
-        int uniqueNumOfUsers = 0;
-        double entropy = 0;
+    // JsonObject reportObject = report.getJsonObject();
+    // JsonArray instances = (JsonArray) reportObject.get("instances");
+    // Iterator<JsonElement> instanceIterator = instances.iterator();
+    // while (instanceIterator.hasNext()) {
+    // JsonObject instanceObj = (JsonObject) (instanceIterator.next());
+    // if (instanceObj.get("user_id").getAsInt() != instance.getInstanceID())
+    // continue;
 
-        JsonObject reportObject = report.getJsonObject();
-        JsonArray instances = (JsonArray) reportObject.get("instances");
-        Iterator<JsonElement> instanceIterator = instances.iterator();
-        while (instanceIterator.hasNext()) {
-            JsonObject instanceObj = (JsonObject) (instanceIterator.next());
-            if (instanceObj.get("user_id").getAsInt() != instance.getInstanceID())
-                continue;
+    // instanceObj.addProperty("total_number_of_labels", totalNumOfLabels);
+    // instanceObj.addProperty("unique_number_of_labels", uniqueNumOfLabels);
+    // instanceObj.addProperty("unique_number_of_users", uniqueNumOfUsers);
+    // instanceObj.addProperty("entropy", entropy);
 
-            instanceObj.addProperty("total_number_of_labels", totalNumOfLabels);
-            instanceObj.addProperty("unique_number_of_labels", uniqueNumOfLabels);
-            instanceObj.addProperty("unique_number_of_users", uniqueNumOfUsers);
-            instanceObj.addProperty("entropy", entropy);
+    // // most freq labels for instances -------------------------------
 
-            // guncellenecek
+    // HashMap<String, Long> parameters =
+    // instanceMetric.mostFreqLabelAndPerc(dataset.getAssignmentList());
+    // String key = ((String[]) parameters.keySet().toArray())[0];
+    // JsonObject mostFreqLabel = new JsonObject();
+    // mostFreqLabel.addProperty("label_name", key);
+    // mostFreqLabel.addProperty("frequency", parameters.get(key));
+    // instanceObj.add("most_freq_label", mostFreqLabel);
 
-        }
+    // // ----------------------------- most freq labels for instances
 
-    }
+    // // list labels for instances -------------------------------------
 
-    public void updateDataset(Dataset dataset, User user) {
-        float completeness = this.datasetMetrics.completenessPercentage();
-        int numberOfUsers = this.datasetMetrics.numberOfUserAssigned();
+    // JsonArray listLabels = (JsonArray) instanceObj.get("list_labels");
+    // HashMap<String, Long> labelsList =
+    // instanceMetric.listClassLabels(dataset.getAssignmentList());
+    // String[] keys = (String[]) parameters.keySet().toArray();
 
-        JsonObject reportObject = report.getJsonObject();
-        JsonArray datasets = (JsonArray) reportObject.get("datasets");
-        Iterator<JsonElement> datasetIterator = datasets.iterator();
-        while (datasetIterator.hasNext()) {
-            JsonObject datasetObj = (JsonObject) (datasetIterator.next());
-            if (datasetObj.get("dataset_id").getAsInt() != dataset.getDatasetID())
-                continue;
+    // int labelsListSize = keys.length;
 
-            datasetObj.addProperty("number_of_users", numberOfUsers);
-            datasetObj.addProperty("completeness", completeness);
+    // // flush labels list array
+    // Iterator<JsonElement> labelListIterator = listLabels.iterator();
+    // while (labelListIterator.hasNext()) {
+    // JsonObject labelListObj = (JsonObject) (labelListIterator.next());
+    // listLabels.remove(labelListObj);
+    // }
+    // // recreate labels list
+    // for (int i = 0; i < labelsListSize; i++) {
+    // JsonObject labelListObject = new JsonObject();
+    // labelListObject.addProperty("label_name", keys[i]);
+    // labelListObject.addProperty("percentage", labelsList.get(keys[i]));
+    // listLabels.add(labelListObject);
+    // }
 
-            // final instance labels part
-            JsonArray finalLabels = (JsonArray) reportObject.get("final_instance_labels");
-            ArrayList<String> finalLabelsList = datasetMetrics.distributionInstance();
-            int finalLabelsListSize = finalLabels.size();
+    // // -------------------------------------list labels for instances
 
-            // flush final labels array
-            Iterator<JsonElement> finalLabelsIterator = finalLabels.iterator();
-            while (finalLabelsIterator.hasNext()) {
-                JsonObject finalLabelObj = (JsonObject) (finalLabelsIterator.next());
-                finalLabels.remove(finalLabelObj);
-            }
-            // recreate final labels
-            for (int i = 0; i < finalLabelsListSize; i = i + 2) {
-                JsonObject finalLabelObj = new JsonObject();
-                finalLabelObj.addProperty("instance", finalLabelsList.get(i));
-                finalLabelObj.addProperty("percentage", Double.parseDouble(finalLabelsList.get(i + 1)));
-                finalLabels.add(finalLabelObj);
-            }
+    // }
 
-            UserMetrics userMetric = null;
-            for (int i = 0; i < userMetrics.size(); i++) {
-                if (userMetrics.get(i).getUser().getUserID() == user.getUserID()) {
-                    userMetric = userMetrics.get(i);
-                    break;
-                }
-            }
+    // }
 
-            // user completeness for datasets in report
-            // --------------------------------------------
+    // public void updateDataset(Dataset dataset, User user) {
+    // float completeness = this.datasetMetrics.completenessPercentage();
+    // int numberOfUsers = this.datasetMetrics.numberOfUserAssigned();
 
-            JsonArray userCompleteness = (JsonArray) datasetObj.get("user_completeness");
-            Iterator<JsonElement> userCompIterator = userCompleteness.iterator();
+    // JsonObject reportObject = report.getJsonObject();
+    // JsonArray datasets = (JsonArray) reportObject.get("datasets");
+    // Iterator<JsonElement> datasetIterator = datasets.iterator();
+    // while (datasetIterator.hasNext()) {
+    // JsonObject datasetObj = (JsonObject) (datasetIterator.next());
+    // if (datasetObj.get("dataset_id").getAsInt() != dataset.getDatasetID())
+    // continue;
 
-            if (!userCompIterator.hasNext()) {
-                for (int i = 0; i < userMetrics.size(); i++) {
-                    JsonObject completenessObject = new JsonObject();
-                    completenessObject.addProperty("user_id", userMetrics.get(i).getUser().getUserID());
-                    completenessObject.addProperty("percentage", 0);
-                    userCompleteness.add(completenessObject);
-                }
-            }
+    // datasetObj.addProperty("number_of_users", numberOfUsers);
+    // datasetObj.addProperty("completeness", completeness);
 
-            while (userCompIterator.hasNext()) {
-                JsonObject completenessObj = (JsonObject) (userCompIterator.next());
-                if (completenessObj.get("user_id").getAsInt() == user.getUserID()) {
-                    completenessObj.addProperty("percentage",
-                            userMetric.datasetCompletenessPer(this.report.getJsonObject()));
-                }
-            }
+    // // final instance labels part
+    // JsonArray finalLabels = (JsonArray) datasetObj.get("final_instance_labels");
+    // ArrayList<String> finalLabelsList = datasetMetrics.distributionInstance();
+    // int finalLabelsListSize = finalLabels.size();
 
-            // -------------------------------------------- user completeness for datasets
-            // in report
+    // // flush final labels array
+    // Iterator<JsonElement> finalLabelsIterator = finalLabels.iterator();
+    // while (finalLabelsIterator.hasNext()) {
+    // JsonObject finalLabelObj = (JsonObject) (finalLabelsIterator.next());
+    // finalLabels.remove(finalLabelObj);
+    // }
+    // // recreate final labels
+    // for (int i = 0; i < finalLabelsListSize; i = i + 2) {
+    // JsonObject finalLabelObj = new JsonObject();
+    // finalLabelObj.addProperty("instance", finalLabelsList.get(i));
+    // finalLabelObj.addProperty("percentage",
+    // Double.parseDouble(finalLabelsList.get(i + 1)));
+    // finalLabels.add(finalLabelObj);
+    // }
 
-            // user consistency for datasets in report ----------------------------------
+    // // unique number of instances for each label -------------------
 
-            JsonArray userConsistency = (JsonArray) datasetObj.get("user_consistency");
-            Iterator<JsonElement> userConsIterator = userConsistency.iterator();
+    // JsonArray uniqueInstances = (JsonArray)
+    // datasetObj.get("unique_instance_number_for_each_label");
 
-            if (!userConsIterator.hasNext()) {
-                for (int i = 0; i < userMetrics.size(); i++) {
-                    JsonObject consistencyObject = new JsonObject();
-                    consistencyObject.addProperty("user_id", userMetrics.get(i).getUser().getUserID());
-                    consistencyObject.addProperty("consistency_percentages", 0);
-                    userCompleteness.add(consistencyObject);
-                }
-            }
+    // // flush unique instance labels array
+    // Iterator<JsonElement> uniqueInstanceIterator = uniqueInstances.iterator();
+    // while (uniqueInstanceIterator.hasNext()) {
+    // JsonObject labelObj = (JsonObject) (uniqueInstanceIterator.next());
+    // uniqueInstances.remove(labelObj);
+    // }
 
-            while (userConsIterator.hasNext()) {
-                JsonObject consistencyObj = (JsonObject) (userConsIterator.next());
-                if (consistencyObj.get("user_id").getAsInt() == user.getUserID()) {
-                    JsonArray users = (JsonArray) reportObject.get("users");
-                    Iterator<JsonElement> userIterator = users.iterator();
-                    while (userIterator.hasNext()) {
-                        JsonObject userObj = (JsonObject) (userIterator.next());
-                        if (userObj.get("user_id").getAsInt() == user.getUserID()) {
-                            consistencyObj.addProperty("consistency_percentages",
-                                    userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
-                                            userObj.get("consistency_percentages").getAsDouble()));
-                        }
-                    }
+    // ArrayList<Label> labels = datasetMetrics.getDataset().getClassLabels();
+    // for (int j = 0; j < labels.size(); j++) {
+    // JsonObject labelObj = new JsonObject();
+    // int number = datasetMetrics.numOfUniqueInstance(labels.get(j));
+    // labelObj.addProperty("label_id", labels.get(j).getLabelID());
+    // labelObj.addProperty("unique_instance_number", number);
+    // uniqueInstances.add(labelObj);
+    // }
 
-                }
-            }
+    // // --------------------------- unique number of instances for each label
 
-            // ---------------------------------- user consistency for datasets in report
+    // // find current user's userMetric
+    // UserMetrics userMetric = null;
+    // for (int i = 0; i < userMetrics.size(); i++) {
+    // if (userMetrics.get(i).getUser().getUserID() == user.getUserID()) {
+    // userMetric = userMetrics.get(i);
+    // break;
+    // }
+    // }
 
-        }
+    // // user completeness for datasets in report
+    // // --------------------------------------------
 
-    }
+    // JsonArray userCompleteness = (JsonArray) datasetObj.get("user_completeness");
+    // Iterator<JsonElement> userCompIterator = userCompleteness.iterator();
 
-    public void adduserMetrics(UserMetrics userMetric) {
-        this.userMetrics.add(userMetric);
-    }
+    // if (!userCompIterator.hasNext()) {
+    // for (int i = 0; i < userMetrics.size(); i++) {
+    // JsonObject completenessObject = new JsonObject();
+    // completenessObject.addProperty("user_id",
+    // userMetrics.get(i).getUser().getUserID());
+    // completenessObject.addProperty("percentage", 0);
+    // userCompleteness.add(completenessObject);
+    // }
+    // }
 
-    public ArrayList<UserMetrics> getUserMetrics() {
-        return this.userMetrics;
-    }
+    // boolean isFound = false;
+    // while (userCompIterator.hasNext()) {
+    // JsonObject completenessObj = (JsonObject) (userCompIterator.next());
+    // if (completenessObj.get("user_id").getAsInt() == user.getUserID()) {
+    // completenessObj.addProperty("percentage",
+    // userMetric.datasetCompletenessPer(this.report.getJsonObject()));
+    // isFound = true;
+    // }
+    // }
+    // if (!isFound) {
+    // JsonObject completenessObject = new JsonObject();
+    // completenessObject.addProperty("user_id", user.getUserID());
+    // completenessObject.addProperty("percentage",
+    // userMetric.datasetCompletenessPer(this.report.getJsonObject()));
+    // userCompleteness.add(completenessObject);
+    // }
 
-    public DatasetMetrics getDatasetMetrics() {
-        return this.datasetMetrics;
-    }
+    // // -------------------------------------------- user completeness for
+    // datasets
+    // // in report
 
-    public ArrayList<InstanceMetrics> getInstanceMetrics() {
-        return this.instanceMetrics;
-    }
+    // // user consistency for datasets in report ----------------------------------
 
-    public void setUserMetrics(ArrayList<UserMetrics> userMetrics) {
-        this.userMetrics = userMetrics;
-    }
+    // JsonArray userConsistency = (JsonArray) datasetObj.get("user_consistency");
+    // Iterator<JsonElement> userConsIterator = userConsistency.iterator();
 
-    public void setDatasetMetrics(DatasetMetrics datasetMetrics) {
-        this.datasetMetrics = datasetMetrics;
-    }
+    // if (!userConsIterator.hasNext()) {
+    // for (int i = 0; i < userMetrics.size(); i++) {
+    // JsonObject consistencyObject = new JsonObject();
+    // consistencyObject.addProperty("user_id",
+    // userMetrics.get(i).getUser().getUserID());
+    // consistencyObject.addProperty("consistency_percentages", 0);
+    // userConsistency.add(consistencyObject);
+    // }
+    // }
 
-    public void setInstanceMetrics(ArrayList<InstanceMetrics> instanceMetrics) {
-        this.instanceMetrics = instanceMetrics;
-    }
+    // isFound = false;
+    // while (userConsIterator.hasNext()) {
+    // JsonObject consistencyObj = (JsonObject) (userConsIterator.next());
+    // if (consistencyObj.get("user_id").getAsInt() == user.getUserID()) {
+    // JsonArray users = (JsonArray) reportObject.get("users");
+    // Iterator<JsonElement> userIterator = users.iterator();
+    // while (userIterator.hasNext()) {
+    // JsonObject userObj = (JsonObject) (userIterator.next());
+    // if (userObj.get("user_id").getAsInt() == user.getUserID()) {
+    // consistencyObj.addProperty("consistency_percentages",
+    // userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
+    // userObj.get("consistency_percentages").getAsDouble()));
+    // }
+    // }
+    // isFound = true;
+    // }
+    // }
+    // if (!isFound) {
+    // JsonObject consistencyObject = new JsonObject();
+
+    // JsonArray users = (JsonArray) reportObject.get("users");
+    // Iterator<JsonElement> userIterator = users.iterator();
+    // while (userIterator.hasNext()) {
+    // JsonObject userObj = (JsonObject) (userIterator.next());
+    // if (userObj.get("user_id").getAsInt() == user.getUserID()) {
+    // consistencyObject.addProperty("user_id", user.getUserID());
+    // consistencyObject.addProperty("consistency_percentages",
+    // userMetric.consistencyPercentagesForUser(dataset.getAssignmentList(),
+    // userObj.get("consistency_percentages").getAsDouble()));
+    // }
+    // }
+    // userConsistency.add(consistencyObject);
+    // }
+
+    // // ---------------------------------- user consistency for datasets in report
+
+    // }
+
+    // }
 
     public Dataset getDataset() {
         return this.dataset;
@@ -270,5 +344,23 @@ public class ReportingMechanism {
 
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
+        this.datasetReportMechanism = new DatasetReportMechanism(dataset);
     }
+
+    public Report getReport() {
+        return this.report;
+    }
+
+    public UserReportMechanism getUserReportMechanism() {
+        return this.userReportMechanism;
+    }
+
+    public InstanceReportMechanism getInstanceReportMechanism() {
+        return this.instanceReportMechanism;
+    }
+
+    public DatasetReportMechanism getDatasetReportMechanism() {
+        return this.datasetReportMechanism;
+    }
+
 }
