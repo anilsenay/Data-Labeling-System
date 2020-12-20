@@ -146,15 +146,23 @@ public class ReportingMechanism {
             datasetObj.addProperty("number_of_users", numberOfUsers);
             datasetObj.addProperty("completeness", completeness);
 
-            // final instace labels part
-            JsonArray finalLabels = ()reportObject.get("final_instance_labels");
-            int finalLabelsListSize = datasetMetrics.distributionInstance().size();
-            for (int i = 0; i < finalLabelsListSize; i++) {
-                JsonObject finalLabelObj = new JsonObject();
-                finalLabelObj.addProperty("instance", i);
-                finalLabelObj.addProperty("percentage", datasetMetrics.distributionInstance().get(i));
-                finalLabels.add(finalLabelObj);
+            // final instance labels part
+            JsonArray finalLabels = (JsonArray) reportObject.get("final_instance_labels");
+            ArrayList<String> finalLabelsList = datasetMetrics.distributionInstance();
+            int finalLabelsListSize = finalLabels.size();
 
+            // flush final labels array
+            Iterator<JsonElement> finalLabelsIterator = finalLabels.iterator();
+            while (finalLabelsIterator.hasNext()) {
+                JsonObject finalLabelObj = (JsonObject) (finalLabelsIterator.next());
+                finalLabels.remove(finalLabelObj);
+            }
+            // recreate final labels
+            for (int i = 0; i < finalLabelsListSize; i = i + 2) {
+                JsonObject finalLabelObj = new JsonObject();
+                finalLabelObj.addProperty("instance", finalLabelsList.get(i));
+                finalLabelObj.addProperty("percentage", Double.parseDouble(finalLabelsList.get(i + 1)));
+                finalLabels.add(finalLabelObj);
             }
 
             UserMetrics userMetric = null;

@@ -4,8 +4,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import jdk.jfr.Frequency;
-
 public class InstanceMetrics {
 
     private Instance instance;
@@ -95,6 +93,7 @@ public class InstanceMetrics {
                 }
             }
         }
+        
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
 
         for (int j = 0; j < labels.size(); j++) {
@@ -128,5 +127,4 @@ public class InstanceMetrics {
     public Instance getInstance() {
         return this.instance;
     }
-
 }
