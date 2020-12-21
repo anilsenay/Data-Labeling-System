@@ -1,21 +1,18 @@
-import java.util.ArrayList;
-import java.util.Date;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.File;
-import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+import java.io.File;
 
 // Gson package is used to print output only
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-// For reading json input and creating objects, this package is used.
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.google.gson.JsonParser;
 
 /* DataLabelingSystem class for creating dataset with given instance, 
    user and label from input.json and config.json file
@@ -27,13 +24,20 @@ public class DataLabelingSystem {
 	private Logger logger = Logger.getInstance();
 	private String inputName, outputName;
 	private DatasetLoader datasetLoader = new DatasetLoader();
+	private ReportingMechanism reportingMechanism = ReportingMechanism.getInstance();
 
 	public void handleDataset() {
 		File outputFile = new File(this.outputName);
 		if (outputFile.exists()) { // dataset output u varsa
 			datasetLoader.loadDataset(this);
-		} else
+			// // restore final labels after loading dataset
+			// InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(),
+			// this.dataset.getAssignmentList());
+		} else {
 			datasetLoader.createDataset(this);
+		}
+		reportingMechanism.setDataset(this.dataset);
+		reportingMechanism.importReport(dataset, userList);
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -42,53 +46,55 @@ public class DataLabelingSystem {
 		ArrayList<Integer> userIDs = new ArrayList<Integer>();
 
 		try { // Read and parse.
-			JSONParser parser = new JSONParser();
-
-			Object obj = parser.parse(new FileReader(fileName));
-
-			JSONObject jsonObject = (JSONObject) obj;
+			JsonParser parser = new JsonParser();
+			JsonElement jsonElement = parser.parse(new FileReader(fileName));
+			JsonObject jsonObject = jsonElement.getAsJsonObject();
 
 			// Get users from input file and store them to the JSON Array.
-			JSONArray userObjects = (JSONArray) jsonObject.get("users");
+			JsonArray userObjects = (JsonArray) jsonObject.get("users");
 
-			int currentDatasetID = ((Long) jsonObject.get("currentDatasetId")).intValue();
-			JSONArray datasets = (JSONArray) jsonObject.get("datasets");
-			Iterator<JSONObject> datasetIterator = datasets.iterator();
+			int currentDatasetID = jsonObject.get("currentDatasetId").getAsInt();
+			JsonArray datasets = (JsonArray) jsonObject.get("datasets");
+			Iterator<JsonElement> datasetIterator = datasets.iterator();
 
 			while (datasetIterator.hasNext()) {
 
-				JSONObject datasetObj = (datasetIterator.next());
-				int datasetId = ((Long) datasetObj.get("dataset_id")).intValue();
+				JsonObject datasetObj = (JsonObject) (datasetIterator.next());
+				int datasetId = datasetObj.get("dataset_id").getAsInt();
 				if (datasetId != currentDatasetID)
 					continue;
 
-				String datasetName = (String) datasetObj.get("dataset_name");
-				String datasetPath = (String) datasetObj.get("path");
+				String datasetName = datasetObj.get("dataset_name").getAsString();
+				String datasetPath = datasetObj.get("path").getAsString();
 				this.inputName = datasetPath;
 				this.outputName = datasetId + "_" + datasetName + "_output.json";
 
-				JSONArray users = (JSONArray) datasetObj.get("users");
-				Iterator<Long> usersIterator = users.iterator();
+				JsonArray users = (JsonArray) datasetObj.get("users");
+				Iterator<JsonElement> usersIterator = users.iterator();
 				while (usersIterator.hasNext()) {
-					Long userId = usersIterator.next();
+					Long userId = usersIterator.next().getAsLong();
 					userIDs.add(userId.intValue());
 				}
 			}
 
 			// Get users from Iterator Object and store them to JSON object.
-			Iterator<JSONObject> userListIterator = userObjects.iterator();
+			Iterator<JsonElement> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
 
-				JSONObject userObj = (userListIterator.next());
-				int userID = ((Long) userObj.get("user id")).intValue();
+				JsonObject userObj = (JsonObject) (userListIterator.next());
+				int userID = userObj.get("user id").getAsInt();
 				if (!userIDs.contains(userID))
 					continue;
-				double consistencyCheckProbability = ((Double) userObj.get("ConsistencyCheckProbability")).doubleValue();
-				String userName = (String) userObj.get("user name");
-				String userType = (String) userObj.get("user type");
+				double consistencyCheckProbability = userObj.get("ConsistencyCheckProbability").getAsDouble();
+
+				String userName = userObj.get("user name").getAsString();
+				String userType = userObj.get("user type").getAsString();
 
 				// Create users from given parameters.
-				userList.add(new RandomBot(userName, userID, userType, consistencyCheckProbability));
+				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
+				userList.add(user);
+				UserPerformance up = new UserPerformance(user);
+				up.updateAssignedDatasets(datasetIterator);
 			}
 
 		} catch (Exception e) {

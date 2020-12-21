@@ -6,6 +6,7 @@ public class Instance {
 	// The variables content, instanceID are created.
 	private String content;
 	private int instanceID;
+	private Label finalLabel;
 
 	// No arg constructor.
 	public Instance() {
@@ -16,15 +17,19 @@ public class Instance {
 	public Instance(String content, int instanceID) {
 		this.content = content;
 		this.instanceID = instanceID;
-		
-        // Print the created instance to the log file.
+
+		// Print the created instance to the log file.
 		Logger.getInstance().print(new Date(),
 				"[Instance] INFO instance: created \"" + content + "\" with id: " + instanceID);
 	}
-	
+
 	// Getter and setter methods for Instance class.
 	public String getContent() {
 		return this.content;
+	}
+
+	public Label getfinalLabel() {
+		return this.finalLabel;
 	}
 
 	public int getInstanceID() {
@@ -37,6 +42,10 @@ public class Instance {
 
 	public void setInstanceID(int instanceID) {
 		this.instanceID = instanceID;
+	}
+
+	public void setfinalLabel(Label finalLabel) {
+		this.finalLabel = finalLabel;
 	}
 
 }

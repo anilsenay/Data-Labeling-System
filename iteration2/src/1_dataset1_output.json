@@ -1,0 +1,875 @@
+{
+  "dataset id": 1,
+  "dataset name": "Sentiment Dataset",
+  "maximum number of labels per instance": 1,
+  "class labels": [
+    {
+      "label id": 1,
+      "label text": "Positive"
+    },
+    {
+      "label id": 2,
+      "label text": "Negative"
+    },
+    {
+      "label id": 3,
+      "label text": "Notr"
+    }
+  ],
+  "instances": [
+    {
+      "id": 1,
+      "instance": "aldım eve gidince kutusundan çıkardım hasarlıydı"
+    },
+    {
+      "id": 2,
+      "instance": "yöneticisi bizzat ilgilenerek gerekli özverili örneği göstererek güzel teşekkürler"
+    },
+    {
+      "id": 3,
+      "instance": "mesela kamerası aldık yoktu"
+    },
+    {
+      "id": 4,
+      "instance": "siteniz çalışmıyor kaç gündür"
+    },
+    {
+      "id": 5,
+      "instance": "şimdilik memnun kaldım umarım kararım değişmez"
+    },
+    {
+      "id": 6,
+      "instance": "durduğu yerde sessiz moduna geçmesi başta fazla giden bataryasının ayda kapasitesinin ciddi anlamda düşmesi dışında fiyatı düşünüldüğünde iyi"
+    },
+    {
+      "id": 7,
+      "instance": "filmin büyük artısı uzun zamandır görmediğimiz oyunculuğunu döktürmesini sağlamasıydı"
+    },
+    {
+      "id": 8,
+      "instance": "şarjı hemen bitiriyor"
+    },
+    {
+      "id": 9,
+      "instance": "in yeni kampanyasi cok basarili"
+    },
+    {
+      "id": 10,
+      "instance": "kullanışlı fiyata alınabilecek güzel düsünmeden alabilirsiniz"
+    }
+  ],
+  "class label assignments": [
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:33.821"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:33.941"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:33.958"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:33.974"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.13"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.29"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.61"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.71"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.118"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.146"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.150"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.197"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.206"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.249"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.278"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.316"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.375"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.418"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 22:48:34.444"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 22:48:34.449"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.195"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.347"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.374"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.429"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.471"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.486"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.548"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.656"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.663"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.707"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.713"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.739"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.763"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.794"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.824"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.830"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.860"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:11.894"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:42:11.993"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:42:12.54"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.268"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.387"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.412"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.449"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.515"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.560"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.582"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.640"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.648"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.657"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.710"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.747"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.753"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.826"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.852"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.913"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.980"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.987"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:47.26"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:47.54"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.268"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.387"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.412"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.449"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.515"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.560"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.582"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.640"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.648"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.657"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.710"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.747"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.753"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.826"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.852"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.913"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:46.980"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:46.987"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:44:47.26"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:44:47.54"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.568"
+    },
+    {
+      "instance id": 1,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.701"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.714"
+    },
+    {
+      "instance id": 2,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.768"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.818"
+    },
+    {
+      "instance id": 3,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.844"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.861"
+    },
+    {
+      "instance id": 4,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.890"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.909"
+    },
+    {
+      "instance id": 5,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.925"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:35.961"
+    },
+    {
+      "instance id": 6,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:35.987"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:36.11"
+    },
+    {
+      "instance id": 7,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:36.34"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        3
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:36.58"
+    },
+    {
+      "instance id": 8,
+      "class label ids": [
+        3
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:36.64"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        2
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:36.78"
+    },
+    {
+      "instance id": 9,
+      "class label ids": [
+        2
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:36.133"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        1
+      ],
+      "user id": 1,
+      "datetime": "12/20/2020, 23:46:36.168"
+    },
+    {
+      "instance id": 10,
+      "class label ids": [
+        1
+      ],
+      "user id": 2,
+      "datetime": "12/20/2020, 23:46:36.226"
+    }
+  ],
+  "users": [
+    {
+      "user id": 1,
+      "user name": "RandomLabelingMechanism1",
+      "user type": "RandomBot"
+    },
+    {
+      "user id": 2,
+      "user name": "RandomLabelingMechanism2",
+      "user type": "RandomBot"
+    }
+  ]
+}

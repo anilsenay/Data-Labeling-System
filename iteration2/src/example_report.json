@@ -1,0 +1,158 @@
+{
+  "users": [
+    {
+      "user_id": 1,
+      "user_name": "blabla",
+      "number_of_dataset": 3,
+      "datasets_status": [
+        {
+          "dataset_id": 1,
+          "status": 0
+        },
+        {
+          "dataset_id": 2,
+          "status": 0
+        },
+        {
+          "dataset_id": 3,
+          "status": 20
+        }
+      ],
+      "labeled_instances": 12,
+      "unique_labeled_instances": 5,
+      "consistency_percentages": 60,
+      "avg_time": 22,
+      "std_dev": 0.5
+    },
+    {
+      "user_id": 2,
+      "user_name": "blabla",
+      "number_of_dataset": 3,
+      "datasets_status": [
+        {
+          "dataset_id": 1,
+          "status": 100
+        },
+        {
+          "dataset_id": 2,
+          "status": 50
+        },
+        {
+          "dataset_id": 3,
+          "status": 20
+        }
+      ],
+      "labeled_instances": 12,
+      "unique_labeled_instances": 5,
+      "consistency_percentages": 60,
+      "avg_time": 22,
+      "std_dev": 0.5
+    }
+  ],
+  "instances": [
+    {
+      "instance_id": 1,
+      "instance_name": "lorem ipsum",
+      "total_number_of_labels": 10,
+      "unique_number_of_labels": 3,
+      "unique_number_of_users": 3,
+      "most_freq_label": {
+        "label_name": "lorem ipsum1",
+        "percentage": 20
+      },
+      "list_labels": [
+        {
+          "label_name": "lorem ipsum1",
+          "percentage": 100
+        },
+        {
+          "label_name": "lorem ipsum2",
+          "percentage": 50
+        },
+        {
+          "label_name": "lorem ipsum3",
+          "percentage": 20
+        }
+      ],
+      "entropy": 0.8
+    },
+    {
+      "instance_id": 2,
+      "instance_name": "lorem ipsum222",
+      "total_number_of_labels": 10,
+      "unique_number_of_labels": 3,
+      "unique_number_of_users": 3,
+      "most_freq_label": {
+        "label_name": "lorem ipsum1",
+        "percentage": 20
+      },
+      "list_labels": [
+        {
+          "label_name": "lorem ipsum1",
+          "percentage": 100
+        },
+        {
+          "label_name": "lorem ipsum2",
+          "percentage": 50
+        },
+        {
+          "label_name": "lorem ipsum3",
+          "percentage": 20
+        }
+      ],
+      "entropy": 0.8
+    }
+  ],
+  "datasets": [
+    {
+      "dataset_id": 1,
+      "dataset_name": "lorem ipsum",
+      "completeness": 70,
+      "final_instance_labels": [
+        {
+          "instance": "lorem ipsum1",
+          "percentage": 20
+        },
+        {
+          "instance": "lorem ipsum2",
+          "percentage": 80
+        }
+      ],
+      "unique_instance_number_for_each_label": [
+        {
+          "label_id": 1,
+          "unique_instance_number": 4
+        },
+        {
+          "label_id": 2,
+          "unique_instance_number": 0
+        },
+        {
+          "label_id": 3,
+          "unique_instance_number": 1
+        }
+      ],
+      "number_of_users": 3,
+      "user_completeness": [
+        {
+          "user_id": 1,
+          "percentage": 20
+        },
+        {
+          "user_id": 2,
+          "percentage": 80
+        }
+      ],
+      "user_consistency": [
+        {
+          "user_id": 1,
+          "consistency_percentages": 50
+        },
+        {
+          "user_id": 2,
+          "consistency_percentages": 30
+        }
+      ]
+    }
+  ]
+}
