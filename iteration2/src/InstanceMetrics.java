@@ -77,9 +77,9 @@ public class InstanceMetrics {
         Long frequency = occurrences.entrySet().stream()
                 .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getValue();
 
-        System.out.println("dataset id \t" + ReportingMechanism.getInstance().getDataset().getDatasetID());
         int size = ReportingMechanism.getInstance().getDataset().getClassLabels().size();
         Label finalLabel;
+
         for (int j = 0; j < size; j++) {
             if (label.equals(ReportingMechanism.getInstance().getDataset().getClassLabels().get(j).getLabelName())) {
                 finalLabel = ReportingMechanism.getInstance().getDataset().getClassLabels().get(j);
@@ -87,6 +87,7 @@ public class InstanceMetrics {
                 break;
             }
         }
+
         Long percentage = ((frequency / labels.size()) * 100);
         result.put(label, percentage);
         return result;

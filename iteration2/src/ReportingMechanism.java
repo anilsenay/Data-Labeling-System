@@ -30,6 +30,7 @@ public class ReportingMechanism {
         this.report.writeReport();
     }
 
+    // Getters & Setters
     public Dataset getDataset() {
         return this.dataset;
     }

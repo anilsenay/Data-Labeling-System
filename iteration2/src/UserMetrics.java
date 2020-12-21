@@ -142,60 +142,44 @@ public class UserMetrics {
         return 1;
     }
 
-    // A-5
     public double consistencyPercentagesForUser(User user, ArrayList<Assignment> assignmentList,
             double prevPercentage) {
         ArrayList<Assignment> thisUsersAssignments = new ArrayList<Assignment>();
-        HashSet<Integer> uniqueAssignedInstances = new HashSet<Integer>();
-        ArrayList<ArrayList<Integer>> labelsOfEachInstance = new ArrayList<ArrayList<Integer>>();
-        double newPercentage = prevPercentage;
-        int countUserAssignments = 0;
+        ArrayList<Integer> uniqueAssignedInstanceIDs = new ArrayList<Integer>();
+        ArrayList<Integer> assignedLabelIDs = new ArrayList<Integer>();
+        double total = 0;
+        double newPercentage = 0;
 
-        for (int i = 0; i < assignmentList.size(); i++) {
+        int size = assignmentList.size();
+        for (int i = 0; i < size; i++) {
             if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 thisUsersAssignments.add(assignmentList.get(i));
-                countUserAssignments++;
             }
-
-        }
-        for (int i = 0; i < thisUsersAssignments.size(); i++) {
-            uniqueAssignedInstances.add(thisUsersAssignments.get(i).getInstance().getInstanceID());
         }
 
-        Integer[] uniqueAssignedInstancesArray = (uniqueAssignedInstances
-                .toArray(new Integer[uniqueAssignedInstances.size()]));
-        Arrays.sort(uniqueAssignedInstancesArray);
-        for (int j2 = 0; j2 < uniqueAssignedInstancesArray.length; j2++) {
-            labelsOfEachInstance.add(new ArrayList<Integer>());
+        size = thisUsersAssignments.size();
+        for (int i = 0; i < size; i++) {
+            if (!uniqueAssignedInstanceIDs.contains(assignmentList.get(i).getInstance().getInstanceID())) {
+                uniqueAssignedInstanceIDs.add(assignmentList.get(i).getInstance().getInstanceID());
+            }
         }
 
-        for (int i = 0; i < uniqueAssignedInstances.size(); i++) {
+        for (int i = 0; i < uniqueAssignedInstanceIDs.size(); i++) {
             for (int j = 0; j < thisUsersAssignments.size(); j++) {
-                if (uniqueAssignedInstancesArray[i] == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
-
+                if (uniqueAssignedInstanceIDs.get(i) == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
                     for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
-                        labelsOfEachInstance.get(i)
-                                .add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
-
+                        assignedLabelIDs.add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
                     }
                 }
             }
+
+            Integer[] assignedLabelIDsArray = assignedLabelIDs.toArray(new Integer[assignedLabelIDs.size()]);
+            total += (1.0 * mostfrequent(assignedLabelIDsArray)) / (1.0 * uniqueAssignedInstanceIDs.size());
+            assignedLabelIDs.clear();
+
         }
-
-        double consistencyPerInstance = 0.0;
-        for (int k = 0; k < labelsOfEachInstance.size(); k++) {
-            double mostFreq = ((double) mostfrequent(
-                    labelsOfEachInstance.get(k).toArray(new Integer[labelsOfEachInstance.get(k).size()])));
-            consistencyPerInstance = mostFreq / labelsOfEachInstance.get(k).size();
-
-            if (prevPercentage != 0)
-                newPercentage = ((newPercentage * (countUserAssignments + 1)) + consistencyPerInstance) / (k + 2);
-            else
-                newPercentage = ((newPercentage * (countUserAssignments)) + consistencyPerInstance) / (k + 1);
-        }
-        BigDecimal bd = new BigDecimal(newPercentage).setScale(2, RoundingMode.HALF_UP);
-
-        return bd.doubleValue();
+        newPercentage = (1.0 * total) / uniqueAssignedInstanceIDs.size();
+        return newPercentage * 100.0;
     }
 
     // A-6
@@ -243,7 +227,6 @@ public class UserMetrics {
     }
 
     private int mostfrequent(Integer array[]) {
-
         // Insert all elements in hash
         Map<Integer, Integer> hashmap = new HashMap<Integer, Integer>();
 

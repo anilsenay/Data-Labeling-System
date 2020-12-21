@@ -65,8 +65,10 @@ public class DatasetMetrics {
             if (i % 2 == 0)
                 continue;
 
-            float rate = (float) (1.0 * Integer.parseInt(result.get(i)) / instanceListSize);
-            result.set(i, String.valueOf(rate));
+            float rate = (float) ((1.0 * Integer.parseInt(result.get(i)) / instanceListSize));
+
+            result.set(i, String.valueOf((double) ((int) (rate * 10000)) / 100.0));
+
         }
 
         return result;
