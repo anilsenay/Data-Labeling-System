@@ -40,11 +40,11 @@ public class DatasetReportMechanism {
             int finalLabelsListSize = finalLabels.size();
 
             // flush final labels array
-            for (int z = 0; z < finalLabels.size(); z++) {
+            for (int z = finalLabels.size() - 1; z >= 0; z--) {
                 finalLabels.remove(z);
             }
             // recreate final labels
-            for (int i = 0; i < finalLabelsListSize; i = i + 2) {
+            for (int i = 0; i < finalLabelsList.size(); i = i + 2) {
                 JsonObject finalLabelObj = new JsonObject();
                 finalLabelObj.addProperty("instance", finalLabelsList.get(i));
                 finalLabelObj.addProperty("percentage", Double.parseDouble(finalLabelsList.get(i + 1)));
@@ -56,7 +56,7 @@ public class DatasetReportMechanism {
             JsonArray uniqueInstances = (JsonArray) datasetObj.get("unique_instance_number_for_each_label");
 
             // flush unique instance labels array
-            for (int z = 0; z < uniqueInstances.size(); z++) {
+            for (int z = uniqueInstances.size() - 1; z >= 0; z--) {
                 uniqueInstances.remove(z);
             }
 
