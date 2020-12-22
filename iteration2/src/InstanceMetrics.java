@@ -129,11 +129,16 @@ public class InstanceMetrics {
             }
         }
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
-        // occurrences.forEach((key, value) -> System.out.println(key + ":" + value));
-
         double result = 0;
+        ArrayList<String> uniquelabelList = new ArrayList<String>();
         for (int j = 0; j < labels.size(); j++) {
-            Long frequency = occurrences.get(labels.get(j));
+            if (uniquelabelList.contains(labels.get(j))) {
+                continue;
+            }
+
+            uniquelabelList.add(labels.get(j));
+
+            long frequency = occurrences.get(labels.get(j));
 
             if (numberOfUniqueLabelAssignment(instance, assignmentList) == 1) {
                 return -1;
@@ -142,6 +147,7 @@ public class InstanceMetrics {
             result -= (((1.0 * frequency) / (1.0 * labels.size()))
                     * (1.0 * (Math.log(1.0 * ((1.0 * frequency) / (1.0 * labels.size()))))
                             / (1.0 * Math.log(1.0 * numberOfUniqueLabelAssignment(instance, assignmentList)))));
+
         }
 
         return result;
