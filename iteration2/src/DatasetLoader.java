@@ -34,6 +34,7 @@ public class DatasetLoader {
       }
       // Create dataset from given parameters.
       dataset = new Dataset(datasetId, datasetName, maxNumberPerInstance);
+      new DatasetPerformance(dataset);
 
       // Get labels and instances from input file to the JSON Array.
       JSONArray classLabelList = (JSONArray) jsonObject.get("class labels");
@@ -52,7 +53,9 @@ public class DatasetLoader {
         int instanceID = ((Long) instanceObj.get("id")).intValue();
 
         // Create instance from given parameters.
-        dataset.addInstance(new Instance(instanceText, instanceID));
+        Instance instance = new Instance(instanceText, instanceID);
+        dataset.addInstance(instance);
+        new InstancePerformance(instance);
       }
 
       // Get labels from Iterator Object and store them to JSON object.
@@ -74,13 +77,12 @@ public class DatasetLoader {
   }
 
   // Load dataset from output file.
-  public void loadDataset(DataLabelingSystem dls) {
+  public Dataset loadDataset(String fileName, DataLabelingSystem dls, Dataset ds) {
     Dataset dataset = null;
-
     try { // Read and parse the output file.
       JSONParser parser = new JSONParser();
 
-      Object obj = parser.parse(new FileReader(dls.getOutputName()));
+      Object obj = parser.parse(new FileReader(fileName));
 
       JSONObject jsonObject = (JSONObject) obj;
 
@@ -97,6 +99,8 @@ public class DatasetLoader {
       }
       // Create dataset from given parameters.
       dataset = new Dataset(datasetId, datasetName, maxNumberPerInstance);
+      if (fileName == dls.getOutputName())
+        new DatasetPerformance(dataset);
 
       // Get labels and instances from input file to the JSON Array.
       JSONArray classLabelList = (JSONArray) jsonObject.get("class labels");
@@ -108,8 +112,6 @@ public class DatasetLoader {
       Iterator<JSONObject> labelIterator = classLabelList.iterator();
       Iterator<JSONObject> assignmentIterator = assignmentList.iterator();
 
-      System.out.println("1");
-
       // Get instances from Iterator Object and store them to JSON object.
       while (instanceIterator.hasNext()) {
         JSONObject instanceObj = (instanceIterator.next());
@@ -117,9 +119,11 @@ public class DatasetLoader {
         int instanceID = ((Long) instanceObj.get("id")).intValue();
 
         // Create instance from given parameters.
-        dataset.addInstance(new Instance(instanceText, instanceID));
+        Instance instance = new Instance(instanceText, instanceID);
+        dataset.addInstance(instance);
+        if (fileName == dls.getOutputName())
+          new InstancePerformance(instance);
       }
-      System.out.println("2");
 
       // Get labels from Iterator Object and store them to JSON object.
       while (labelIterator.hasNext()) {
@@ -130,15 +134,12 @@ public class DatasetLoader {
         // Create labels from given parameters.
         dataset.addLabel(new Label(labelID, labelText));
       }
-      System.out.println("3");
-
       // Restore assignments
       while (assignmentIterator.hasNext()) {
         JSONObject assignmentObj = (assignmentIterator.next());
         int instanceId = ((Long) assignmentObj.get("instance id")).intValue();
         int userId = ((Long) assignmentObj.get("user id")).intValue();
         String date = (String) assignmentObj.get("datetime");
-
         // find user
         User user = null;
         int userListSize = dls.getUserList().size();
@@ -171,11 +172,10 @@ public class DatasetLoader {
         int labelsSize = dataset.getClassLabels().size();
         for (int i = 0; i < labelIdsSize; i++) {
           for (int j = 0; j < labelsSize; j++) {
-            Label label = null;
             if (labelIds.get(i) == dataset.getClassLabels().get(j).getLabelID()) {
-              label = dataset.getClassLabels().get(j);
+              Label label = dataset.getClassLabels().get(j);
+              assignment.addLabel(label);
             }
-            assignment.addLabel(label);
           }
         }
 
@@ -188,6 +188,7 @@ public class DatasetLoader {
       System.exit(0);
     }
 
-    dls.setDataset(dataset);
+    ds = (dataset);
+    return dataset;
   }
 }
