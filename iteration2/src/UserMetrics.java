@@ -142,44 +142,52 @@ public class UserMetrics {
         return 1;
     }
 
-    public double consistencyPercentagesForUser(User user, ArrayList<Assignment> assignmentList,
-            double prevPercentage) {
-        ArrayList<Assignment> thisUsersAssignments = new ArrayList<Assignment>();
-        ArrayList<Integer> uniqueAssignedInstanceIDs = new ArrayList<Integer>();
-        ArrayList<Integer> assignedLabelIDs = new ArrayList<Integer>();
-        double total = 0;
-        double newPercentage = 0;
+    // A-5 Consistency percentage
+    public double consistencyPercentagesForUser(User user, ArrayList<Dataset> datasetList) {
+        int countTotal = 0;
+        double result = 0.0;
 
-        int size = assignmentList.size();
-        for (int i = 0; i < size; i++) {
-            if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
-                thisUsersAssignments.add(assignmentList.get(i));
-            }
-        }
+        for (int m = 0; m < datasetList.size(); m++) {
+            double total = 0;
+            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
+            ArrayList<Assignment> thisUsersAssignments = new ArrayList<Assignment>();
+            ArrayList<Integer> uniqueAssignedInstanceIDs = new ArrayList<Integer>();
+            ArrayList<Integer> assignedLabelIDs = new ArrayList<Integer>();
 
-        size = thisUsersAssignments.size();
-        for (int i = 0; i < size; i++) {
-            if (!uniqueAssignedInstanceIDs.contains(assignmentList.get(i).getInstance().getInstanceID())) {
-                uniqueAssignedInstanceIDs.add(assignmentList.get(i).getInstance().getInstanceID());
-            }
-        }
-
-        for (int i = 0; i < uniqueAssignedInstanceIDs.size(); i++) {
-            for (int j = 0; j < thisUsersAssignments.size(); j++) {
-                if (uniqueAssignedInstanceIDs.get(i) == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
-                    for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
-                        assignedLabelIDs.add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
-                    }
+            int size = assignmentList.size();
+            for (int i = 0; i < size; i++) {
+                if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+                    thisUsersAssignments.add(assignmentList.get(i));
                 }
             }
 
-            Integer[] assignedLabelIDsArray = assignedLabelIDs.toArray(new Integer[assignedLabelIDs.size()]);
-            total += (1.0 * mostfrequent(assignedLabelIDsArray)) / (1.0 * uniqueAssignedInstanceIDs.size());
-            assignedLabelIDs.clear();
+            size = thisUsersAssignments.size();
+            for (int i = 0; i < size; i++) {
+                if (!uniqueAssignedInstanceIDs.contains(assignmentList.get(i).getInstance().getInstanceID())) {
+                    uniqueAssignedInstanceIDs.add(assignmentList.get(i).getInstance().getInstanceID());
+                }
+            }
 
+            for (int i = 0; i < uniqueAssignedInstanceIDs.size(); i++) {
+                for (int j = 0; j < thisUsersAssignments.size(); j++) {
+                    if (uniqueAssignedInstanceIDs.get(i) == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
+                        for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
+                            assignedLabelIDs.add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
+                        }
+                    }
+                }
+
+                Integer[] assignedLabelIDsArray = assignedLabelIDs.toArray(new Integer[assignedLabelIDs.size()]);
+                total += (1.0 * mostfrequent(assignedLabelIDsArray)) / (1.0 * uniqueAssignedInstanceIDs.size());
+                assignedLabelIDs.clear();
+
+            }
+            countTotal += uniqueAssignedInstanceIDs.size();
+            result += 1.0 * total;
         }
-        newPercentage = (1.0 * total) / uniqueAssignedInstanceIDs.size();
-        return newPercentage * 100.0;
+
+        result = (result * 1.0) / (countTotal * 1.0);
+        return result;
     }
 
     // A-6
@@ -196,34 +204,33 @@ public class UserMetrics {
     }
 
     // A-7
-    public double standartDev(User user, ArrayList<Assignment> assignmentList) {
+    public double standartDev(User user, ArrayList<Dataset> datasetList) {
 
-        double standartDeviation = 0.0;
-        double sum = 0.0;
-        double mean = 0.0;
-        double result = 0.0;
-        double sq = 0.0;
-
+        double sum = 0.0, standardDeviation = 0.0;
         ArrayList<Long> seconds = new ArrayList<Long>();
-        for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
-                Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
-                seconds.add(sec);
+
+        for (int m = 0; m < datasetList.size(); m++) {
+            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
+            for (int i = 0; i < assignmentList.size(); i++) {
+                if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
+                    Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
+                    seconds.add(sec);
+                }
             }
         }
-        for (int i = 0; i < seconds.size(); i++) {
-            sum += seconds.get(i);
+
+        for (long num : seconds) {
+            sum += num;
         }
-        mean = sum / seconds.size();
 
-        for (int i = 0; i < seconds.size(); i++) {
+        int length = seconds.size();
+        double mean = sum / length;
 
-            standartDeviation += Math.pow((seconds.get(i) - mean), 2);
+        for (long num : seconds) {
+            standardDeviation += Math.pow(num - mean, 2);
         }
-        sq = standartDeviation / seconds.size();
-        result = Math.sqrt(sq);
 
-        return result;
+        return Math.sqrt(standardDeviation / length);
     }
 
     private int mostfrequent(Integer array[]) {
