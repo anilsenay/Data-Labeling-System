@@ -61,7 +61,7 @@ public class InstanceReportMechanism {
 
             JsonArray listLabels = (JsonArray) instanceObj.get("list_labels");
             HashMap<String, Double> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
-            String[] keys = parameters.keySet().toArray(new String[parameters.keySet().size()]);
+            String[] keys = labelsList.keySet().toArray(new String[labelsList.keySet().size()]);
 
             int labelsListSize = keys.length;
 
