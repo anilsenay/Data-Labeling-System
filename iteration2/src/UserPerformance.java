@@ -42,8 +42,8 @@ public class UserPerformance {
     }
 
     // A-5
-    public double getConsistencyPercentagesForUser(ArrayList<Assignment> assignmentList, double prevPercentage) {
-        return UserMetrics.getInstance().consistencyPercentagesForUser(this.user, assignmentList, prevPercentage);
+    public double getConsistencyPercentagesForUser(ArrayList<Dataset> datasetList) {
+        return UserMetrics.getInstance().consistencyPercentagesForUser(this.user, datasetList);
     }
 
     // A-6
@@ -52,8 +52,8 @@ public class UserPerformance {
     }
 
     // A-7
-    public double getStandartDev(ArrayList<Assignment> assignmentList) {
-        return UserMetrics.getInstance().standartDev(this.user, assignmentList);
+    public double getStandartDev(ArrayList<Dataset> datasetList) {
+        return UserMetrics.getInstance().standartDev(this.user, datasetList);
     }
 
     public User getUser() {
