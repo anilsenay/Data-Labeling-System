@@ -114,6 +114,7 @@ public class InstanceMetrics {
             percentage = ((int) (percentage * 100) / 100.0);
             result.put(labels.get(j), percentage);
         }
+
         return result;
     }
 
@@ -122,7 +123,6 @@ public class InstanceMetrics {
         ArrayList<String> labels = new ArrayList<String>();
         for (int i = 0; i < assignmentList.size(); i++) {
             if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
-
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
                 }
@@ -135,9 +135,15 @@ public class InstanceMetrics {
         for (int j = 0; j < labels.size(); j++) {
             Long frequency = occurrences.get(labels.get(j));
 
-            result -= (((1.0 * frequency) / labels.size())
-                    * ((Math.log((1.0 * frequency) / labels.size())) / (1.0 * Math.log(2))));
+            if (numberOfUniqueLabelAssignment(instance, assignmentList) == 1) {
+                return -1;
+            }
+
+            result -= (((1.0 * frequency) / (1.0 * labels.size()))
+                    * (1.0 * (Math.log(1.0 * ((1.0 * frequency) / (1.0 * labels.size()))))
+                            / (1.0 * Math.log(1.0 * numberOfUniqueLabelAssignment(instance, assignmentList)))));
         }
+
         return result;
     }
 
