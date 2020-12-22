@@ -29,20 +29,19 @@ public class UserMetrics {
 
     // A-1 Number of datasets assigned
     public ArrayList<Integer> datasetAssign(User user, Iterator<JsonElement> datasetIterator) {
-        int count = 0;
         ArrayList<Integer> datasetIds = new ArrayList<Integer>();
         while (datasetIterator.hasNext()) {
 
             JsonObject datasetObj = (JsonObject) (datasetIterator.next());
+            System.out.println(datasetObj.get("dataset_name"));
             JsonArray users = (JsonArray) datasetObj.get("users");
             Iterator<JsonElement> usersIterator = users.iterator();
 
             while (usersIterator.hasNext()) {
-                JsonObject userObj = (JsonObject) usersIterator.next();
-                if (userObj.get("user_id").getAsInt() == user.getUserID()) {
+                int userID = usersIterator.next().getAsInt();
+                if (userID == user.getUserID()) {
                     int datasetID = (datasetObj.get("dataset_id").getAsInt());
                     datasetIds.add(datasetID);
-                    count++;
                 }
 
             }

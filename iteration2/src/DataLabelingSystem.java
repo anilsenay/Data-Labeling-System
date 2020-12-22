@@ -83,7 +83,7 @@ public class DataLabelingSystem {
 					userIDs.add(userId.intValue());
 				}
 			}
-
+			Iterator<JsonElement> datasetIterator2 = datasets.iterator();
 			// Get users from Iterator Object and store them to JSON object.
 			Iterator<JsonElement> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
@@ -101,7 +101,7 @@ public class DataLabelingSystem {
 				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
-				up.updateAssignedDatasets(datasetIterator);
+				up.updateAssignedDatasets(datasetIterator2);
 			}
 			this.userList = userList;
 
