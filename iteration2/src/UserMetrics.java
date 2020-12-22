@@ -191,16 +191,18 @@ public class UserMetrics {
     }
 
     // A-6
-    public double averageTimeSpent(User user, ArrayList<Assignment> assignmentList) {
-        ArrayList<Long> seconds = new ArrayList<Long>();
-        for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
-                Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
-                seconds.add(sec);
-            }
+    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
+        long average=0;
+        for (int i = 0; i < datasetList.size(); i++) {
+            long dateOfFirst = datasetList.get(i).getAssignmentList().get(0).getDateTime().getTime() /1000;
+            long dateOfLast = datasetList.get(i).getAssignmentList().get(datasetList.get(i).getAssignmentList().size()-1).getDateTime().getTime() /1000;
+
+            average += (dateOfFirst-dateOfLast) / datasetList.get(i).getAssignmentList().size();
+            
         }
-        double average = seconds.stream().mapToLong(value -> value).average().orElse(0.0);
-        return average;
+
+        long totalAverage= average / datasetList.size();
+        return totalAverage;
     }
 
     // A-7
