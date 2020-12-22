@@ -51,7 +51,6 @@ public class UserMetrics {
         return datasetIds;
     }
 
-    // Buraya rapordan çekilen dataset gönderilmeli /////////////////
     // A-2 List of all datasets with their completeness percentage
     public float datasetCompletenessPer(User user, JsonObject report) {
         JsonArray userObjects = (JsonArray) report.get("users");
@@ -128,7 +127,7 @@ public class UserMetrics {
         return 1;
     }
 
-    // A-4 TEST EDİLMELİ ???
+    // A-4 TEST EDİLMELİ
     public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
         for (int i = 0; i < assignmentList.size(); i++) {
@@ -191,16 +190,31 @@ public class UserMetrics {
     }
 
     // A-6
-    public double averageTimeSpent(User user, ArrayList<Assignment> assignmentList) {
+    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
         ArrayList<Long> seconds = new ArrayList<Long>();
-        for (int i = 0; i < assignmentList.size(); i++) {
-            if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
-                Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
-                seconds.add(sec);
+        ArrayList<Assignment> userAssignments = new ArrayList<Assignment>();
+        double result = 0;
+
+        for (int m = 0; m < datasetList.size(); m++) {
+            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
+
+            for (int i = 0; i < assignmentList.size(); i++) {
+                if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+                    userAssignments.add(assignmentList.get(i));
+                }
+            }
+
+            if (userAssignments.size() > 0) {
+                long sec = userAssignments.get(userAssignments.size() - 1).getDateTime().getTime()
+                        - userAssignments.get(0).getDateTime().getTime();
+                sec /= 1000;
+                result += sec;
             }
         }
-        double average = seconds.stream().mapToLong(value -> value).average().orElse(0.0);
-        return average;
+
+        result /= datasetList.size() * 1.0;
+
+        return result;
     }
 
     // A-7
