@@ -55,11 +55,10 @@ public class InstanceMetrics {
         return uniqueUsers.size();
     }
 
-    // B-4.1 TESTE EN KADİR(:d) OLACAK METOTLARDAN BİRİ !!!
-
-    public HashMap<String, Long> mostFreqLabelAndPerc(Instance instance, ArrayList<Assignment> assignmentList) {
+    // B-4
+    public HashMap<String, Double> mostFreqLabelAndPerc(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
-        HashMap<String, Long> result = new HashMap<String, Long>();
+        HashMap<String, Double> result = new HashMap<String, Double>();
         for (int i = 0; i < assignmentList.size(); i++) {
             if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
@@ -74,7 +73,7 @@ public class InstanceMetrics {
         String label = occurrences.entrySet().stream()
                 .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
 
-        Long frequency = occurrences.entrySet().stream()
+        long frequency = occurrences.entrySet().stream()
                 .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getValue();
 
         int size = ReportingMechanism.getInstance().getDataset().getClassLabels().size();
@@ -88,18 +87,19 @@ public class InstanceMetrics {
             }
         }
 
-        Long percentage = ((frequency / labels.size()) * 100);
+        double percentage = (double) ((frequency * 1.0 / labels.size()) * 100.0);
+        percentage = (int) (percentage * 100);
+        percentage = percentage / 100.0;
         result.put(label, percentage);
         return result;
     }
 
     // B-5
-    public HashMap<String, Long> listClassLabels(Instance instance, ArrayList<Assignment> assignmentList) {
+    public HashMap<String, Double> listClassLabels(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
-        HashMap<String, Long> result = new HashMap<String, Long>();
+        HashMap<String, Double> result = new HashMap<String, Double>();
         for (int i = 0; i < assignmentList.size(); i++) {
             if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
-
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                     labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
                 }
@@ -109,8 +109,9 @@ public class InstanceMetrics {
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
 
         for (int j = 0; j < labels.size(); j++) {
-            Long frequency = occurrences.get(labels.get(j));
-            Long percentage = ((frequency / labels.size()) * 100);
+            long frequency = occurrences.get(labels.get(j));
+            double percentage = (double) ((frequency * 1.0 / labels.size()) * 100.0);
+            percentage = ((int) (percentage * 100) / 100.0);
             result.put(labels.get(j), percentage);
         }
         return result;
