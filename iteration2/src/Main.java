@@ -7,7 +7,7 @@ public class Main {
         // Read config file and create dataset.
         DataLabelingSystem DLS = new DataLabelingSystem();
         DLS.loadConfig("config.json"); // Get user from config.json.
-        DLS.handleDataset(DLS.getOutputName());
+        DLS.handleDataset();
 
         // Random assignment for iteration-1.
         ArrayList<Instance> instanceList = DLS.getDataset().getInstances();
