@@ -128,7 +128,8 @@ public class UserMetrics {
     public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
         for (int i = 0; i < assignmentList.size() - 1; i++) {
-            if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+            if (assignmentList.get(i).getUser() != null
+                    && user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 if (newAssignment.getInstance().getInstanceID() == assignmentList.get(i).getInstance()
                         .getInstanceID()) {
                     return 0;
@@ -152,7 +153,8 @@ public class UserMetrics {
 
             int size = assignmentList.size();
             for (int i = 0; i < size; i++) {
-                if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+                if (assignmentList.get(i).getUser() != null
+                        && user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                     thisUsersAssignments.add(assignmentList.get(i));
                 }
             }
@@ -197,7 +199,8 @@ public class UserMetrics {
             ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
 
             for (int i = 0; i < assignmentList.size(); i++) {
-                if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
+                if (assignmentList.get(i).getUser() != null
+                        && user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                     userAssignments.add(assignmentList.get(i));
                 }
             }
@@ -224,7 +227,8 @@ public class UserMetrics {
         for (int m = 0; m < datasetList.size(); m++) {
             ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
             for (int i = 0; i < assignmentList.size(); i++) {
-                if (assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
+                if (assignmentList.get(i).getUser() != null
+                        && assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
                     Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
                     seconds.add(sec);
                 }
