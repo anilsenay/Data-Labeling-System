@@ -26,12 +26,12 @@ public class InstancePerformance {
     }
 
     // B-4
-    public HashMap<String, Long> getMostFreqLabelAndPerc(ArrayList<Assignment> assignmentList) {
+    public HashMap<String, Double> getMostFreqLabelAndPerc(ArrayList<Assignment> assignmentList) {
         return InstanceMetrics.getInstance().mostFreqLabelAndPerc(this.instance, assignmentList);
     }
 
     // B-5
-    public HashMap<String, Long> getListClassLabels(ArrayList<Assignment> assignmentList) {
+    public HashMap<String, Double> getListClassLabels(ArrayList<Assignment> assignmentList) {
         return InstanceMetrics.getInstance().listClassLabels(this.instance, assignmentList);
     }
 
