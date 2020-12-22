@@ -147,8 +147,8 @@ public class DatasetReportMechanism {
                         JsonObject userObj = (JsonObject) (userIterator.next());
                         if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                             consistencyObj.addProperty("consistency_percentages",
-                                    userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                                            userObj.get("consistency_percentages").getAsDouble()));
+                                    userPerformance.getConsistencyPercentagesForUser(
+                                            ReportingMechanism.getInstance().getAllDatasets()));
                         }
                     }
                     isFound = true;
@@ -163,9 +163,8 @@ public class DatasetReportMechanism {
                     JsonObject userObj = (JsonObject) (userIterator.next());
                     if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                         consistencyObject.addProperty("user_id", user.getUserID());
-                        consistencyObject.addProperty("consistency_percentages",
-                                userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                                        userObj.get("consistency_percentages").getAsDouble()));
+                        consistencyObject.addProperty("consistency_percentages", userPerformance
+                                .getConsistencyPercentagesForUser(ReportingMechanism.getInstance().getAllDatasets()));
                     }
                 }
                 userConsistency.add(consistencyObject);
