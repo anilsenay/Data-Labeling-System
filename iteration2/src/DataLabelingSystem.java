@@ -38,7 +38,8 @@ public class DataLabelingSystem {
 
 		// // restore final labels after loading dataset
 		if (outputFile.exists())
-			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(), this.dataset.getAssignmentList());
+			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(),
+					this.dataset.getAssignmentList());
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -83,7 +84,7 @@ public class DataLabelingSystem {
 					userIDs.add(userId.intValue());
 				}
 			}
-			Iterator<JsonElement> datasetIterator2 = datasets.iterator();
+
 			// Get users from Iterator Object and store them to JSON object.
 			Iterator<JsonElement> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
@@ -101,7 +102,7 @@ public class DataLabelingSystem {
 				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
-				up.updateAssignedDatasets(datasetIterator2);
+				up.updateAssignedDatasets(datasets.iterator());
 			}
 			this.userList = userList;
 
