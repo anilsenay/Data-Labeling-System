@@ -59,7 +59,6 @@ public class ReportingMechanism {
     }
 
     public void addOldDataset(Dataset dataset) {
-        System.out.println("Added new old dataset with id :" + dataset.getDatasetID());
         this.oldDatasets.add(dataset);
     }
 
