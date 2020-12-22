@@ -31,7 +31,7 @@ public class UserReportMechanism {
         int numberOfUniqueInstances = userPerformance.getUniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
                 newAssignment);
         double avgTime = userPerformance.getAverageTimeSpent(dataset.getAssignmentList());
-        double stdDev = userPerformance.getStandartDev(dataset.getAssignmentList());
+        double stdDev = userPerformance.getStandartDev(ReportingMechanism.getInstance().getAllDatasets());
 
         JsonObject reportObject = report.getJsonObject();
         JsonArray users = (JsonArray) reportObject.get("users");
@@ -47,8 +47,8 @@ public class UserReportMechanism {
             int unique_labeled_instances = userObj.get("unique_labeled_instances").getAsInt();
             userObj.addProperty("unique_labeled_instances", unique_labeled_instances + numberOfUniqueInstances);
             double consistency_percentages = userObj.get("consistency_percentages").getAsDouble();
-            double consPercentage = userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                    consistency_percentages);
+            double consPercentage = userPerformance
+                    .getConsistencyPercentagesForUser(ReportingMechanism.getInstance().getAllDatasets());
             userObj.addProperty("consistency_percentages", consPercentage);
             userObj.addProperty("avg_time", avgTime);
             userObj.addProperty("std_dev", stdDev);

@@ -4,7 +4,7 @@ public class ReportingMechanism {
     private static ReportingMechanism reportingMechanism;
     private Report report = new Report();
     private Dataset dataset = null;
-    private ArrayList<Dataset> oldDatasets = new ArrayList<Dataset>();
+    private ArrayList<Dataset> allDatasets = new ArrayList<Dataset>();
 
     private UserReportMechanism userReportMechanism = new UserReportMechanism();
     private InstanceReportMechanism instanceReportMechanism = new InstanceReportMechanism();
@@ -39,7 +39,7 @@ public class ReportingMechanism {
     public void setDataset(Dataset dataset) {
         this.dataset = dataset;
         this.datasetReportMechanism = new DatasetReportMechanism(dataset);
-        System.out.println("Dataset in reportingMech: " + this.dataset.getDatasetID());
+        this.allDatasets.add(dataset);
     }
 
     public Report getReport() {
@@ -59,7 +59,11 @@ public class ReportingMechanism {
     }
 
     public void addOldDataset(Dataset dataset) {
-        this.oldDatasets.add(dataset);
+        this.allDatasets.add(dataset);
+    }
+
+    public ArrayList<Dataset> getAllDatasets() {
+        return this.allDatasets;
     }
 
 }
