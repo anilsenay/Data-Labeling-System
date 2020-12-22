@@ -4,6 +4,7 @@ public class ReportingMechanism {
     private static ReportingMechanism reportingMechanism;
     private Report report = new Report();
     private Dataset dataset = null;
+    private ArrayList<Dataset> oldDatasets = new ArrayList<Dataset>();
 
     private UserReportMechanism userReportMechanism = new UserReportMechanism();
     private InstanceReportMechanism instanceReportMechanism = new InstanceReportMechanism();
@@ -55,6 +56,11 @@ public class ReportingMechanism {
 
     public DatasetReportMechanism getDatasetReportMechanism() {
         return this.datasetReportMechanism;
+    }
+
+    public void addOldDataset(Dataset dataset) {
+        System.out.println("Added new old dataset with id :" + dataset.getDatasetID());
+        this.oldDatasets.add(dataset);
     }
 
 }
