@@ -30,7 +30,7 @@ public class UserReportMechanism {
         int totalNumberOfInstances = userPerformance.getNumberOfInstancesLabeled();
         int numberOfUniqueInstances = userPerformance.getUniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
                 newAssignment);
-        double avgTime = userPerformance.getAverageTimeSpent(dataset.getAssignmentList());
+        double avgTime = userPerformance.getAverageTimeSpent(ReportingMechanism.getInstance().getAllDatasets());
         double stdDev = userPerformance.getStandartDev(ReportingMechanism.getInstance().getAllDatasets());
 
         JsonObject reportObject = report.getJsonObject();
