@@ -31,9 +31,7 @@ public class UserMetrics {
     public ArrayList<Integer> datasetAssign(User user, Iterator<JsonElement> datasetIterator) {
         ArrayList<Integer> datasetIds = new ArrayList<Integer>();
         while (datasetIterator.hasNext()) {
-
             JsonObject datasetObj = (JsonObject) (datasetIterator.next());
-            System.out.println(datasetObj.get("dataset_name"));
             JsonArray users = (JsonArray) datasetObj.get("users");
             Iterator<JsonElement> usersIterator = users.iterator();
 
@@ -129,7 +127,7 @@ public class UserMetrics {
     // A-4 TEST EDİLMELİ
     public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
-        for (int i = 0; i < assignmentList.size(); i++) {
+        for (int i = 0; i < assignmentList.size() - 1; i++) {
             if (user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                 if (newAssignment.getInstance().getInstanceID() == assignmentList.get(i).getInstance()
                         .getInstanceID()) {
@@ -185,14 +183,15 @@ public class UserMetrics {
         }
 
         result = (result * 1.0) / (countTotal * 1.0);
+        result = ((int) (result * 10000)) / 100.0;
         return result;
     }
 
     // A-6
     public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
-        ArrayList<Long> seconds = new ArrayList<Long>();
         ArrayList<Assignment> userAssignments = new ArrayList<Assignment>();
         double result = 0;
+        int count = 0;
 
         for (int m = 0; m < datasetList.size(); m++) {
             ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
@@ -206,12 +205,12 @@ public class UserMetrics {
             if (userAssignments.size() > 0) {
                 long sec = userAssignments.get(userAssignments.size() - 1).getDateTime().getTime()
                         - userAssignments.get(0).getDateTime().getTime();
-                sec /= 1000;
                 result += sec;
+                count++;
             }
         }
 
-        result /= datasetList.size() * 1.0;
+        result = result / (count * 1.0);
 
         return result;
     }
