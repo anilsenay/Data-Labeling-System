@@ -46,7 +46,8 @@ public class InstanceReportMechanism {
 
             // most freq labels for instances -------------------------------
 
-            HashMap<String, Long> parameters = instancePerformance.getMostFreqLabelAndPerc(dataset.getAssignmentList());
+            HashMap<String, Double> parameters = instancePerformance
+                    .getMostFreqLabelAndPerc(dataset.getAssignmentList());
             String key = parameters.keySet().toArray(new String[parameters.keySet().size()])[0];
 
             JsonObject mostFreqLabel = new JsonObject();
@@ -59,13 +60,13 @@ public class InstanceReportMechanism {
             // list labels for instances -------------------------------------
 
             JsonArray listLabels = (JsonArray) instanceObj.get("list_labels");
-            HashMap<String, Long> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
+            HashMap<String, Double> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
             String[] keys = parameters.keySet().toArray(new String[parameters.keySet().size()]);
 
             int labelsListSize = keys.length;
 
             // flush labels list array
-            for (int z = 0; z < listLabels.size(); z++) {
+            for (int z = listLabels.size() - 1; z >= 0; z--) {
                 listLabels.remove(z);
             }
 
