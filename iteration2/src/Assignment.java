@@ -13,6 +13,7 @@ public class Assignment {
 	// AssignedLabels list is created.
 	private ArrayList<Label> assignedLabels = new ArrayList<Label>();
 	private Date dateTime;
+	private double assignmentDuration;
 
 	// No arg constructor.
 	public Assignment() {
@@ -28,8 +29,7 @@ public class Assignment {
 		this.dateTime = new Date();
 	}
 
-	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels, String date)
-			throws ParseException {
+	public Assignment(Instance instance, User user, ArrayList<Label> assignedLabels, String date) throws ParseException {
 		super();
 		this.instance = instance;
 		this.user = user;
@@ -78,6 +78,14 @@ public class Assignment {
 
 	public void setDateTime(Date dateTime) {
 		this.dateTime = dateTime;
+	}
+
+	public double getAssingmentDuration() {
+		return this.assignmentDuration;
+	}
+
+	public void setAssingmentDuration(double duration) {
+		this.assignmentDuration = duration;
 	}
 
 }
