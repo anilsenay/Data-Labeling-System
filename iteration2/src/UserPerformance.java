@@ -41,8 +41,8 @@ public class UserPerformance {
     }
 
     // A-6
-    public double getAverageTimeSpent(ArrayList<Dataset> datasets, double lastAverage) {
-        return UserMetrics.getInstance().averageTimeSpent(this.user, datasets, lastAverage);
+    public double getAverageTimeSpent(ArrayList<Dataset> datasets) {
+        return UserMetrics.getInstance().averageTimeSpent(this.user, datasets);
     }
 
     // A-7
