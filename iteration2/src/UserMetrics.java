@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -144,11 +145,12 @@ public class UserMetrics {
     }
 
     // A-6
-    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
+    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList, double lastAverage) {
         ArrayList<Assignment> userAssignments = new ArrayList<Assignment>();
         double result = 0;
         int count = 0;
-
+        Date endDate = new Date();
+        int totalLastAssignments=0;
         for (int m = 0; m < datasetList.size(); m++) {
             ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
 
@@ -156,18 +158,15 @@ public class UserMetrics {
                 if (assignmentList.get(i).getUser() != null
                         && user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
                     userAssignments.add(assignmentList.get(i));
-                }
-            }
-
-            if (userAssignments.size() > 0) {
-                long sec = userAssignments.get(userAssignments.size() - 1).getDateTime().getTime()
-                        - userAssignments.get(0).getDateTime().getTime();
-                result += sec;
-                count++;
+                }            
             }
         }
-
-        result = result / (count * 1.0);
+        totalLastAssignments = userAssignments.size();
+        Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
+        Assignment lastAssignment = currentDataset.getAssignmentList().get(currentDataset.getAssignmentList().size() -1 );
+        double assignmentDuration = (endDate.getTime()  - lastAssignment.getDateTime().getTime())/1000.0;
+        
+        result = ((lastAverage*(totalLastAssignments-1)) + assignmentDuration)/ totalLastAssignments;
 
         return result;
     }
