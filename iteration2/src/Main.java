@@ -14,8 +14,6 @@ public class Main {
         ArrayList<User> userList = DLS.getUserList();
         Dataset dataset = DLS.getDataset();
 
-        // we should handle dataset status here, is it restored or newly created
-
         for (int i = 0; i < instanceList.size(); i++) {
             for (int j = 0; j < userList.size(); j++) {
                 if (userList.get(j).getUserType().equalsIgnoreCase("RandomBot")) {
