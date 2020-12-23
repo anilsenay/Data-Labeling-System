@@ -102,16 +102,14 @@ public class DatasetReportMechanism {
             while (userCompIterator.hasNext()) {
                 JsonObject completenessObj = (JsonObject) (userCompIterator.next());
                 if (completenessObj.get("user_id").getAsInt() == user.getUserID()) {
-                    completenessObj.addProperty("percentage",
-                            userPerformance.getDatasetCompletenessPer(report.getJsonObject()));
+                    completenessObj.addProperty("percentage", userPerformance.getDatasetCompletenessPer());
                     isFound = true;
                 }
             }
             if (!isFound) {
                 JsonObject completenessObject = new JsonObject();
                 completenessObject.addProperty("user_id", user.getUserID());
-                completenessObject.addProperty("percentage",
-                        userPerformance.getDatasetCompletenessPer(report.getJsonObject()));
+                completenessObject.addProperty("percentage", userPerformance.getDatasetCompletenessPer());
                 userCompleteness.add(completenessObject);
                 userCompleteness.add(completenessObject);
                 userCompleteness.add(completenessObject);

@@ -21,14 +21,8 @@ public class UserPerformance {
     }
 
     // A-2 List of all datasets with their completeness percentage
-    public float getDatasetCompletenessPer(JsonObject report) {
-
-        return UserMetrics.getInstance().datasetCompletenessPer(this.user, report);
-    }
-
-    // A-2.1
-    public float getDatasetCompletenessPerCurrent() {
-        return UserMetrics.getInstance().datasetCompletenessPerCurrent(this.user);
+    public float getDatasetCompletenessPer() {
+        return UserMetrics.getInstance().datasetCompletenessPer(this.user);
     }
 
     // A-3
