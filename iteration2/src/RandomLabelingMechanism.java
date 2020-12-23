@@ -27,12 +27,13 @@ public class RandomLabelingMechanism extends LabelingMechanism {
      * then returns to assignmentList in dataset.
      */
     public Assignment assign(Dataset dataset, Instance instance, User user) {
+        Assignment assignment = new Assignment(instance, user, new ArrayList<Label>());
 
         // Getting a random value between 1 and max labels per instance.
         int maxLabelRandom = (int) (1 + (Math.random() * dataset.getMaxLabelPerInstance()));
 
         // Creates a local label arraylist to store labels to assign.
-        ArrayList<Label> labels = new ArrayList<Label>();
+        ArrayList<Label> labels = assignment.getAssignedLabels();
 
         // Chooses a random label from classLabel arraylist in dataset.
         for (int j = 0; j < maxLabelRandom; j++) {
@@ -48,7 +49,12 @@ public class RandomLabelingMechanism extends LabelingMechanism {
         }
 
         // Returns to assignmentList in dataset.
-        Assignment assignment = new Assignment(instance, user, labels);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            Logger.getInstance().error(new Date(), e.getLocalizedMessage());
+        }
+        assignment.setAssingmentDuration(new Date().getTime() - assignment.getDateTime().getTime());
         dataset.addAssignment(assignment);
         return assignment;
     }

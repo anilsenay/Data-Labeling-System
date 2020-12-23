@@ -26,12 +26,12 @@ public class UserReportMechanism {
         }
 
         int numberOfDatasets = userPerformance.getAssignedDatasets().size();
-        float currentDatasetStatus = userPerformance.getDatasetCompletenessPer(report.getJsonObject());
+        float currentDatasetStatus = userPerformance.getDatasetCompletenessPer();
         int totalNumberOfInstances = userPerformance.getNumberOfInstancesLabeled();
         int numberOfUniqueInstances = userPerformance.getUniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
                 newAssignment);
-        double avgTime = userPerformance.getAverageTimeSpent(dataset.getAssignmentList());
-        double stdDev = userPerformance.getStandartDev(dataset.getAssignmentList());
+
+        double stdDev = userPerformance.getStandartDev(ReportingMechanism.getInstance().getAllDatasets());
 
         JsonObject reportObject = report.getJsonObject();
         JsonArray users = (JsonArray) reportObject.get("users");
@@ -46,10 +46,10 @@ public class UserReportMechanism {
             userObj.addProperty("labeled_instances", totalNumberOfInstances + labeled_instances);
             int unique_labeled_instances = userObj.get("unique_labeled_instances").getAsInt();
             userObj.addProperty("unique_labeled_instances", unique_labeled_instances + numberOfUniqueInstances);
-            double consistency_percentages = userObj.get("consistency_percentages").getAsDouble();
-            double consPercentage = userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                    consistency_percentages);
+            double consPercentage = userPerformance
+                    .getConsistencyPercentagesForUser(ReportingMechanism.getInstance().getAllDatasets());
             userObj.addProperty("consistency_percentages", consPercentage);
+            double avgTime = userPerformance.getAverageTimeSpent(ReportingMechanism.getInstance().getAllDatasets());
             userObj.addProperty("avg_time", avgTime);
             userObj.addProperty("std_dev", stdDev);
 

@@ -32,7 +32,7 @@ public class DatasetMetrics {
 
         float perc = (float) ((1.0 * labeledInstances.size()) / countInstance);
 
-        return perc;
+        return perc * 100;
     }
 
     // C-2 Class distribution based on final instance labels

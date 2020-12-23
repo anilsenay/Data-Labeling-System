@@ -41,11 +41,11 @@ public class DatasetReportMechanism {
             int finalLabelsListSize = finalLabels.size();
 
             // flush final labels array
-            for (int z = 0; z < finalLabels.size(); z++) {
+            for (int z = finalLabels.size() - 1; z >= 0; z--) {
                 finalLabels.remove(z);
             }
             // recreate final labels
-            for (int i = 0; i < finalLabelsListSize; i = i + 2) {
+            for (int i = 0; i < finalLabelsList.size(); i = i + 2) {
                 JsonObject finalLabelObj = new JsonObject();
                 finalLabelObj.addProperty("instance", finalLabelsList.get(i));
                 finalLabelObj.addProperty("percentage", Double.parseDouble(finalLabelsList.get(i + 1)));
@@ -57,7 +57,7 @@ public class DatasetReportMechanism {
             JsonArray uniqueInstances = (JsonArray) datasetObj.get("unique_instance_number_for_each_label");
 
             // flush unique instance labels array
-            for (int z = 0; z < uniqueInstances.size(); z++) {
+            for (int z = uniqueInstances.size() - 1; z >= 0; z--) {
                 uniqueInstances.remove(z);
             }
 
@@ -102,8 +102,7 @@ public class DatasetReportMechanism {
             while (userCompIterator.hasNext()) {
                 JsonObject completenessObj = (JsonObject) (userCompIterator.next());
                 if (completenessObj.get("user_id").getAsInt() == user.getUserID()) {
-                    completenessObj.addProperty("percentage",
-                            userPerformance.getDatasetCompletenessPer(report.getJsonObject()));
+                    completenessObj.addProperty("percentage", userPerformance.getDatasetCompletenessPer());
                     isFound = true;
                 }
             }
@@ -111,8 +110,7 @@ public class DatasetReportMechanism {
             if (!isFound) {
                 JsonObject completenessObject = new JsonObject();
                 completenessObject.addProperty("user_id", user.getUserID());
-                completenessObject.addProperty("percentage",
-                        userPerformance.getDatasetCompletenessPer(report.getJsonObject()));
+                completenessObject.addProperty("percentage", userPerformance.getDatasetCompletenessPer());
                 userCompleteness.add(completenessObject);
                 userCompleteness.add(completenessObject);
                 userCompleteness.add(completenessObject);
@@ -147,8 +145,8 @@ public class DatasetReportMechanism {
                         JsonObject userObj = (JsonObject) (userIterator.next());
                         if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                             consistencyObj.addProperty("consistency_percentages",
-                                    userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                                            userObj.get("consistency_percentages").getAsDouble()));
+                                    userPerformance.getConsistencyPercentagesForUser(
+                                            ReportingMechanism.getInstance().getAllDatasets()));
                         }
                     }
                     isFound = true;
@@ -164,9 +162,8 @@ public class DatasetReportMechanism {
                     JsonObject userObj = (JsonObject) (userIterator.next());
                     if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                         consistencyObject.addProperty("user_id", user.getUserID());
-                        consistencyObject.addProperty("consistency_percentages",
-                                userPerformance.getConsistencyPercentagesForUser(dataset.getAssignmentList(),
-                                        userObj.get("consistency_percentages").getAsDouble()));
+                        consistencyObject.addProperty("consistency_percentages", userPerformance
+                                .getConsistencyPercentagesForUser(ReportingMechanism.getInstance().getAllDatasets()));
                     }
                 }
                 userConsistency.add(consistencyObject);

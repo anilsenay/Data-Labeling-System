@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class UserPerformance {
 
@@ -21,14 +20,8 @@ public class UserPerformance {
     }
 
     // A-2 List of all datasets with their completeness percentage
-    public float getDatasetCompletenessPer(JsonObject report) {
-
-        return UserMetrics.getInstance().datasetCompletenessPer(this.user, report);
-    }
-
-    // A-2.1
-    public float getDatasetCompletenessPerCurrent() {
-        return UserMetrics.getInstance().datasetCompletenessPerCurrent(this.user);
+    public float getDatasetCompletenessPer() {
+        return UserMetrics.getInstance().datasetCompletenessPer(this.user);
     }
 
     // A-3
@@ -42,18 +35,18 @@ public class UserPerformance {
     }
 
     // A-5
-    public double getConsistencyPercentagesForUser(ArrayList<Assignment> assignmentList, double prevPercentage) {
-        return UserMetrics.getInstance().consistencyPercentagesForUser(this.user, assignmentList, prevPercentage);
+    public double getConsistencyPercentagesForUser(ArrayList<Dataset> datasetList) {
+        return UserMetrics.getInstance().consistencyPercentagesForUser(this.user, datasetList);
     }
 
     // A-6
-    public double getAverageTimeSpent(ArrayList<Assignment> assignmentList) {
-        return UserMetrics.getInstance().averageTimeSpent(this.user, assignmentList);
+    public double getAverageTimeSpent(ArrayList<Dataset> datasets) {
+        return UserMetrics.getInstance().averageTimeSpent(this.user, datasets);
     }
 
     // A-7
-    public double getStandartDev(ArrayList<Assignment> assignmentList) {
-        return UserMetrics.getInstance().standartDev(this.user, assignmentList);
+    public double getStandartDev(ArrayList<Dataset> datasetList) {
+        return UserMetrics.getInstance().standartDev(this.user, datasetList);
     }
 
     public User getUser() {

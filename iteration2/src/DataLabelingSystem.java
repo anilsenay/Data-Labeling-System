@@ -20,25 +20,25 @@ import com.google.gson.JsonParser;
 public class DataLabelingSystem {
 
 	private Dataset dataset = null;
-	private ArrayList<Dataset> datasetList = new ArrayList<Dataset>();
 	private ArrayList<User> userList = null;
 	private Logger logger = Logger.getInstance();
 	private String inputName, outputName;
 	private DatasetLoader datasetLoader = new DatasetLoader();
 	private ReportingMechanism reportingMechanism = ReportingMechanism.getInstance();
 
-	public void handleDataset(String fileName) {
-		File outputFile = new File(fileName);
+	public void handleDataset() {
+		File outputFile = new File(this.outputName);
 		if (outputFile.exists()) { // dataset output u varsa
-			this.dataset = datasetLoader.loadDataset(fileName, this, this.dataset);
-			// // restore final labels after loading dataset
-			// InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(),
-			// this.dataset.getAssignmentList());
+			this.dataset = datasetLoader.loadDataset(this.outputName, this, this.dataset);
 		} else {
 			datasetLoader.createDataset(this);
 		}
 		reportingMechanism.setDataset(this.dataset);
 		reportingMechanism.importReport(this.dataset, this.userList);
+
+		// // restore final labels after loading dataset
+		if (outputFile.exists())
+			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(), this.dataset.getAssignmentList());
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -101,12 +101,12 @@ public class DataLabelingSystem {
 				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
-				up.updateAssignedDatasets(datasetIterator);
+				up.updateAssignedDatasets(datasets.iterator());
 			}
 			this.userList = userList;
 
 			for (String outputFile : storedDatasets)
-				datasetList.add(datasetLoader.loadDataset(outputFile, this, new Dataset()));
+				reportingMechanism.addOldDataset(datasetLoader.loadDataset(outputFile, this, new Dataset()));
 
 		} catch (Exception e) {
 			logger.error(new Date(), e.toString());
@@ -166,6 +166,7 @@ public class DataLabelingSystem {
 			assignmentObject.add("class label ids", classLabelIds);
 			assignmentObject.addProperty("user id", assignmentList.get(j).getUser().getUserID());
 			assignmentObject.addProperty("datetime", date);
+			assignmentObject.addProperty("duration", assignmentList.get(j).getAssingmentDuration());
 
 			assignmentJSONList.add(assignmentObject);
 		}
@@ -206,10 +207,6 @@ public class DataLabelingSystem {
 
 	public ArrayList<User> getUserList() {
 		return this.userList;
-	}
-
-	public ArrayList<Dataset> getDatasetList() {
-		return this.datasetList;
 	}
 
 	public String getInputName() {

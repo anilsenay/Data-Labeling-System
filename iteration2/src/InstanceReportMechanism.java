@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonElement;
 
+// InstanceReportMechanism for reporting InstancePerformances.
 public class InstanceReportMechanism {
 
     private ArrayList<InstancePerformance> instancePerformances = new ArrayList<InstancePerformance>();
@@ -14,6 +15,7 @@ public class InstanceReportMechanism {
 
     }
 
+    // Update instance.
     public void updateInstance(Instance instance) {
         Dataset dataset = ReportingMechanism.getInstance().getDataset();
         Report report = ReportingMechanism.getInstance().getReport();
@@ -44,9 +46,10 @@ public class InstanceReportMechanism {
             instanceObj.addProperty("unique_number_of_users", uniqueNumOfUsers);
             instanceObj.addProperty("entropy", entropy);
 
-            // most freq labels for instances -------------------------------
+            // Most frequent labels for instances.
 
-            HashMap<String, Long> parameters = instancePerformance.getMostFreqLabelAndPerc(dataset.getAssignmentList());
+            HashMap<String, Double> parameters = instancePerformance
+                    .getMostFreqLabelAndPerc(dataset.getAssignmentList());
             String key = parameters.keySet().toArray(new String[parameters.keySet().size()])[0];
 
             JsonObject mostFreqLabel = new JsonObject();
@@ -54,22 +57,22 @@ public class InstanceReportMechanism {
             mostFreqLabel.addProperty("frequency", parameters.get(key));
             instanceObj.add("most_freq_label", mostFreqLabel);
 
-            // ----------------------------- most freq labels for instances
+            // Most frequent labels for instances.
 
-            // list labels for instances -------------------------------------
+            // list labels for instances.
 
             JsonArray listLabels = (JsonArray) instanceObj.get("list_labels");
-            HashMap<String, Long> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
-            String[] keys = parameters.keySet().toArray(new String[parameters.keySet().size()]);
+            HashMap<String, Double> labelsList = instancePerformance.getListClassLabels(dataset.getAssignmentList());
+            String[] keys = labelsList.keySet().toArray(new String[labelsList.keySet().size()]);
 
             int labelsListSize = keys.length;
 
-            // flush labels list array
-            for (int z = 0; z < listLabels.size(); z++) {
+            // Flush labels list array.
+            for (int z = listLabels.size() - 1; z >= 0; z--) {
                 listLabels.remove(z);
             }
 
-            // recreate labels list
+            // Recreate labels list.
             for (int i = 0; i < labelsListSize; i++) {
                 JsonObject labelListObject = new JsonObject();
                 labelListObject.addProperty("label_name", keys[i]);
@@ -77,7 +80,7 @@ public class InstanceReportMechanism {
                 listLabels.add(labelListObject);
             }
 
-            // -------------------------------------list labels for instances
+            // List labels for instances.
         }
     }
 
