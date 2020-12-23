@@ -13,13 +13,12 @@ public class UserMetrics {
     private static UserMetrics userMetrics;
 
     private UserMetrics() {
-
     }
 
     public static synchronized UserMetrics getInstance() {
-        if (userMetrics == null) {
+        if (userMetrics == null)
             userMetrics = new UserMetrics();
-        }
+
         return userMetrics;
     }
 
@@ -33,11 +32,8 @@ public class UserMetrics {
 
             while (usersIterator.hasNext()) {
                 int userID = usersIterator.next().getAsInt();
-                if (userID == user.getUserID()) {
-                    int datasetID = (datasetObj.get("dataset_id").getAsInt());
-                    datasetIds.add(datasetID);
-                }
-
+                if (userID == user.getUserID())
+                    datasetIds.add((datasetObj.get("dataset_id").getAsInt()));
             }
         }
 
@@ -58,15 +54,14 @@ public class UserMetrics {
                 continue;
 
             int instanceID = assignments.get(i).getInstance().getInstanceID();
-            if (!assignedInstanceID.contains(instanceID)) {
+
+            if (!assignedInstanceID.contains(instanceID))
                 assignedInstanceID.add(instanceID);
-            }
         }
 
         float compPerCurrent = (float) ((1.0 * assignedInstanceID.size()) / instanceCount) * 100;
-        compPerCurrent = (float) (((int) (compPerCurrent * 100)) / 100.0);
 
-        return compPerCurrent;
+        return ((float) (((int) (compPerCurrent * 100)) / 100.0));
     }
 
     // A-3
@@ -111,17 +106,15 @@ public class UserMetrics {
 
             size = thisUsersAssignments.size();
             for (int i = 0; i < size; i++) {
-                if (!uniqueAssignedInstanceIDs.contains(assignmentList.get(i).getInstance().getInstanceID())) {
+                if (!uniqueAssignedInstanceIDs.contains(assignmentList.get(i).getInstance().getInstanceID()))
                     uniqueAssignedInstanceIDs.add(assignmentList.get(i).getInstance().getInstanceID());
-                }
             }
 
             for (int i = 0; i < uniqueAssignedInstanceIDs.size(); i++) {
                 for (int j = 0; j < thisUsersAssignments.size(); j++) {
                     if (uniqueAssignedInstanceIDs.get(i) == thisUsersAssignments.get(j).getInstance().getInstanceID()) {
-                        for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++) {
+                        for (int j2 = 0; j2 < thisUsersAssignments.get(j).getAssignedLabels().size(); j2++)
                             assignedLabelIDs.add(thisUsersAssignments.get(j).getAssignedLabels().get(j2).getLabelID());
-                        }
                     }
                 }
 
@@ -143,32 +136,33 @@ public class UserMetrics {
     public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
 
         double sum = 0.0;
-        ArrayList<Double> seconds = new ArrayList<Double>();
+        ArrayList<Double> seconds = getUserAssignmentDurations(user, datasetList);
 
-        for (int m = 0; m < datasetList.size(); m++) {
-            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
-            for (int i = 0; i < assignmentList.size(); i++) {
-                if (assignmentList.get(i).getUser() != null
-                        && assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
-                    seconds.add(assignmentList.get(i).getAssingmentDuration() / 1000.0);
-                }
-            }
-        }
-
-        for (double num : seconds) {
+        for (double num : seconds)
             sum += num;
-        }
 
-        int length = seconds.size();
-        double mean = sum / length;
-
-        return mean;
+        return sum / seconds.size();
     }
 
     // A-7
     public double standartDev(User user, ArrayList<Dataset> datasetList) {
 
         double sum = 0.0, standardDeviation = 0.0;
+        ArrayList<Double> seconds = getUserAssignmentDurations(user, datasetList);
+
+        for (double num : seconds)
+            sum += num;
+
+        int length = seconds.size();
+        double mean = sum / length;
+
+        for (double num : seconds)
+            standardDeviation += Math.pow(num - mean, 2);
+
+        return Math.sqrt(standardDeviation / length);
+    }
+
+    private ArrayList<Double> getUserAssignmentDurations(User user, ArrayList<Dataset> datasetList) {
         ArrayList<Double> seconds = new ArrayList<Double>();
 
         for (int m = 0; m < datasetList.size(); m++) {
@@ -180,19 +174,7 @@ public class UserMetrics {
                 }
             }
         }
-
-        for (double num : seconds) {
-            sum += num;
-        }
-
-        int length = seconds.size();
-        double mean = sum / length;
-
-        for (double num : seconds) {
-            standardDeviation += Math.pow(num - mean, 2);
-        }
-
-        return Math.sqrt(standardDeviation / length);
+        return seconds;
     }
 
     private int mostfrequent(Integer array[]) {
@@ -214,9 +196,8 @@ public class UserMetrics {
         int max_count = 0;
 
         for (Entry<Integer, Integer> val : hashmap.entrySet()) {
-            if (max_count < val.getValue()) {
+            if (max_count < val.getValue())
                 max_count = val.getValue();
-            }
         }
         return max_count;
     }
