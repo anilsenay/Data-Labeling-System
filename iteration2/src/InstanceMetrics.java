@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+// Singleton Pattern implemented.
 public class InstanceMetrics {
 
     private static InstanceMetrics instanceMetrics;
@@ -19,7 +20,7 @@ public class InstanceMetrics {
         return instanceMetrics;
     }
 
-    // B-1
+    // B-1 -> Total number of label assignments.
     public int numberOfLabelAssignment(Instance instance, ArrayList<Assignment> assignmentList) {
         int count = 0;
         for (int i = 0; i < assignmentList.size(); i++) {
@@ -30,7 +31,7 @@ public class InstanceMetrics {
         return count;
     }
 
-    // B-2
+    // B-2 -> Number of unique label assignments.
     public int numberOfUniqueLabelAssignment(Instance instance, ArrayList<Assignment> assignmentList) {
         HashSet<Integer> uniqueInstanceLabeled = new HashSet<Integer>();
         for (int i = 0; i < assignmentList.size(); i++) {
@@ -44,7 +45,7 @@ public class InstanceMetrics {
         return uniqueInstanceLabeled.size();
     }
 
-    // B-3
+    // B-3 -> Number of unique users.
     public int numberOfUniqueUsers(Instance instance, ArrayList<Assignment> assignmentList) {
         HashSet<Integer> uniqueUsers = new HashSet<Integer>();
         for (int i = 0; i < assignmentList.size(); i++) {
@@ -55,7 +56,7 @@ public class InstanceMetrics {
         return uniqueUsers.size();
     }
 
-    // B-4
+    // B-4 -> Most frequent class label and percentage.
     public HashMap<String, Double> mostFreqLabelAndPerc(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         HashMap<String, Double> result = new HashMap<String, Double>();
@@ -94,7 +95,7 @@ public class InstanceMetrics {
         return result;
     }
 
-    // B-5
+    // B-5 -> List class labels and percentages.
     public HashMap<String, Double> listClassLabels(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         HashMap<String, Double> result = new HashMap<String, Double>();
@@ -118,7 +119,7 @@ public class InstanceMetrics {
         return result;
     }
 
-    // B-6
+    // B-6 -> Entropy.
     public double entropy(Instance instance, ArrayList<Assignment> assignmentList) {
         ArrayList<String> labels = new ArrayList<String>();
         for (int i = 0; i < assignmentList.size(); i++) {
@@ -153,7 +154,7 @@ public class InstanceMetrics {
         return result;
     }
 
-    // Update all final labels
+    // Update all final labels.
     public void updateAllFinalLabels(ArrayList<Instance> instanceList, ArrayList<Assignment> assignmentList) {
         for (int i = 0; i < instanceList.size(); i++) {
             mostFreqLabelAndPerc(instanceList.get(i), assignmentList);
