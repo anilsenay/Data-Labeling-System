@@ -171,7 +171,7 @@ public class DatasetReportMechanism {
                 userConsistency.add(consistencyObject);
             }
 
-            // ---------------------------------- user consistency for datasets in report
+            // ----------------------------------- user consistency for datasets in report
 
         }
 
