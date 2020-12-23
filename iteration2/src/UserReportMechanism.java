@@ -26,7 +26,7 @@ public class UserReportMechanism {
         }
 
         int numberOfDatasets = userPerformance.getAssignedDatasets().size();
-        float currentDatasetStatus = userPerformance.getDatasetCompletenessPer(report.getJsonObject());
+        float currentDatasetStatus = userPerformance.getDatasetCompletenessPer();
         int totalNumberOfInstances = userPerformance.getNumberOfInstancesLabeled();
         int numberOfUniqueInstances = userPerformance.getUniqueNumOfInstancesLabeled(dataset.getAssignmentList(),
                 newAssignment);
