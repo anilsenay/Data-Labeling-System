@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 public class UserPerformance {
 
