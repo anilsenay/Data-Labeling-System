@@ -22,7 +22,6 @@ public class Main {
 
                 if (userList.get(j).getUserType().equalsIgnoreCase("RandomBot")) {
                     int randomNumber = (int) (Math.random() * 100);
-                    System.out.println("Random number is: " + randomNumber);
                     if (randomNumber < user.getConsistencyCheckProbability() * 100) {
                         // get user's old assignments
                         ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
