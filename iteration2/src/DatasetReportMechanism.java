@@ -38,8 +38,7 @@ public class DatasetReportMechanism {
             // final instance labels part
             JsonArray finalLabels = (JsonArray) datasetObj.get("final_instance_labels");
             ArrayList<String> finalLabelsList = datasetPerformance.getDistributionInstance();
-            int finalLabelsListSize = finalLabels.size();
-
+         
             // flush final labels array
             for (int z = finalLabels.size() - 1; z >= 0; z--) {
                 finalLabels.remove(z);
