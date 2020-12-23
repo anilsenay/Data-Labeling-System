@@ -49,55 +49,7 @@ public class UserMetrics {
     }
 
     // A-2 List of all datasets with their completeness percentage
-    public float datasetCompletenessPer(User user, JsonObject report) {
-        JsonArray userObjects = (JsonArray) report.get("users");
-        Iterator<JsonElement> userListIterator = userObjects.iterator();
-        int instanceCount = 0;
-        ArrayList<Integer> assignedInstanceID = new ArrayList<Integer>();
-        ArrayList<Instance> instances = new ArrayList<Instance>();
-
-        while (userListIterator.hasNext()) {
-            JsonObject userObj = (JsonObject) (userListIterator.next());
-            int userID = userObj.get("user_id").getAsInt();
-
-            if (userID != user.getUserID())
-                continue;
-
-            JsonArray datasetStatus = (JsonArray) userObj.get("datasets_status");
-            Iterator<JsonElement> datasetStatusIterator = datasetStatus.iterator();
-
-            while (datasetStatusIterator.hasNext()) {
-                Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
-                int currentDatasetID = currentDataset.getDatasetID();
-
-                JsonObject datasetObj = (JsonObject) (datasetStatusIterator.next());
-                int datasetId = (datasetObj.get("dataset_id").getAsInt());
-
-                if (datasetId != currentDatasetID)
-                    continue;
-
-                ArrayList<Assignment> assignments = currentDataset.getAssignmentList();
-                instances = currentDataset.getInstances();
-
-                int size = assignments.size();
-                for (int i = 0; i < size; i++) {
-                    if (assignments.get(i).getUser().getUserID() == userID) {
-                        int instanceID = assignments.get(i).getInstance().getInstanceID();
-                        if (!assignedInstanceID.contains(instanceID)) {
-                            assignedInstanceID.add(instanceID);
-                        }
-                    }
-                }
-            }
-        }
-
-        instanceCount = instances.size();
-
-        float compPer = (float) ((1.0 * assignedInstanceID.size()) / instanceCount) * 100;
-        return compPer;
-    }
-
-    public float datasetCompletenessPerCurrent(User user) {
+    public float datasetCompletenessPer(User user) {
         Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
         ArrayList<Assignment> assignments = currentDataset.getAssignmentList();
         ArrayList<Instance> instances = currentDataset.getInstances();
@@ -116,6 +68,8 @@ public class UserMetrics {
         }
 
         float compPerCurrent = (float) ((1.0 * assignedInstanceID.size()) / instanceCount) * 100;
+        compPerCurrent = (float) (((int) (compPerCurrent * 100)) / 100.0);
+
         return compPerCurrent;
     }
 
