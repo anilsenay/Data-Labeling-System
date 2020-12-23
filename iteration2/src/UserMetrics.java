@@ -1,13 +1,8 @@
-import java.util.Arrays;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.HashSet;
-import java.util.Map.Entry; // HEPSİ İÇİN KESİNLİKLE TEST LAZIMM.
+import java.util.Map.Entry;
 import java.util.Iterator;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -79,7 +74,7 @@ public class UserMetrics {
         return 1;
     }
 
-    // A-4 TEST EDİLMELİ
+    // A-4
     public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
         for (int i = 0; i < assignmentList.size() - 1; i++) {
@@ -145,57 +140,55 @@ public class UserMetrics {
     }
 
     // A-6
-    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList, double lastAverage) {
-        ArrayList<Assignment> userAssignments = new ArrayList<Assignment>();
-        double result = 0;
-        int count = 0;
-        Date endDate = new Date();
-        int totalLastAssignments=0;
-        for (int m = 0; m < datasetList.size(); m++) {
-            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
+    public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
 
-            for (int i = 0; i < assignmentList.size(); i++) {
-                if (assignmentList.get(i).getUser() != null
-                        && user.getUserID() == assignmentList.get(i).getUser().getUserID()) {
-                    userAssignments.add(assignmentList.get(i));
-                }            
-            }
-        }
-        totalLastAssignments = userAssignments.size();
-        Dataset currentDataset = ReportingMechanism.getInstance().getDataset();
-        Assignment lastAssignment = currentDataset.getAssignmentList().get(currentDataset.getAssignmentList().size() -1 );
-        double assignmentDuration = (endDate.getTime()  - lastAssignment.getDateTime().getTime())/1000.0;
-        
-        result = ((lastAverage*(totalLastAssignments-1)) + assignmentDuration)/ totalLastAssignments;
-
-        return result;
-    }
-
-    // A-7
-    public double standartDev(User user, ArrayList<Dataset> datasetList) {
-
-        double sum = 0.0, standardDeviation = 0.0;
-        ArrayList<Long> seconds = new ArrayList<Long>();
+        double sum = 0.0;
+        ArrayList<Double> seconds = new ArrayList<Double>();
 
         for (int m = 0; m < datasetList.size(); m++) {
             ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
             for (int i = 0; i < assignmentList.size(); i++) {
                 if (assignmentList.get(i).getUser() != null
                         && assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
-                    Long sec = (assignmentList.get(i).getDateTime().getTime()) / 1000;
-                    seconds.add(sec);
+                    seconds.add(assignmentList.get(i).getAssingmentDuration() / 1000.0);
                 }
             }
         }
 
-        for (long num : seconds) {
+        for (double num : seconds) {
             sum += num;
         }
 
         int length = seconds.size();
         double mean = sum / length;
 
-        for (long num : seconds) {
+        return mean;
+    }
+
+    // A-7
+    public double standartDev(User user, ArrayList<Dataset> datasetList) {
+
+        double sum = 0.0, standardDeviation = 0.0;
+        ArrayList<Double> seconds = new ArrayList<Double>();
+
+        for (int m = 0; m < datasetList.size(); m++) {
+            ArrayList<Assignment> assignmentList = datasetList.get(m).getAssignmentList();
+            for (int i = 0; i < assignmentList.size(); i++) {
+                if (assignmentList.get(i).getUser() != null
+                        && assignmentList.get(i).getUser().getUserID() == user.getUserID()) {
+                    seconds.add(assignmentList.get(i).getAssingmentDuration() / 1000.0);
+                }
+            }
+        }
+
+        for (double num : seconds) {
+            sum += num;
+        }
+
+        int length = seconds.size();
+        double mean = sum / length;
+
+        for (double num : seconds) {
             standardDeviation += Math.pow(num - mean, 2);
         }
 
@@ -217,12 +210,11 @@ public class UserMetrics {
             }
         }
 
-        // find max frequencyuency.
-        int max_count = 0, res = -1;
+        // find max frequency
+        int max_count = 0;
 
         for (Entry<Integer, Integer> val : hashmap.entrySet()) {
             if (max_count < val.getValue()) {
-                res = val.getKey();
                 max_count = val.getValue();
             }
         }
