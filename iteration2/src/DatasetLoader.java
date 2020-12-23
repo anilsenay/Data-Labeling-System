@@ -140,6 +140,7 @@ public class DatasetLoader {
         int instanceId = ((Long) assignmentObj.get("instance id")).intValue();
         int userId = ((Long) assignmentObj.get("user id")).intValue();
         String date = (String) assignmentObj.get("datetime");
+        Double duration = (Double) assignmentObj.get("duration");
         // find user
         User user = null;
         int userListSize = dls.getUserList().size();
@@ -157,6 +158,7 @@ public class DatasetLoader {
         }
 
         Assignment assignment = new Assignment(instance, user, new ArrayList<Label>(), date);
+        assignment.setAssingmentDuration(duration);
 
         // get label ids
         ArrayList<Integer> labelIds = new ArrayList<Integer>();

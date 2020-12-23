@@ -38,8 +38,7 @@ public class DataLabelingSystem {
 
 		// // restore final labels after loading dataset
 		if (outputFile.exists())
-			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(),
-					this.dataset.getAssignmentList());
+			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(), this.dataset.getAssignmentList());
 	}
 
 	// Get users from given file and store them to JSON object.
@@ -167,6 +166,7 @@ public class DataLabelingSystem {
 			assignmentObject.add("class label ids", classLabelIds);
 			assignmentObject.addProperty("user id", assignmentList.get(j).getUser().getUserID());
 			assignmentObject.addProperty("datetime", date);
+			assignmentObject.addProperty("duration", assignmentList.get(j).getAssingmentDuration());
 
 			assignmentJSONList.add(assignmentObject);
 		}
