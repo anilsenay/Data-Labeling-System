@@ -64,12 +64,13 @@ public class InstanceMetrics {
             if (instance.getInstanceID() == assignmentList.get(i).getInstance().getInstanceID()) {
 
                 for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
-                    if (assignmentList.get(i).getAssignedLabels().get(j) != null) {
+                    if (assignmentList.get(i).getAssignedLabels().get(j) != null)
                         labels.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelName());
-                    }
                 }
             }
         }
+        if(labels.size() == 0) return null;
+        
         Map<String, Long> occurrences = labels.stream().collect(Collectors.groupingBy(w -> w, Collectors.counting()));
         String label = occurrences.entrySet().stream()
                 .max((entry1, entry2) -> entry1.getValue() > entry2.getValue() ? 1 : -1).get().getKey();
