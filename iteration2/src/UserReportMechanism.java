@@ -9,10 +9,11 @@ public class UserReportMechanism {
 
     private ArrayList<UserPerformance> userPerformances = new ArrayList<UserPerformance>();
 
+    // No-arg constructor
     public UserReportMechanism() {
 
     }
-
+    // Update user part of the report
     public void updateUser(User user, Assignment newAssignment) {
         Dataset dataset = ReportingMechanism.getInstance().getDataset();
         Report report = ReportingMechanism.getInstance().getReport();
@@ -40,7 +41,8 @@ public class UserReportMechanism {
             JsonObject userObj = (JsonObject) (userIterator.next());
             if (userObj.get("user_id").getAsInt() != user.getUserID())
                 continue;
-
+            /* Add number of datasets , total number of instances , unique labeled instances ,
+             consistencey percentage,average time and standart deviation to report */
             userObj.addProperty("number_of_datasets", numberOfDatasets);
             int labeled_instances = userObj.get("labeled_instances").getAsInt();
             userObj.addProperty("labeled_instances", totalNumberOfInstances + labeled_instances);
@@ -56,7 +58,7 @@ public class UserReportMechanism {
             JsonArray userDatasets = (JsonArray) userObj.get("datasets_status");
             Iterator<JsonElement> userDatasetIterator = userDatasets.iterator();
 
-            // if there is no dataset added
+            // If there is no dataset added
             if (!userDatasetIterator.hasNext()) {
                 for (int i = 0; i < userPerformance.getAssignedDatasets().size(); i++) {
                     JsonObject datasetStatusObj = new JsonObject();
@@ -65,7 +67,7 @@ public class UserReportMechanism {
                     userDatasets.add(datasetStatusObj);
                 }
             }
-            // if dataset exists update its status
+            // If dataset exists update its status
             boolean isFound = false;
             while (userDatasetIterator.hasNext()) {
                 JsonObject datasetObj = (JsonObject) (userDatasetIterator.next());
@@ -74,7 +76,7 @@ public class UserReportMechanism {
                 datasetObj.addProperty("status", currentDatasetStatus);
                 isFound = true;
             }
-            // if new dataset added and could not be found in the list
+            // If new dataset added and could not be found in the list
             if (!isFound) {
                 JsonObject datasetStatusObj = new JsonObject();
                 datasetStatusObj.addProperty("dataset_id", dataset.getDatasetID());
