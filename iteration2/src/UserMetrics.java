@@ -15,6 +15,7 @@ public class UserMetrics {
     private UserMetrics() {
     }
 
+    // getInstance call for usage of object variable with singleton pattern 
     public static synchronized UserMetrics getInstance() {
         if (userMetrics == null)
             userMetrics = new UserMetrics();
@@ -64,12 +65,12 @@ public class UserMetrics {
         return ((float) (((int) (compPerCurrent * 100)) / 100.0));
     }
 
-    // A-3
+    // A-3 Total number of instances labeled
     public int numberOfInstancesLabeled() {
         return 1;
     }
 
-    // A-4
+    // A-4 Total number of unique instances labeled 
     public int uniqueNumOfInstancesLabeled(User user, ArrayList<Assignment> assignmentList, Assignment newAssignment) {
 
         for (int i = 0; i < assignmentList.size() - 1; i++) {
@@ -132,7 +133,7 @@ public class UserMetrics {
         return result;
     }
 
-    // A-6
+    // A-6 Average time spent in labeling an instance in seconds
     public double averageTimeSpent(User user, ArrayList<Dataset> datasetList) {
 
         double sum = 0.0;
@@ -144,7 +145,7 @@ public class UserMetrics {
         return sum / seconds.size();
     }
 
-    // A-7
+    // A-7 Std. dev. of  time spent in labeling an instance in seconds
     public double standartDev(User user, ArrayList<Dataset> datasetList) {
 
         double sum = 0.0, standardDeviation = 0.0;
@@ -162,6 +163,7 @@ public class UserMetrics {
         return Math.sqrt(standardDeviation / length);
     }
 
+    // Calculates the time it takes to perform an assignment
     private ArrayList<Double> getUserAssignmentDurations(User user, ArrayList<Dataset> datasetList) {
         ArrayList<Double> seconds = new ArrayList<Double>();
 
@@ -177,6 +179,7 @@ public class UserMetrics {
         return seconds;
     }
 
+    // Finds the most frequent label
     private int mostfrequent(Integer array[]) {
         // Insert all elements in hash
         Map<Integer, Integer> hashmap = new HashMap<Integer, Integer>();
