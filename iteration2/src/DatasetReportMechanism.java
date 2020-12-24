@@ -97,6 +97,7 @@ public class DatasetReportMechanism {
                     userCompleteness.add(completenessObject);
                 }
             }
+
             // if objects of the userCompleteness exists, find current user and update corresponding properties
             userCompIterator = userCompleteness.iterator();
             boolean isFound = false;
@@ -107,6 +108,7 @@ public class DatasetReportMechanism {
                     isFound = true;
                 }
             }
+
             // if user added in between executions, create and update user's information
             if (!isFound) {
                 JsonObject completenessObject = new JsonObject();
@@ -134,6 +136,7 @@ public class DatasetReportMechanism {
                     userConsistency.add(consistencyObject);
                 }
             }
+
             // if objects of the userConsistency array has already created then find current user and update it
             userConsIterator = userConsistency.iterator();
             isFound = false;
@@ -154,6 +157,7 @@ public class DatasetReportMechanism {
                     isFound = true;
                 }
             }
+
             // if user added in between executions, create and update user's information
             if (!isFound) {
                 JsonObject consistencyObject = new JsonObject();
