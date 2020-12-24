@@ -156,7 +156,8 @@ public class DatasetLoader {
           if (dataset.getInstances().get(i).getInstanceID() == instanceId)
             instance = dataset.getInstances().get(i);
         }
-
+        
+        // create assignment for calculating assignment duration
         Assignment assignment = new Assignment(instance, user, new ArrayList<Label>(), date);
         assignment.setAssingmentDuration(duration);
 
@@ -164,12 +165,14 @@ public class DatasetLoader {
         ArrayList<Integer> labelIds = new ArrayList<Integer>();
         JSONArray labels = (JSONArray) assignmentObj.get("class label ids");
         Iterator<Long> labelsIterator = labels.iterator();
+        
+        //store label IDs
         while (labelsIterator.hasNext()) {
           Long id = labelsIterator.next();
           labelIds.add(id.intValue());
         }
 
-        // find labels
+        // find labels and add them into assignedLabels arraylist
         int labelIdsSize = labelIds.size();
         int labelsSize = dataset.getClassLabels().size();
         for (int i = 0; i < labelIdsSize; i++) {
@@ -181,7 +184,7 @@ public class DatasetLoader {
           }
         }
 
-        // Create labels from given parameters.
+        // Add current assignment into assignmentList 
         dataset.addAssignment(assignment);
       }
 
