@@ -26,17 +26,17 @@ public class DataLabelingSystem {
 	private DatasetLoader datasetLoader = new DatasetLoader();
 	private ReportingMechanism reportingMechanism = ReportingMechanism.getInstance();
 
-	public void handleDataset() {
+	public void handleDataset() { // handling dataset existance
 		File outputFile = new File(this.outputName);
-		if (outputFile.exists()) { // dataset output u varsa
-			this.dataset = datasetLoader.loadDataset(this.outputName, this, this.dataset);
-		} else {
-			datasetLoader.createDataset(this);
+		if (outputFile.exists()) { // if there exists an dataset
+			this.dataset = datasetLoader.loadDataset(this.outputName, this, this.dataset); // load dataset into current dataset object
+		} else { // if there is no dataset initially
+			datasetLoader.createDataset(this); // create it for later usage
 		}
-		reportingMechanism.setDataset(this.dataset);
-		reportingMechanism.importReport(this.dataset, this.userList);
+		reportingMechanism.setDataset(this.dataset); //setting corresponding dataset as current dataset
+		reportingMechanism.importReport(this.dataset, this.userList); // importing report
 
-		// // restore final labels after loading dataset
+		//restore final labels after loading dataset
 		if (outputFile.exists())
 			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(), this.dataset.getAssignmentList());
 	}
@@ -73,11 +73,13 @@ public class DataLabelingSystem {
 					continue;
 				}
 				String datasetPath = datasetObj.get("path").getAsString();
+				// store input and output names
 				this.inputName = datasetPath;
 				this.outputName = datasetId + "_" + datasetName + "_output.json";
 
 				JsonArray users = (JsonArray) datasetObj.get("users");
 				Iterator<JsonElement> usersIterator = users.iterator();
+				// store userIDs for later comparisons
 				while (usersIterator.hasNext()) {
 					Long userId = usersIterator.next().getAsLong();
 					userIDs.add(userId.intValue());
@@ -87,11 +89,11 @@ public class DataLabelingSystem {
 			// Get users from Iterator Object and store them to JSON object.
 			Iterator<JsonElement> userListIterator = userObjects.iterator();
 			while (userListIterator.hasNext()) {
-
 				JsonObject userObj = (JsonObject) (userListIterator.next());
 				int userID = userObj.get("user id").getAsInt();
 				if (!userIDs.contains(userID))
 					continue;
+				// get consistencyCheckProbability from users
 				double consistencyCheckProbability = userObj.get("ConsistencyCheckProbability").getAsDouble();
 
 				String userName = userObj.get("user name").getAsString();
@@ -101,10 +103,12 @@ public class DataLabelingSystem {
 				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
+				// update assigned datasets for every user
 				up.updateAssignedDatasets(datasets.iterator());
 			}
 			this.userList = userList;
-
+			
+			// add existing datasets into stored datasets
 			for (String outputFile : storedDatasets)
 				reportingMechanism.addOldDataset(datasetLoader.loadDataset(outputFile, this, new Dataset()));
 
