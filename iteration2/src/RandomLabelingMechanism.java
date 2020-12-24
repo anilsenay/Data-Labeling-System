@@ -54,6 +54,7 @@ public class RandomLabelingMechanism extends LabelingMechanism {
         } catch (InterruptedException e) {
             Logger.getInstance().error(new Date(), e.getLocalizedMessage());
         }
+        // sets duration of current assignment and adds into current dataset
         assignment.setAssingmentDuration(new Date().getTime() - assignment.getDateTime().getTime());
         dataset.addAssignment(assignment);
         return assignment;
