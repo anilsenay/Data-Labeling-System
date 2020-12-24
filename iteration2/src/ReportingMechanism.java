@@ -10,9 +10,11 @@ public class ReportingMechanism {
     private InstanceReportMechanism instanceReportMechanism = new InstanceReportMechanism();
     private DatasetReportMechanism datasetReportMechanism = new DatasetReportMechanism();
 
+    // No-arg constructor
     private ReportingMechanism() {
     }
 
+    // getInstance call for usage of object variable with singleton pattern 
     public static synchronized ReportingMechanism getInstance() {
         if (reportingMechanism == null) {
             reportingMechanism = new ReportingMechanism();
@@ -24,6 +26,7 @@ public class ReportingMechanism {
         report.handleReport(this);
     }
 
+    // Updates our report with the help of reporting mechanisms
     public void updateReport(Assignment assignment) {
         userReportMechanism.updateUser(assignment.getUser(), assignment);
         instanceReportMechanism.updateInstance(assignment.getInstance());
