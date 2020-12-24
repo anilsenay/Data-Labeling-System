@@ -122,11 +122,11 @@ public class Report {
     public void addNewInstances(ArrayList<InstancePerformance> instanceMetrics, JsonArray instanceArray) {
         JsonObject reportObject = this.reportObject;
         JsonArray instances = (JsonArray) reportObject.get("instances");
-        Iterator<JsonElement> instanceIterator = instances != null ? instances.iterator() : null;
-
+        
         int instanceMetricsSize = instanceMetrics.size();
         for (int i = 0; i < instanceMetricsSize; i++) {
-
+            
+            Iterator<JsonElement> instanceIterator = instances != null ? instances.iterator() : null;
             boolean isFound = false;
             // finding out that whether instances are created before or not by iterating through them
             while (instanceIterator != null && instanceIterator.hasNext()) {
