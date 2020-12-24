@@ -7,7 +7,8 @@ public class DatasetMetrics {
     private DatasetMetrics() {
 
     }
-
+    
+    // getInstance call for usage of object variable with singleton pattern 
     public static synchronized DatasetMetrics getInstance() {
         if (datasetMetrics == null) {
             datasetMetrics = new DatasetMetrics();
@@ -23,13 +24,14 @@ public class DatasetMetrics {
         ArrayList<Integer> labeledInstances = new ArrayList<Integer>();
 
         int countAssignment = assignmentList.size();
+        // gett labeled instances
         for (int i = 0; i < countAssignment; i++) {
             int id = assignmentList.get(i).getInstance().getInstanceID();
             if (!labeledInstances.contains(id)) {
                 labeledInstances.add(id);
             }
         }
-
+        // percentage calculation labeled instances / every instance current dataset has
         float perc = (float) ((1.0 * labeledInstances.size()) / countInstance);
 
         return perc * 100;
@@ -74,15 +76,18 @@ public class DatasetMetrics {
         return result;
     }
 
-    // C-3 List number of unique instances for each class label ()
+    // C-3 List number of unique instances for each class label
     public int numOfUniqueInstance(Label label) {
+    	// get current dataset from previous state
         Dataset dataset = ReportingMechanism.getInstance().getDataset();
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
         ArrayList<Integer> uniqueInstanceIDs = new ArrayList<Integer>();
 
+        // addition of unique instance ids  to uniqueInstanceIDs arraylist
         for (int i = 0; i < assignmentList.size(); i++) {
             for (int j = 0; j < assignmentList.get(i).getAssignedLabels().size(); j++) {
                 if (label.getLabelID() == assignmentList.get(i).getAssignedLabels().get(j).getLabelID()) {
+                	// if current instance is not added before
                     if (!uniqueInstanceIDs.contains(assignmentList.get(i).getAssignedLabels().get(j).getLabelID())) {
                         uniqueInstanceIDs.add(assignmentList.get(i).getAssignedLabels().get(j).getLabelID());
                     }
@@ -95,12 +100,14 @@ public class DatasetMetrics {
 
     // C-4 Number of users assigned to this dataset
     public int numberOfUserAssigned() {
+    	// get current dataset from previous state
         Dataset dataset = ReportingMechanism.getInstance().getDataset();
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
         int count = 0;
         ArrayList<Integer> userIDs = new ArrayList<Integer>();
 
         int countAssignment = dataset.getAssignmentList().size();
+        // count number of users assigned to current dataset
         for (int i = 0; i < countAssignment; i++) {
             int userID = assignmentList.get(i).getUser().getUserID();
             if (!userIDs.contains(userID)) {
