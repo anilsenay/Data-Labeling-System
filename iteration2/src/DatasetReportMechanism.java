@@ -16,11 +16,13 @@ public class DatasetReportMechanism {
     public DatasetReportMechanism(Dataset dataset) {
         this.datasetPerformance = new DatasetPerformance(dataset);
     }
-
+    // update dataset part of the report
     public void updateDataset(Dataset dataset, User user) {
+    	// get current state of the report
         Report report = ReportingMechanism.getInstance().getReport();
-
+        // calculate completeness
         float completeness = this.datasetPerformance.getCompletenessPercentage();
+        // calculate number of users
         int numberOfUsers = this.datasetPerformance.getNumberOfUserAssigned();
 
         JsonObject reportObject = report.getJsonObject();
@@ -30,15 +32,14 @@ public class DatasetReportMechanism {
             JsonObject datasetObj = (JsonObject) (datasetIterator.next());
             if (datasetObj.get("dataset_id").getAsInt() != dataset.getDatasetID())
                 continue;
-
+            // add number of users and completeness to report
             datasetObj.addProperty("number_of_users", numberOfUsers);
             datasetObj.addProperty("completeness", completeness);
 
             // final instance labels part
             JsonArray finalLabels = (JsonArray) datasetObj.get("final_instance_labels");
             ArrayList<String> finalLabelsList = datasetPerformance.getDistributionInstance();
-            int finalLabelsListSize = finalLabels.size();
-
+         
             // flush final labels array
             for (int z = finalLabels.size() - 1; z >= 0; z--) {
                 finalLabels.remove(z);
@@ -51,7 +52,7 @@ public class DatasetReportMechanism {
                 finalLabels.add(finalLabelObj);
             }
 
-            // unique number of instances for each label -------------------
+            // starting of unique number of instances for each label part -------------------
 
             JsonArray uniqueInstances = (JsonArray) datasetObj.get("unique_instance_number_for_each_label");
 
@@ -59,7 +60,8 @@ public class DatasetReportMechanism {
             for (int z = uniqueInstances.size() - 1; z >= 0; z--) {
                 uniqueInstances.remove(z);
             }
-
+            
+            //recreate unique instances
             ArrayList<Label> labels = datasetPerformance.getDataset().getClassLabels();
             for (int j = 0; j < labels.size(); j++) {
                 JsonObject labelObj = new JsonObject();
@@ -69,7 +71,7 @@ public class DatasetReportMechanism {
                 uniqueInstances.add(labelObj);
             }
 
-            // --------------------------- unique number of instances for each label
+            // --------------------------- ending of unique number of instances for each label part
 
             // find current user's userMetric
             UserPerformance userPerformance = null;
@@ -82,12 +84,11 @@ public class DatasetReportMechanism {
                 }
             }
 
-            // user completeness for datasets in report
-            // --------------------------------------------
+            // starting of user completeness for datasets in report part -----------------------------------------
 
             JsonArray userCompleteness = (JsonArray) datasetObj.get("user_completeness");
             Iterator<JsonElement> userCompIterator = userCompleteness.iterator();
-
+            // initially if there is no userCompleteness part, create it with user id and percentage properties 
             if (!userCompIterator.hasNext()) {
                 for (int i = 0; i < userPerformances.size(); i++) {
                     JsonObject completenessObject = new JsonObject();
@@ -96,7 +97,7 @@ public class DatasetReportMechanism {
                     userCompleteness.add(completenessObject);
                 }
             }
-
+            // if objects of the userCompleteness exists, find current user and update corresponding properties
             userCompIterator = userCompleteness.iterator();
             boolean isFound = false;
             while (userCompIterator.hasNext()) {
@@ -106,6 +107,7 @@ public class DatasetReportMechanism {
                     isFound = true;
                 }
             }
+            // if user added in between executions, create and update user's information
             if (!isFound) {
                 JsonObject completenessObject = new JsonObject();
                 completenessObject.addProperty("user_id", user.getUserID());
@@ -117,14 +119,13 @@ public class DatasetReportMechanism {
                 userCompleteness.add(completenessObject);
             }
 
-            // -------------------------------------------- user completeness for datasets
-            // in report
+            // -------------------------------------------- ending of user completeness for datasets in report part
 
-            // user consistency for datasets in report ----------------------------------
+            // starting of user consistency for datasets in report part ----------------------------------
 
             JsonArray userConsistency = (JsonArray) datasetObj.get("user_consistency");
             Iterator<JsonElement> userConsIterator = userConsistency.iterator();
-
+            // if objects of the userConsistency array is not created then create and add user id and consistency percentages 
             if (!userConsIterator.hasNext()) {
                 for (int i = 0; i < userPerformances.size(); i++) {
                     JsonObject consistencyObject = new JsonObject();
@@ -133,7 +134,7 @@ public class DatasetReportMechanism {
                     userConsistency.add(consistencyObject);
                 }
             }
-
+            // if objects of the userConsistency array has already created then find current user and update it
             userConsIterator = userConsistency.iterator();
             isFound = false;
             while (userConsIterator.hasNext()) {
@@ -143,6 +144,7 @@ public class DatasetReportMechanism {
                     Iterator<JsonElement> userIterator = users.iterator();
                     while (userIterator.hasNext()) {
                         JsonObject userObj = (JsonObject) (userIterator.next());
+                        // if current user is found in all users, update consistency percentage based on all datasets
                         if (userObj.get("user_id").getAsInt() == user.getUserID()) {
                             consistencyObj.addProperty("consistency_percentages",
                                     userPerformance.getConsistencyPercentagesForUser(
@@ -152,6 +154,7 @@ public class DatasetReportMechanism {
                     isFound = true;
                 }
             }
+            // if user added in between executions, create and update user's information
             if (!isFound) {
                 JsonObject consistencyObject = new JsonObject();
 
@@ -168,12 +171,12 @@ public class DatasetReportMechanism {
                 userConsistency.add(consistencyObject);
             }
 
-            // ---------------------------------- user consistency for datasets in report
+            // ---------------------------------- ending of user consistency for datasets in report part
 
         }
 
     }
-
+    // getter and setter methods for datasetPerformance
     public DatasetPerformance getDatasetPerformance() {
         return this.datasetPerformance;
     }
@@ -181,5 +184,5 @@ public class DatasetReportMechanism {
     public void setDatasetPerformance(DatasetPerformance datasetPerformance) {
         this.datasetPerformance = datasetPerformance;
     }
-
+    
 }
