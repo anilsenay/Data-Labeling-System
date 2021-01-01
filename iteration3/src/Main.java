@@ -84,6 +84,33 @@ public class Main {
                         // Print results to the console and log file.
                         DLS.writeOutputFile();
                         ReportingMechanism.getInstance().updateReport(assignment);
+                    } else if (userList.get(j).getUserType().equalsIgnoreCase("RelevanceBot")) {
+                        RelevanceBot user = (RelevanceBot) userList.get(j);
+                        int randomNumber = (int) (Math.random() * 100);
+                        if (randomNumber < user.getConsistencyCheckProbability() * 100) {
+                            // get user's old assignments
+                            ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
+                            for (int z = 0; z < assignmentList.size(); z++) {
+                                if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
+                                    usersAssignments.add(assignmentList.get(z));
+                                }
+                            }
+                            // if there is no previous assignment for this user
+                            if (usersAssignments.size() == 0) {
+                                assignment = user.assign(dataset, instanceList.get(i));
+                            } else {
+                                int randomAssignment = (int) (Math.random() * usersAssignments.size());
+                                Instance randomInstance = usersAssignments.get(randomAssignment).getInstance();
+                                assignment = user.assign(dataset, randomInstance);
+                            }
+
+                        } else {
+                            assignment = user.assign(dataset, instanceList.get(i));
+                        }
+
+                        // Print results to the console and log file.
+                        DLS.writeOutputFile();
+                        ReportingMechanism.getInstance().updateReport(assignment);
                     }
                 }
             }

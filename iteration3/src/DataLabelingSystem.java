@@ -109,6 +109,8 @@ public class DataLabelingSystem {
 					user = new RegularUser(userName, userID, userType, consistencyCheckProbability);
 				if (userType.equals("RandomBot"))
 					user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
+				if (userType.equals("RelevanceBot"))
+					user = new RelevanceBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
 				// update assigned datasets for every user
