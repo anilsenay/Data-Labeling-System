@@ -3,7 +3,7 @@ import java.util.Date;
 
 /* RandomLabelingMechanism is kind of labelingMechanism which assignment process handled randomly, 
    inherits from LabelingMechanism class. Implemented Singleton Pattern. */
-public class RandomLabelingMechanism extends LabelingMechanism {
+public class RandomLabelingMechanism implements ILabeling {
     private static RandomLabelingMechanism randomLabelingMechanism;
 
     // No arg constructor.
@@ -20,6 +20,12 @@ public class RandomLabelingMechanism extends LabelingMechanism {
         }
 
         return randomLabelingMechanism;
+    }
+
+    @Override
+    public void assign() {
+        // TODO Auto-generated method stub
+
     }
 
     /*

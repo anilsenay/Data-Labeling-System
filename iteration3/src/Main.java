@@ -14,38 +14,70 @@ public class Main {
         Dataset dataset = DLS.getDataset();
         ArrayList<Assignment> assignmentList = dataset.getAssignmentList();
 
-        // Random assignment for iteration-2
-        for (int i = 0; i < instanceList.size(); i++) {
-            for (int j = 0; j < userList.size(); j++) {
-                RandomBot user = (RandomBot) userList.get(j);
+        if (DLS.getCurrentUser() != null) {
+            User user = DLS.getCurrentUser();
+            for (int i = 0; i < instanceList.size(); i++) {
                 Assignment assignment = null;
-
-                if (userList.get(j).getUserType().equalsIgnoreCase("RandomBot")) {
-                    int randomNumber = (int) (Math.random() * 100);
-                    if (randomNumber < user.getConsistencyCheckProbability() * 100) {
-                        // get user's old assignments
-                        ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
-                        for (int z = 0; z < assignmentList.size(); z++) {
-                            if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
-                                usersAssignments.add(assignmentList.get(z));
-                            }
+                int randomNumber = (int) (Math.random() * 100);
+                if (randomNumber < user.getConsistencyCheckProbability() * 100) {
+                    // get user's old assignments
+                    ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
+                    for (int z = 0; z < assignmentList.size(); z++) {
+                        if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
+                            usersAssignments.add(assignmentList.get(z));
                         }
-                        // if there is no previous assignment for this user
-                        if (usersAssignments.size() == 0) {
-                            assignment = user.assign(dataset, instanceList.get(i));
-                        } else {
-                            int randomAssignment = (int) (Math.random() * usersAssignments.size());
-                            Instance randomInstance = usersAssignments.get(randomAssignment).getInstance();
-                            assignment = user.assign(dataset, randomInstance);
-                        }
-
-                    } else {
-                        assignment = user.assign(dataset, instanceList.get(i));
                     }
+                    // if there is no previous assignment for this user
+                    if (usersAssignments.size() == 0) {
+                        assignment = user.assign(dataset, instanceList.get(i));
+                    } else {
+                        int randomAssignment = (int) (Math.random() * usersAssignments.size());
+                        Instance randomInstance = usersAssignments.get(randomAssignment).getInstance();
+                        assignment = user.assign(dataset, randomInstance);
+                    }
+                } else {
+                    assignment = user.assign(dataset, instanceList.get(i));
+                }
 
-                    // Print results to the console and log file.
-                    DLS.writeOutputFile();
-                    ReportingMechanism.getInstance().updateReport(assignment);
+                DLS.writeOutputFile();
+                ReportingMechanism.getInstance().updateReport(assignment);
+            }
+        }
+
+        else {
+            // Random assignment for iteration-2
+            for (int i = 0; i < instanceList.size(); i++) {
+                for (int j = 0; j < userList.size(); j++) {
+                    Assignment assignment = null;
+
+                    if (userList.get(j).getUserType().equalsIgnoreCase("RandomBot")) {
+                        RandomBot user = (RandomBot) userList.get(j);
+                        int randomNumber = (int) (Math.random() * 100);
+                        if (randomNumber < user.getConsistencyCheckProbability() * 100) {
+                            // get user's old assignments
+                            ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
+                            for (int z = 0; z < assignmentList.size(); z++) {
+                                if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
+                                    usersAssignments.add(assignmentList.get(z));
+                                }
+                            }
+                            // if there is no previous assignment for this user
+                            if (usersAssignments.size() == 0) {
+                                assignment = user.assign(dataset, instanceList.get(i));
+                            } else {
+                                int randomAssignment = (int) (Math.random() * usersAssignments.size());
+                                Instance randomInstance = usersAssignments.get(randomAssignment).getInstance();
+                                assignment = user.assign(dataset, randomInstance);
+                            }
+
+                        } else {
+                            assignment = user.assign(dataset, instanceList.get(i));
+                        }
+
+                        // Print results to the console and log file.
+                        DLS.writeOutputFile();
+                        ReportingMechanism.getInstance().updateReport(assignment);
+                    }
                 }
             }
         }

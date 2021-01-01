@@ -32,8 +32,9 @@
     },
     {
       "user id": 6,
-      "user name": "RandomLabelingMechanism6",
-      "user type": "RandomBot",
+      "user name": "anilsenay",
+      "password": "202cb962ac59075b964b07152d234b70",
+      "user type": "Regular",
       "ConsistencyCheckProbability": 0.1
     }
   ],
@@ -42,7 +43,7 @@
       "dataset_id": 1,
       "dataset_name": "dataset1",
       "path": "input.json",
-      "users": [1, 2]
+      "users": [1, 2, 6]
     },
     {
       "dataset_id": 2,

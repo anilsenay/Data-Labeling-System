@@ -21,22 +21,26 @@ public class DataLabelingSystem {
 
 	private Dataset dataset = null;
 	private ArrayList<User> userList = null;
+	private User currentUser = null;
+
 	private Logger logger = Logger.getInstance();
 	private String inputName, outputName;
 	private DatasetLoader datasetLoader = new DatasetLoader();
 	private ReportingMechanism reportingMechanism = ReportingMechanism.getInstance();
+	private LoginMechanism loginMechanism = new LoginMechanism();
 
 	public void handleDataset() { // handling dataset existance
 		File outputFile = new File(this.outputName);
 		if (outputFile.exists()) { // if there exists an dataset
-			this.dataset = datasetLoader.loadDataset(this.outputName, this, this.dataset); // load dataset into current dataset object
+			// load dataset into current dataset object
+			this.dataset = datasetLoader.loadDataset(this.outputName, this, this.dataset);
 		} else { // if there is no dataset initially
 			datasetLoader.createDataset(this); // create it for later usage
 		}
-		reportingMechanism.setDataset(this.dataset); //setting corresponding dataset as current dataset
+		reportingMechanism.setDataset(this.dataset); // setting corresponding dataset as current dataset
 		reportingMechanism.importReport(this.dataset, this.userList); // importing report
 
-		//restore final labels after loading dataset
+		// restore final labels after loading dataset
 		if (outputFile.exists())
 			InstanceMetrics.getInstance().updateAllFinalLabels(this.dataset.getInstances(), this.dataset.getAssignmentList());
 	}
@@ -99,15 +103,23 @@ public class DataLabelingSystem {
 				String userName = userObj.get("user name").getAsString();
 				String userType = userObj.get("user type").getAsString();
 
+				User user = null;
 				// Create users from given parameters.
-				RandomBot user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
+				if (userType.equals("Regular"))
+					user = new RegularUser(userName, userID, userType, consistencyCheckProbability);
+				if (userType.equals("RandomBot"))
+					user = new RandomBot(userName, userID, userType, consistencyCheckProbability);
 				userList.add(user);
 				UserPerformance up = new UserPerformance(user);
 				// update assigned datasets for every user
 				up.updateAssignedDatasets(datasets.iterator());
 			}
 			this.userList = userList;
-			
+			User getLoggedUser = loginMechanism.execute(this.userList);
+
+			if (getLoggedUser != null)
+				this.currentUser = getLoggedUser;
+
 			// add existing datasets into stored datasets
 			for (String outputFile : storedDatasets)
 				reportingMechanism.addOldDataset(datasetLoader.loadDataset(outputFile, this, new Dataset()));
@@ -227,6 +239,10 @@ public class DataLabelingSystem {
 
 	public void setUserList(ArrayList<User> userList) {
 		this.userList = userList;
+	}
+
+	public User getCurrentUser() {
+		return this.currentUser;
 	}
 
 }
