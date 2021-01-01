@@ -26,8 +26,8 @@
     },
     {
       "user id": 5,
-      "user name": "RandomLabelingMechanism5",
-      "user type": "RandomBot",
+      "user name": "RelevanceBot1",
+      "user type": "RelevanceBot",
       "ConsistencyCheckProbability": 0.1
     },
     {
@@ -43,7 +43,7 @@
       "dataset_id": 1,
       "dataset_name": "dataset1",
       "path": "input.json",
-      "users": [1, 2, 6]
+      "users": [5, 6]
     },
     {
       "dataset_id": 2,

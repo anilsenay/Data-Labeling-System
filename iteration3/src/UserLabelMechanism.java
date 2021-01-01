@@ -23,12 +23,12 @@ public class UserLabelMechanism implements ILabeling {
         return userLabelingMechanism;
     }
 
-    public void execute(Dataset dataset, User user){
+    public void execute(Dataset dataset, User user) {
         ArrayList<Instance> instances = dataset.getInstances();
 
         int instanceListSize = instances.size();
 
-        for(int i = 0; i < instanceListSize; i++){
+        for (int i = 0; i < instanceListSize; i++) {
             assign(dataset, instances.get(i), user);
         }
 
@@ -36,7 +36,6 @@ public class UserLabelMechanism implements ILabeling {
 
     @Override
     public void assign() {
-        // TODO Auto-generated method stub
 
     }
 
@@ -50,12 +49,13 @@ public class UserLabelMechanism implements ILabeling {
 
         System.out.println("\nInstance = " + "\u001B[36m" + instance.getContent() + "\u001B[0m");
         System.out.println("\nChoose one of these labels:");
-        for(int j = 0; j < labelListSize; j++)
-            System.out.println("[ " + (j+1) + " ] Label: " + "\u001B[32m" + labels.get(j).getLabelName() + "\u001B[0m");
-        
+        for (int j = 0; j < labelListSize; j++)
+            System.out
+                    .println("[ " + (j + 1) + " ] Label: " + "\u001B[32m" + labels.get(j).getLabelName() + "\u001B[0m");
+
         int labelIndex = Integer.MAX_VALUE;
-        while(labelIndex <= 0 || labelIndex > labelListSize){
-            if(labelIndex != Integer.MAX_VALUE)
+        while (labelIndex <= 0 || labelIndex > labelListSize) {
+            if (labelIndex != Integer.MAX_VALUE)
                 System.out.println("\nPlease select a correct label id");
             System.out.print("\nWrite the id of label you choose: ");
             labelIndex = this.sc.nextInt();
@@ -69,8 +69,8 @@ public class UserLabelMechanism implements ILabeling {
                 "[Assignment] INFO user id:" + user.getUserID() + " " + user.getUserName() + " tagged instance id:"
                         + instance.getInstanceID() + " " + "with class label " + label.getLabelID() + ":"
                         + label.getLabelName() + " " + " instance: \"" + instance.getContent() + "\"");
-        
+
         return assignment;
     }
-    
+
 }
