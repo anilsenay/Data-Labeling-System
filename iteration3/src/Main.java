@@ -16,17 +16,24 @@ public class Main {
 
         if (DLS.getCurrentUser() != null) {
             User user = DLS.getCurrentUser();
+
+            // get user's old assignments
+            ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
+            ArrayList<Instance> usersInstances = new ArrayList<Instance>();
+            for (int z = 0; z < assignmentList.size(); z++) {
+                if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
+                    usersAssignments.add(assignmentList.get(z));
+                    usersInstances.add(assignmentList.get(z).getInstance());
+                }
+            }
+
             for (int i = 0; i < instanceList.size(); i++) {
+                if (usersInstances.contains(instanceList.get(i)))
+                    continue;
                 Assignment assignment = null;
                 int randomNumber = (int) (Math.random() * 100);
                 if (randomNumber < user.getConsistencyCheckProbability() * 100) {
-                    // get user's old assignments
-                    ArrayList<Assignment> usersAssignments = new ArrayList<Assignment>();
-                    for (int z = 0; z < assignmentList.size(); z++) {
-                        if (assignmentList.get(z).getUser().getUserID() == user.getUserID()) {
-                            usersAssignments.add(assignmentList.get(z));
-                        }
-                    }
+
                     // if there is no previous assignment for this user
                     if (usersAssignments.size() == 0) {
                         assignment = user.assign(dataset, instanceList.get(i));
