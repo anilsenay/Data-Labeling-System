@@ -1,4 +1,4 @@
-public class User {
+public abstract class User {
 
     // The variables userName, userID, userType.
     private String userName;
@@ -57,5 +57,7 @@ public class User {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    abstract Assignment assign(Dataset dataset, Instance instance);
 
 }
