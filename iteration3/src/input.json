@@ -1,0 +1,61 @@
+{
+  "dataset id": 1,
+  "dataset name": "Sentiment Dataset",
+  "maximum number of labels per instance": 1,
+  "class labels": [
+    {
+      "label id": 1,
+      "label text": "Positive"
+    },
+    {
+      "label id": 2,
+      "label text": "Negative"
+    },
+    {
+      "label id": 3,
+      "label text": "Notr"
+    }
+  ],
+  "instances": [
+    {
+      "id": 1,
+      "instance": "Nice I bought it, good pretty perfect bad worse awful no delicious tasty "
+    },
+    {
+      "id": 2,
+      "instance": "a nice thank you by showing the necessary self-sacrificing example by taking care of the manager personally"
+    },
+    {
+      "id": 3,
+      "instance": "For example, we bought a camera and didn't have a camera"
+    },
+    {
+      "id": 4,
+      "instance": "How many days your site has not been working"
+    },
+    {
+      "id": 5,
+      "instance": "I am satisfied for now, I hope my decision does not change"
+    },
+    {
+      "id": 6,
+      "instance": "Switching to silent mode where it stops is good, except that the battery, which goes too much at first, significantly decreases its capacity per month."
+    },
+    {
+      "id": 7,
+      "instance": "The big advantage of the movie was that it made her pour her acting that we haven't seen in a long time"
+    },
+    {
+      "id": 8,
+      "instance": "finishes the charge immediately"
+    },
+    {
+      "id": 9,
+      "instance": "The new campaign is very successful"
+    },
+    {
+      "id": 10,
+      "instance": "You can buy it at a handy price without thinking about it."
+    }
+  ]
+}

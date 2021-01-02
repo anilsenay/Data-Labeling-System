@@ -21,13 +21,13 @@
     {
       "user id": 4,
       "user name": "RelevanceBot1",
-      "user type": "RandomBot1",
+      "user type": "RelevanceBot",
       "ConsistencyCheckProbability": 0.1
     },
     {
       "user id": 5,
       "user name": "RelevanceBot2",
-      "user type": "RelevanceBot2",
+      "user type": "RelevanceBot",
       "ConsistencyCheckProbability": 0.1
     },
     {
