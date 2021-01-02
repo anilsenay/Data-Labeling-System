@@ -1,13 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -47,44 +43,33 @@ public class RelevanceLabelingMechanism implements ILabeling {
         String parseInstance[] = instance.getContent().replaceAll("[^\\dA-Za-z ]", "").split(" ");
 
         for (int i = 0; i < parseInstance.length; i++) {
-            // System.out.println("parse: " + parseInstance[i]);
             ArrayList<String> relevants = getRelevants(parseInstance[i]);
-            // System.out.println("RELEVANT:" + relevants.size());
             if (relevants.size() == 0)
                 continue;
             for (int j = 0; j < labels.size(); j++) {
                 for (int j2 = 0; j2 < relevants.size(); j2++) {
-                    // System.out.print(relevants.get(j2) + "|");
                     if (relevants.get(j2).equalsIgnoreCase(labels.get(j).getLabelName())) {
                         assignedLabels.add(labels.get(j));
-                        System.out.println(parseInstance[i] + "-> " + labels.get(j).getLabelName());
                     }
 
                 }
-                // System.out.println();
             }
         }
-        System.out.println("Before occurrences");
         Map<Label, Long> occurrences = assignedLabels.stream()
                 .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
-        System.out.println("Before sortedOccurrences");
-        // Map<Label, Long> sortedOccurrences = new TreeMap<Label, Long>(occurrences);
         Map<Label, Long> sortedOccurrences = occurrences.entrySet().stream()
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).collect(Collectors.toMap(
                         Map.Entry::getKey, Map.Entry::getValue, (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-        System.out.println("KEYSET LENGTH " + sortedOccurrences.keySet().toArray().length);
 
         for (int i = 0; i < dataset.getMaxLabelPerInstance(); i++) {
-            // Label label = (Label) sortedOccurrences.keySet().toArray()[i];
-            System.out.println(sortedOccurrences.keySet().toArray().length);
+            Label label = (Label) sortedOccurrences.keySet().toArray()[i];
             if (sortedOccurrences.size() >= i && sortedOccurrences.keySet().toArray().length > 0) {
-                assignment.addLabel((Label) sortedOccurrences.keySet().toArray()[i]);
+                assignment.addLabel(label);
                 Logger.getInstance().print(new Date(),
                         "[Assignment] INFO user id:" + user.getUserID() + " " + user.getUserName()
                                 + " tagged instance id:" + instance.getInstanceID() + " " + "with class label "
-                                + ((Label) sortedOccurrences.keySet().toArray()[i]).getLabelID() + ":"
-                                + ((Label) sortedOccurrences.keySet().toArray()[i]).getLabelName() + " "
-                                + " instance: \"" + instance.getContent() + "\"");
+                                + label.getLabelID() + ":" + label.getLabelName() + " " + " instance: \""
+                                + instance.getContent() + "\"");
             }
         }
 
@@ -104,8 +89,7 @@ public class RelevanceLabelingMechanism implements ILabeling {
         return assignment;
     }
 
-    public ArrayList<String> getRelevants(String word) {
-        // System.out.println("WORDD::" + word);
+    private ArrayList<String> getRelevants(String word) {
         int responseCode = 0;
         ArrayList<String> words = new ArrayList<String>();
         try {
