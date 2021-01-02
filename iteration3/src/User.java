@@ -58,6 +58,6 @@ public abstract class User {
         this.userName = userName;
     }
 
-    abstract Assignment assign(Dataset dataset, Instance instance);
+    public abstract Assignment assign(Dataset dataset, Instance instance);
 
 }
