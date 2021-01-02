@@ -20,20 +20,21 @@
     },
     {
       "user id": 4,
-      "user name": "RandomLabelingMechanism4",
-      "user type": "RandomBot",
+      "user name": "RelevanceBot1",
+      "user type": "RandomBot1",
       "ConsistencyCheckProbability": 0.1
     },
     {
       "user id": 5,
-      "user name": "RandomLabelingMechanism5",
-      "user type": "RandomBot",
+      "user name": "RelevanceBot2",
+      "user type": "RelevanceBot2",
       "ConsistencyCheckProbability": 0.1
     },
     {
       "user id": 6,
-      "user name": "RandomLabelingMechanism6",
-      "user type": "RandomBot",
+      "user name": "cse3063",
+      "password": "202cb962ac59075b964b07152d234b70",
+      "user type": "Regular",
       "ConsistencyCheckProbability": 0.1
     }
   ],
@@ -42,7 +43,7 @@
       "dataset_id": 1,
       "dataset_name": "dataset1",
       "path": "input.json",
-      "users": [1, 2]
+      "users": [1, 5, 6]
     },
     {
       "dataset_id": 2,
@@ -54,13 +55,13 @@
       "dataset_id": 3,
       "dataset_name": "dataset3",
       "path": "input3.json",
-      "users": [1, 2]
+      "users": [1, 2, 6]
     },
     {
       "dataset_id": 4,
       "dataset_name": "dataset4",
       "path": "input4.json",
-      "users": [2]
+      "users": [2, 4, 5]
     }
   ],
   "currentDatasetId": 1
