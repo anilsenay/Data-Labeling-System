@@ -1,12 +1,12 @@
-import Student
+from Student import Student
 class StudentAnswer(object):
-  isTrue = False
-  def __init__(self, s , question, answer): 
+  
+  def __init__(self, s , question): 
     self.student = s
     self.question = question
-    self.answer = answer
+    self.answers = []
+    self.isTrue = False
 
-  ##check the answer correctness
-  if question.answer == answer:
-    isTrue = True
-  pass
+  def insertAnswer(self, answer):
+    self.answers.append(answer)
+    

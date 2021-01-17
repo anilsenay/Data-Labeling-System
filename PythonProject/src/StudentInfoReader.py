@@ -1,26 +1,34 @@
+from Student import Student
+from os import close
+from numpy.core.numeric import NaN
 import pandas as pd
 import numpy as np
-pollReader = pd.read_excel('./Data/CES3063_Fall2020_rptSinifListesi.xls.xlsx')
-# or using sheet index starting 0
-pd.set_option('display.max_rows', 500)
-pd.set_option('display.max_columns', 500)
-pd.set_option('display.width', 20000)
-QuestionCounter = 0
-AnswerCounter = 0
 
 
-for i in range(len(pollReader
-.columns)):
-    if (i >= 4):
-        if(i % 2 == 0):
-            QuestionCounter += 1
-            pollReader
-            .rename( columns={"Unnamed: "+str(i) :"Question"+str(QuestionCounter-1)}, inplace=True )
-        else:
-            AnswerCounter += 1
-            pollReader
-            .rename( columns={"Unnamed: "+str(i) :"Answer"+str(AnswerCounter-1)}, inplace=True )
+class StudentInfoReader():
 
+    def readStudentList(self, zoomPoll, inputFile):
+        bysReader = pd.read_excel(inputFile)
+        bysReader = bysReader.replace(np.nan, "", regex=True)
+        bysReader.rename(columns={"Unnamed: 2": "StudentNo"}, inplace=True)
+        bysReader.rename(columns={"Unnamed: 4": "Name"}, inplace=True)
+        bysReader.rename(columns={"Unnamed: 7": "Surname"}, inplace=True)
+        bysReader.rename(columns={"Unnamed: 10": "Remark"}, inplace=True)
 
-pollReader = pollReader.replace(np.nan, "", regex=True)
-print(pollReader.loc[::])
+        for i in range(1, len(bysReader)):
+
+            if(bysReader.loc[i, ["StudentNo", "Name", "Surname", "Remark"]][0].isnumeric()):
+                studentNo = bysReader.loc[i, [
+                    "StudentNo", "Name", "Surname", "Remark"]][0]
+                name = (
+                    bysReader.loc[i, ["StudentNo", "Name", "Surname", "Remark"]][1])
+                name = name.translate(name.maketrans(
+                    "çğıöşüÇĞİÖŞÜ", "cgiosucgiosu")).lower()
+                surname = (
+                    bysReader.loc[i, ["StudentNo", "Name", "Surname", "Remark"]][2])
+                surname = surname.translate(surname.maketrans(
+                    "çğıöşüÇĞİÖŞÜ", "cgiosucgiosu")).lower()
+                remark = bysReader.loc[i, [
+                    "StudentNo", "Name", "Surname", "Remark"]][3]
+                student = Student(studentNo, name, surname, None, remark)
+                zoomPoll.students.append(student)

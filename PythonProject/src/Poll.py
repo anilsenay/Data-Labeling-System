@@ -1,13 +1,16 @@
 
 class Poll(object):
-  
-  def __init__(self, id):
-    self.id=id
-    self.pollName=""
-    ##self.submittedDate=""
-    self.studentsAttended=[] #student objesi lol
-    self.questions=[]
-    self.studentAnswers=[]
-    self.numOfQuestions= 0
-    
+
+    def __init__(self):
+        self.id = id
+        self.pollName = ""
+        self.submittedDate = ""
+        self.studentsAttended = []
+        self.questions = []
+        self.studentAnswers = []
+        self.answer_key = None
+        self.isAttendance = False
+        self.totalScore = 0
+
+
 pass
