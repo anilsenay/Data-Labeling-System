@@ -1,0 +1,96 @@
+You have created 4 polls for this meeting.
+Title	Total Questions	Anonymous	
+ Poll 1:OOSD Software Activities	1 question	No	 
+1. Which one is the most important software development activity in you opinion? ( Multiple Choice)
+
+Answer 1: Requirement Analysis
+
+Answer 2: Software Design
+
+Answer 4: Test
+
+ Poll 2:W4-3 Object Orientation	10 questions	No	 
+1. Which one is not correct for Java? ( Single Choice)
+
+Answer 4: A class can inherit two classes
+
+2. Which one is false ? An abstract class can ... ( Single Choice)
+
+Answer 3: can be instantiated
+
+3. An UML class diagram is .... ( Single Choice)
+
+Answer 5: has an elliptic shape
+
+4. There are two types of relations between classes in object oriented programming. Is-a relation and has-a relation. Inheritance forms is-a relation between subclass and superclass ( Single Choice)
+
+Answer 1: True
+
+5. There are two types of relations between classes in object oriented programming. Is-a relation and has-a relation. Composition forms has-a relation between two classes. Which of the following show has-a relation? ( Single Choice)
+
+Answer 3: Automobile-Engine
+
+6. It is possible to call a private method of the superclass in the public method of the inherited class ( Single Choice)
+
+Answer 2: False
+
+7. It is possible to call a private method of the superclass in the private method of the inherited class ( Single Choice)
+
+Answer 2: False
+
+8. It is possible to call a protected method of the superclass in the public method of the inherited class ( Single Choice)
+
+Answer 1: True
+
+9. It is possible to call a protected method of the superclass in the protected method of the inherited class ( Single Choice)
+
+Answer 1: True
+
+10. It is possible to call a protected method of the superclass in the private method of the inherited class ( Single Choice)
+
+Answer 1: True
+
+
+ Poll 3:W6-3 UML Class	10 questions	No	 
+1. If you have following associations with given cardinalities between three classes which of the following will be true? Flat-1---*-LeasingContract-*---*-Tenant ( Single Choice)
+
+Answer 3: One tenant can rent the same flat multiple times with different leasing contracts.
+
+2. A composition (composite aggregation) may express ... ( Single Choice)
+
+Answer 1: when a customer is deleted, all his orders are deleted as well (dependency).
+
+
+3. How do you model the following situation with a UML class diagram: The car fleet of a car rental contains multiple cars, one car belongs to exactly one car fleet. Fleet----Car ( Single Choice)
+
+Answer 1: One to many
+
+4. A generalization relationship between a subclass and a superclass in Java has the following property ( Single Choice)
+
+Answer 1: A subclass can only inherit from one superclass.
+
+
+5. How do you model the following situation with a UML class diagram: During one soccer season multiple players participate in multiple games. Each player may score in each game a certain number of goals. Game----Player ( Single Choice)
+
+Answer 3: Many to many association and Goal as a association class including integer goals attribute
+
+6. A class is divided into which of these compartments ? ( Single Choice)
+
+Answer 4: All of the above
+
+7. What is multiplicity for an association? ( Single Choice)
+
+Answer 1: The multiplicity at the target class end of an association is the number of instances that can be associated with a single instance of source class
+
+
+8. Which among these are the rules to be considered to form UML Class diagrams? ( Single Choice)
+
+Answer 5: All the above
+
+9. Which one is NOT true for UML? ( Single Choice)
+
+Answer 4: Usually created in testing activities
+
+10. In Unified Modeling Language, diagrams which captures system static structure and provide foundation for other models is called ... ( Single Choice)
+
+Answer 2: class diagrams

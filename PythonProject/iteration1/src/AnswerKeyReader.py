@@ -10,13 +10,39 @@ import numpy as np
 class AnswerKeyReader():
 
     def readAnswerKey(self, polls, inputFile):
-        keyReader = pd.read_excel(inputFile)
-        keyReader = keyReader.replace(np.nan, "", regex=True)
-        keyReader.rename(columns={"AnswerKeyFile": "Questions"}, inplace=True)
-        keyReader.rename(columns={"Unnamed: 1": "Answers"}, inplace=True)
+        file = open(inputFile, "r", encoding='utf-8').read().splitlines()
 
         answerKey = None
+        question = None
+        answers = []
         matcher = PollNameMatcher()
+
+        for line in file:
+            if(len(line) == 0 or line == "\n"):
+                continue
+            if(line.lstrip(' ')[:4] == "Poll"):
+                if(answerKey is not None):
+                    answerKey.add_question_answer(question, answers)
+                    answers = []
+                    question = None
+                    matcher.match(polls, answerKey)
+
+                answerKey = AnswerKey(line.lstrip(' ').split("\t")[0][line.find(":"):])
+            elif(answerKey is None):
+                continue
+            elif(line.lstrip(' ')[:6] != "Answer"):
+                if(question is not None):
+                    answerKey.add_question_answer(question, answers)
+                    answers = []
+                question = line.split(" ", 1)[1].replace(" ( Single Choice)", "").replace(" ( Multiple Choice)", "")
+            else:
+                answers.append(line[line.find(":")+1:].lstrip(' '))
+
+        answerKey.add_question_answer(question, answers)
+        matcher.match(polls, answerKey)
+
+        return
+        
 
         for i in range(0, len(keyReader)):
             if(answerKey is None):

@@ -55,5 +55,10 @@ class StudentAnalysis(object):
         for poll in self.zoom_poll.polls:
             for answer in poll.studentAnswers:
                 for question in poll.questions:
-                    if(answer.question == question and question.trueAnswers == answer.answers):
-                        answer.isTrue = True
+                    if(answer.question == question):
+                        for true_answer in question.trueAnswers:
+                            for std_answer in answer.answers:
+                                if(std_answer.encode(encoding='UTF-8',errors='strict') 
+                                == true_answer.encode(encoding='UTF-8',errors='strict')):
+                                    answer.isTrue = True
+                        

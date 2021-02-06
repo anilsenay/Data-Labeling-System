@@ -1,0 +1,402 @@
+You have created 15 polls for this meeting.
+Title	Total Questions	Anonymous	
+ Poll 1:Polling experiment	2 questions	No	 
+1. This is a small experiment about polling function. Are you attending this class? ( Multiple Choice)
+
+Answer 1: Yes
+
+2. Do you like using ZOOM? ( Multiple Choice)
+
+Answer 1: Yes
+
+Answer 2: No
+
+ Poll 2:About Object Oriented Programming 1	1 question	No	 
+1. If you use a Object Oriented programming language instead of procedural programming language in a large software project approach it will result in less lines of code (LOC) ( Multiple Choice)
+
+Answer 2: Not necesseraily
+
+ Poll 3:About Object Oriented Programming 2	5 questions	No	 
+1. If you use a Object Oriented programming language instead of procedural programming language in a large software project approach the resulting software will be easier to maintain ( Multiple Choice)
+
+Answer 1: True
+
+2. If you use a Object Oriented programming language instead of procedural programming language in a large software project, the resulting software will be easier to change ( Single Choice)
+
+Answer 1: True
+
+3. If you use a Object Oriented programming language instead of procedural programming language in a large software project approach, the resulting software will be easier to extend by adding new features based on new requirements ( Single Choice)
+
+Answer 1: True
+
+4. If you use a Object Oriented programming language instead of procedural programming language in a large software project , it will be easier to adapt changes in requirements during the project ( Multiple Choice)
+
+Answer 1: True
+
+5. If you use a Object Oriented programming language instead of procedural programming language in a large software project approach, it will be easier to fix bugs in the resulting software ( Single Choice)
+
+Answer 1: True
+
+ Poll 4:Week 3	1 question	No	 
+1. The result of a project is a collection of artifacts. Which one is not an analysis artifact? ( Single Choice)
+
+Answer 3: Code
+
+ Poll 5:W4-1 Soft. Dev. Activities	7 questions	No	 
+1. Which one is not a usual software development activity? ( Single Choice)
+
+Answer 3: Customer Survey
+
+2. SMART projects are ... ( Multiple Choice)
+
+Answer 1: Specific
+
+Answer 3: Measurable
+
+Answer 5: Achievable
+
+Answer 6: Relevant
+
+Answer 9: Time-bound
+
+3. Based on the Parkinson’s law we can conclude that... ( Single Choice)
+
+Answer 3: shorter and more deadlines can multiply productivity
+
+4. Which software development process is NOT a iterative and evolutionary model? ( Single Choice)
+
+Answer 3: Waterfall
+
+5. Pair programming is an important aspect of the XP model ( Single Choice)
+
+Answer 1: True
+
+6. The order of activities in SCRUM is analysis, design, testing, coding ( Single Choice)
+
+Answer 2: False
+
+7. In SCRUM model a Sprint is ... ( Single Choice)
+
+Answer 1: a time-boxed iteration in which 4 usual software activity; analysis, design, coding, and testing is performed
+
+
+ Poll 6:W4-2 OO	5 questions	No	 
+1. In OO paradigm, data abstractions ( Single Choice)
+
+Answer 2: Groups together the pieces of data that describe a particular entity
+
+2. OO is an approach to solve problems using a software where all computations are performed in the context of objects. Based on this in a pure OO programming language which one of the following is likely to be true?
+
+Answer 3: There can be individual functions/methods that does not belong to a class
+
+3. The attributes (variables) of an object represent its state ( Single Choice)
+
+Answer 1: True
+
+4. If you change the value of a public class attribute of an object, state of the object will change ( Single Choice)
+
+Answer 1: True
+
+5. If you change the value of a private class attribute of an object via a public setter method, state of the object will change ( Single Choice)
+
+Answer 1: True
+
+ Poll 7:W4-3 OO	4 questions	No	 
+1. Based on the Java naming convention, which one is a good name for a class ? ( Single Choice)
+
+
+Answer 5: UniversityCourse
+
+2. An object variable such as "Student activeStudent" may refer to different objects at different points in time ( Single Choice)
+
+Answer 1: True
+
+3. .... variable’s value is shared by all instances of a class ( Single Choice)
+
+Answer 3: static
+
+4. Which one is not a required property of OO languages? ( Single Choice)
+
+Answer 3: Garbage collection
+
+
+ Poll 8:W5-1 OO	10 questions	No	 
+1. Which of the the following is not necessary for a system or language to be OO? ( Single Choice)
+
+Answer 4: Garbage Collection
+
+2. Dynamic Binding occurs when decision about which method to run can only be made at run time ( Single Choice)
+
+Answer 1: True
+
+3. Dynamic binding happens when is more than one possible polymorphic method that could be run among the type of the variable and its subclasses ( Single Choice)
+
+Answer 1: True
+
+4. Dynamic binding is directly related to the polymorphism ( Single Choice)
+
+Answer 1: True
+
+5. We need to avoid switch-case / if-else statements to vary between different types. Instead we need to use polymorphism. This will lead to easy maintenance and extension of the code. ( Single Choice)
+
+Answer 1: True
+
+6. For Polymorphism in Java we need to have at least an abstract method in an abstract class and several classes that inherits from this abstract class by implementing the abstract method in different ways. ( Single Choice)
+
+Answer 1: True
+
+7. For Polymorphism in Java we need to have at least an interface and several classes that implements this interface by by providing implementation to the polymorphic method in different ways. ( Single Choice)
+
+Answer 1: True
+
+8. In order to override a method it has to be abstract. ( Single Choice)
+
+Answer 2: False
+
+9. Abstract classes can be instantiated. ( Single Choice)
+
+Answer 1: True
+
+10. You can never instantiate a class that inherits from abstract class ( Single Choice)
+
+Answer 2: False
+
+ Poll 9:W5-2 OO	5 questions	No	 
+1. There are two types of relationships in object oriented programming. Is-a relation and has-a relation. Classes and objects are organized in a large software by using these relations. ( Single Choice)
+
+Answer 1: True
+
+2. Has-a relation is implemented by using inheritance in OO programming. ( Single Choice)
+
+Answer 2: False
+
+3. Is-a relation is implemented by composition in OO programming. ( Single Choice)
+
+Answer 2: False
+
+4. In inheritance, private methods of the superclass is not included in the subclass. ( Single Choice)
+
+Answer 2: False
+
+5. Account <- SavingsAccount example shows is-a relation. This means that SavingAccount inherits from Account class. In other words Account class is a generalization of SavingsAccount class. ( Single Choice)
+
+Answer 1: True
+
+ Poll 10:W6-1 UML Class Diagrams	10 questions	No	 
+1. Which of the following statement is true concerning objects and/or classes? ( Single Choice)
+
+Answer 1: An object is an instance of a class.
+
+
+2. A UML diagram includes which of the following? ( Single Choice)
+
+Answer 4: All of the above
+
+3. An abstract class is which of the following? ( Single Choice)
+
+Answer 2: A class that has no direct instances but whose descendants may have direct instances
+
+4. Which one of the following explains the following statement? Same operation may apply to two or more classes. ( Single Choice)
+
+Answer 2: Polymorphism
+
+5. Aggregation is which of the following? ( Single Choice)
+
+Answer 1: Expresses a part-of relationship and is a stronger form of an association relationship.
+
+
+6. Composition is a stronger form of which of the following? ( Single Choice)
+
+Answer 1: Aggregation
+
+
+7. Which one describes Waterfall? ( Single Choice)
+
+Answer 2: Analysis design coding test steps in the given order and going through the steps no more than one time
+
+
+8. Which description is a best fit for Scrum? ( Single Choice)
+
+Answer 1: Analysis design coding test steps in the given order and using multiple iterations
+
+
+9. Which one is a best fit for iterative and evolutionary development life cycle like Unified Process (UP) ? ( Single Choice)
+
+Answer 1: Analysis design coding test steps in the given order and using multiple iterations
+
+
+10. The benefits of object-oriented modeling are which of the following? ( Single Choice)
+
+Answer 4: All of the above
+
+ Poll 11:W6-2 UML Class	10 questions	No	 
+1. Which of the following is a technique for hiding the internal implementation details of an object? ( Single Choice)
+
+Answer 1: Encapsulation
+
+2. In Java primitive data types ... ( Single Choice)
+
+Answer 3: are synonyms for classes
+
+3. Which of the following statements about compositions (composite aggregations) are true? ( Single Choice)
+
+Answer 4: In a composition, a part may belong to only one composite at a time
+
+4. Association classes are used to ... ( Single Choice)
+
+Answer 1: Encapsulate association specific attributes and operations
+
+
+5. How do you model the following situation with a UML class diagram: A season worker may be employed in one or several seasons the beginning and the end of each employment period is saved ( Single Choice)
+
+Answer 4: association class
+
+
+6. Which of the following differences between class diagrams and object diagrams are true? ( Multiple Choice)
+
+Answer 1: Class diagrams model the structure of a system, object diagrams model the dynamic view.
+
+Answer 2: Class diagrams describe a system on type level, object diagrams on instance level.
+
+Answer 3: Class diagrams describe the structure of a system. object diagrams describe the shape of a system at a certain point in time.
+
+7. An aggregation is a special ... ( Single Choice)
+
+Answer 1: association
+
+
+8. What is a synonym for strong aggregation? ( Single Choice)
+
+Answer 4: composition
+
+9. A class diagram shows ... view of a system. ( Single Choice)
+
+Answer 1: static
+
+
+10. How do you model the following situation: A doctor treats multiple patients a patient can be treated by multiple doctors. Info of which doctor has treated which patient (can be multiple times) the date and diagnosis are stored. ( Multiple Choice)
+
+Answer 4: Doctor---Treatment---Patient (treatment info stored in Treatment)
+
+ Poll 13:W8-1 Iteration Artifacts	10 questions	No	 
+1. Requirement Analysis is .... activity in software development ( Single Choice)
+
+Answer 1: First
+
+2. The goal in requirement analysis is ... ( Single Choice)
+
+Answer 3: understand customers problem
+
+3. Which one of the following is not a non-functional requirement category? ( Single Choice)
+
+Answer 4: User Types
+
+4. In UP Use cases are created in ... stage of software development ( Single Choice)
+
+Answer 1: Analysis
+
+5. Which one of the following is FALSE? ( Single Choice)
+
+Answer 2: Use case is an object oriented artifact
+
+6. A use case is a collection of success and failure scenarios describing an actor using a system to support a goal ( Single Choice)
+
+Answer 1: True
+
+7. We should avoid implementation specific language in use cases and in requirement analysis such as IF-THEN-ELSE or GUI elements ( Single Choice)
+
+Answer 1: True
+
+8. Use cases never initiate actions actors do and use case interaction produces something of value to an actor ( Single Choice)
+
+Answer 1: True
+
+9. Which of the following is NOT an advantage of use cases? ( Single Choice)
+
+Answer 2: Systematic and intuitive way to capture non-functional requirements
+
+10. Ranking of requirements is done before ... ( Single Choice)
+
+Answer 3: each iteration
+
+ Poll 14:W8-2 Iteration Artifacts	10 questions	No	 
+1. Usually first iteration implements core functionality. The reason for this is to produce a running software at the end of the iteration so that we can get feedback from users. ( Single Choice)
+
+Answer 1: True
+
+2. High risk requirements are usually left to last iterations of the project in order to avoid delay in the project ( Single Choice)
+
+Answer 2: False
+
+3. Which of the following is FALSE for Domain Model? ( Single Choice)
+
+Answer 3: Represents software components along with hardware requirements
+
+4. In UML class diagram if a attribute or method name is underlined it means that attribute or method is abstract ( Single Choice)
+
+Answer 2: False
+
+5. If a class is abstract it will not have any methods ( Single Choice)
+
+Answer 2: False
+
+6. In UML Class diagram if a class is abstract its name is written in italic or followed by {abstract} keyword ( Single Choice)
+
+Answer 1: True
+
+7. Interfaces do not include attributes. ( Single Choice)
+
+Answer 1: True
+
+8. Which of the following is used for dynamic modeling? ( Single Choice)
+
+Answer 4: UML sequence diagram
+
+9. In static model shows classes on the other dynamic model show objects in UML ( Single Choice)
+
+Answer 1: True
+
+10. In the design phase which UML diagram should be created first? ( Single Choice)
+
+Answer 2: Class Diagram
+
+ Poll 15:W8-3 Iteration Artifacts	10 questions	No	 
+1. Visibility is the ability of one object to see another to send a message. In order to do that the sender object must have a reference to receiver object ( Single Choice)
+
+Answer 1: True
+
+2. To send a message from one object to another the receiver object must be visible to the sender via a reference ( Single Choice)
+
+Answer 1: True
+
+3. Which one is not one of the visibility types? ( Single Choice)
+
+Answer 4: Package visibility
+
+4. Which of the following is true for attribute visibility ? The .... object have a reference of the ... object as its attribute ( Single Choice)
+
+Answer 1: sender / receiver
+
+5. In parameter visibility an object of receiver class must be a private attribute ( Single Choice)
+
+Answer 2: False
+
+6. In parameter visibility an object of receiver class must be a public attribute ( Single Choice)
+
+Answer 2: False
+
+7. Which one of the visibility types is most common in OO? ( Single Choice)
+
+Answer 1: Attribute
+
+8. Which one of the visibility types is least common in OO? ( Single Choice)
+
+Answer 4: Global
+
+9. Singleton design pattern is used to achieve ... visibility ( Single Choice)
+
+Answer 4: Global
+
+10. Singleton pattern ensure that a class has only single instance by making the constructor method private/protected and providing a global access point to create or receive the single instance by a static method. ( Single Choice)
+
+Answer 1: True

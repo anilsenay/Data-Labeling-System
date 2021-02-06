@@ -11,7 +11,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.ticker import StrMethodFormatter
-
+import os
+import operator
 
 class ExcelWriter(object):
 
@@ -20,7 +21,7 @@ class ExcelWriter(object):
 
     def attendance_writer(self, zoom_poll):
         writer = pd.ExcelWriter(
-            './Outputs/Attendance/Attendance.xlsx', engine='xlsxwriter')
+            './Outputs/Attendance/Attendance.ods', engine='odf')
         student_name_arr = []
         student_surname_arr = []
         attendance_arr = []
@@ -46,11 +47,11 @@ class ExcelWriter(object):
             if(poll.isAttendance):
                 continue
             poll_name = "./Outputs/Polls/" + poll.pollName + \
-                "-" + poll.submittedDate + ".xlsx"
-            writer = pd.ExcelWriter(poll_name, engine='xlsxwriter')
+                "-" + poll.submittedDate + ".ods"
+            writer = pd.ExcelWriter(poll_name.replace(":", "_").replace("-", "_").replace(" ", "_"), engine="odf")
             studentSuccess = []
             for bys_student in zoom_poll.students:
-                row = [0] * (len(poll.questions)+6)
+                row = [0] * (len(poll.questions)+9)
                 row[0] = bys_student.id
                 row[1] = (bys_student.name)
                 row[2] = (bys_student.surname)
@@ -60,11 +61,13 @@ class ExcelWriter(object):
                     if(bys_student == studentMatcher.find_student(zoom_poll, attended_student)):
                         q = 1
                         studentRate = 0
+                        studentQuestions = 0
                         for question in poll.questions:
                             row[3+q] = 0
                             for answer in poll.studentAnswers:
                                 if(answer.question == question and answer.student == attended_student):
                                     isSuccess = answer.isTrue
+                                    studentQuestions += 1
                                     if(isSuccess):
                                         row[3+q] = 1
                                         studentRate += 1
@@ -72,8 +75,14 @@ class ExcelWriter(object):
                                         row[3+q] = 0
                             q += 1
                         row[q+3] = (studentRate)
-                        row[q+4] = str(100 * (studentRate /
-                                              len(poll.questions))) + "%"
+                        row[q+4] = studentQuestions - studentRate
+                        row[q+5] = len(poll.questions) - studentQuestions
+                        row[q+6] = str(round(studentRate /
+                                              len(poll.questions), 2))
+                        row[q+7] = str(round(100 * (studentRate /
+                                              len(poll.questions)), 2)) + "%"
+                        
+                        
 
                 studentSuccess.append(row)
 
@@ -85,8 +94,11 @@ class ExcelWriter(object):
                 dic['Q'+str(i+1)] = studentSuccess[:, i+4]
             numOfQuestions = len(poll.questions)
             dic['Number Of Questions'] = numOfQuestions
-            dic['Success Rate'] = studentSuccess[:, numOfQuestions+4]
-            dic['Success Percentage'] = studentSuccess[:, numOfQuestions+5]
+            dic['Number of correctly answered questions'] = studentSuccess[:, numOfQuestions+4]
+            dic['Number of wrongly answered questions'] = studentSuccess[:, numOfQuestions+5]
+            dic['Number of empty answered questions'] = studentSuccess[:, numOfQuestions+6]
+            dic['Rate of correctly answered questions'] = studentSuccess[:, numOfQuestions+7]
+            dic['Accuracy percentage'] = studentSuccess[:, numOfQuestions+8]
 
             df = pd.DataFrame(dic)
             df.to_excel(writer, sheet_name='Sheet1', index=False)
@@ -99,7 +111,7 @@ class ExcelWriter(object):
                 continue
             poll_name = "./Outputs/Questions/" + poll.pollName + \
                 "-" + poll.submittedDate + ".xlsx"
-            writer = pd.ExcelWriter(poll_name, engine='xlsxwriter')
+            writer = pd.ExcelWriter(poll_name.replace(":", "_").replace("-", "_").replace(" ", "_"), engine='xlsxwriter')
             question_index = -1
             for question in poll.questions:
                 question_index += 1
@@ -156,16 +168,66 @@ class ExcelWriter(object):
                     'H4', chart)
 
             writer.save()
+    
+    def student_stats_each_poll(self, zoom_poll):
+        for poll in zoom_poll.polls:
+            if(poll.isAttendance):
+                continue
+            
+            for bys_student in zoom_poll.students:
+                pollName = (poll.pollName + "_" + poll.submittedDate).replace(":", "_").replace("-", "_").replace(" ", "_")
+                poll_name = "./Outputs/Students/" + pollName + "/" + pollName + \
+                    "_" + bys_student.name.upper() + "_" + bys_student.surname.upper() + "_" + bys_student.id + ".ods"
+                if not os.path.exists("./Outputs/Students/" + pollName):
+                    os.makedirs("./Outputs/Students/" + pollName)
+                writer = pd.ExcelWriter(poll_name.replace(":", "_").replace("-", "_").replace(" ", "_"), engine='odf')
+                row = [0] * (4)
+                studentSuccess = []
+                for attended_student in poll.studentsAttended:
+                    studentMatcher = StudentMatcher()
+                    if(bys_student == studentMatcher.find_student(zoom_poll, attended_student)):
+                        for question in poll.questions:
+                            row[0] = question.question_content
+                            row[1] = ""
+                            row[2] = ';'.join(question.trueAnswers)
+                            row[3] = 0
+                            for answer in poll.studentAnswers:
+                                if(answer.question == question and answer.student == attended_student):
+                                    row[1] = ';'.join(answer.answers)
+                                    if(answer.isTrue):
+                                        row[3] = 1
+                                    break
+                            studentSuccess.append(row)
+                            row = [0] * (4)
+                if(len(studentSuccess) == 0):
+                    for question in poll.questions:
+                        row[0] = question.question_content
+                        row[1] = ""
+                        row[2] = ';'.join(question.trueAnswers)
+                        row[3] = 0
+                        studentSuccess.append(row)
+                        row = [0] * (4)
+
+                studentSuccess = np.array(studentSuccess)
+
+                dic = {'Question': studentSuccess[:, 0], 'Student Answers': studentSuccess[:, 1],
+                    'Correct Answers': studentSuccess[:, 2], 'Corrent (1 or 0)': studentSuccess[:, 3]}
+                df = pd.DataFrame(dic)
+                df.to_excel(writer, sheet_name='Sheet1', index=False)
+
+                writer.save()
+                writer.close()
 
     def poll_grades_of_students(self, zoomPoll):
         writer = pd.ExcelWriter(
-            "./Outputs/poll_grades.xlsx", engine='xlsxwriter')
+            "./Outputs/CSE3063_2020FALL_QuizGrading.ods", engine='odf')
         columns = []
         date_row = [''] * (len(zoomPoll.polls)+4)
         question_row = [''] * (len(zoomPoll.polls)+4)
         percentage = [''] * (len(zoomPoll.polls)+4)
         index = -1
-        for poll in zoomPoll.polls:
+        sorted_polls = sorted(zoomPoll.polls, key=operator.attrgetter("submittedDate"))
+        for poll in sorted_polls:
             if(not poll.isAttendance):
                 index += 1
 
@@ -179,12 +241,15 @@ class ExcelWriter(object):
 
         for bys_student in zoomPoll.students:
             i = 1
-            row = [0] * (len(zoomPoll.polls)+4)
-            for poll in zoomPoll.polls:
+            student_total_score = 0
+            total_questions = 0
+            row = [0] * (len(sorted_polls)+4)
+            for poll in sorted_polls:
                 if(not poll.isAttendance):
                     poll_name = poll.pollName
                     poll_date = poll.submittedDate
                     poll_num_of_questions = len(poll.questions)
+                    total_questions += poll_num_of_questions
                     row[0] = bys_student.id
                     row[1] = (bys_student.name)
                     row[2] = (bys_student.surname)
@@ -194,8 +259,10 @@ class ExcelWriter(object):
                         studentMatcher = StudentMatcher()
                         if(bys_student == studentMatcher.find_student(zoomPoll, attended_std)):
                             score_for_each_std = attended_std.score
+                            student_total_score += score_for_each_std
                             row[3 + i] = score_for_each_std
                     i += 1
+            row[3 + i] = str(round(student_total_score / total_questions * 100.0, 2)) + "%"
             columns.append(row)
 
         columns = np.array(columns)
@@ -203,11 +270,12 @@ class ExcelWriter(object):
         dic = {'Student Number': columns[:, 0], 'Student Name': columns[:, 1],
                'Student Surname': columns[:, 2], 'Remark': columns[:, 3]}
         pollCount = 0
-        for i in range(len(zoomPoll.polls)):
-            if(not zoomPoll.polls[i].isAttendance):
-                dic[zoomPoll.polls[i].pollName +
-                    zoomPoll.polls[i].submittedDate] = columns[:, i+4]
+        for i in range(len(sorted_polls)):
+            if(not sorted_polls[i].isAttendance):
+                dic[sorted_polls[i].pollName +
+                    sorted_polls[i].submittedDate] = columns[:, pollCount+4]
                 pollCount += 1
+        dic["Accuracy"] = columns[:, pollCount+4]
         df = pd.DataFrame(dic)
         df.to_excel(writer, sheet_name='Sheet1', index=False)
 
