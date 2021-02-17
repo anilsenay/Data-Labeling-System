@@ -1,6 +1,6 @@
-# CSE 3063 Project 1  
+# Data Labeling System
   
-#### Group 3  
+#### Contributors  
 
 150116020 - __*[Muhammet Kürşat Açıkgöz](https://github.com/kursatacikgoz)*__
 
