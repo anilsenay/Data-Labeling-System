@@ -5,6 +5,8 @@ In machine learning, data labeling is the process of identifying raw data (image
 In this purpose, we would like to develop a data labeling mechanism to tag the datawhich are most commonly in the form of images, videos, audio and text assets with proper, meaningful labels.
 
 Data Labeling System consists of three iterations. In every iteration, we used Scrum development methodology in order to make easier the development process. Here is the descriptions of the iterations.
+
+### Iteration 1
   
 #### Contributors  
 
