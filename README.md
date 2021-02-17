@@ -16,4 +16,4 @@
 
 150117072 - __*[Bilgehan Geçici](https://github.com/bilgehangecici)*__
 
-@all-contributors please add @<bilgehangecici> for <contributions>
+
