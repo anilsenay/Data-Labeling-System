@@ -6,7 +6,7 @@ In this purpose, we would like to develop a data labeling mechanism to tag the d
 
 Data Labeling System consists of three iterations. In every iteration, we used Scrum development methodology in order to make easier the development process. Here is the descriptions of the iterations.
 
-### Iteration 1
+### Iteration-1
 
 In the first iteration, random labels will be defined for instances by the system itself, but in subsequent iterations, different users can add different tags to an instance by using various types of labeling mechanisms.
   
