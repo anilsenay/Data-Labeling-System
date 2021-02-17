@@ -9,6 +9,10 @@ Data Labeling System consists of three iterations. In every iteration, we used S
 ### Iteration-1
 
 In the first iteration, random labels will be defined for instances by the system itself, but in subsequent iterations, different users can add different tags to an instance by using various types of labeling mechanisms.
+
+## Iteration-2
+
+In the second iteration, reporting functionality is added for user performance and labeling operation for a particular dataset. The main idea is to collect statistics for users, compare users in the context of a particular dataset or globally, and calculate metrics for instances in the dataset that are labeled with many users. The resulting reports will give us an idea about the quality of the data labeling and the quality of the users.
   
 #### Contributors  
 
