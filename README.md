@@ -10,9 +10,13 @@ Data Labeling System consists of three iterations. In every iteration, we used S
 
 In the first iteration, random labels will be defined for instances by the system itself, but in subsequent iterations, different users can add different tags to an instance by using various types of labeling mechanisms.
 
-## Iteration-2
+### Iteration-2
 
 In the second iteration, reporting functionality is added for user performance and labeling operation for a particular dataset. The main idea is to collect statistics for users, compare users in the context of a particular dataset or globally, and calculate metrics for instances in the dataset that are labeled with many users. The resulting reports will give us an idea about the quality of the data labeling and the quality of the users.
+
+### Iteration-3
+
+In the third iteration, human user interface is added to enable human users to label instances manually, one by one. Each human user has a username and a password validation which are required to enter the system in the beginning. Furthermore, The Relevance Bot, a new bot user, is added and uses Relevance Labeling Mechanism which checks instances' relevance meaning using an API and accordingly labels them.
   
 #### Contributors  
 
