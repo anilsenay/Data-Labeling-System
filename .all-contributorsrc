@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "onkolahmet",
+      "name": "Ahmet Önkol",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62245004?v=4",
+      "profile": "https://github.com/onkolahmet",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "CSE3063F20P1_GRP3",
+  "projectOwner": "anilsenay",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
