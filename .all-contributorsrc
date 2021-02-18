@@ -45,6 +45,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "beyzaaydogan",
+      "name": "Beyza",
+      "avatar_url": "https://avatars.githubusercontent.com/u/35075862?v=4",
+      "profile": "https://github.com/beyzaaydogan",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
