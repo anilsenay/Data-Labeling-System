@@ -1,0 +1,25 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "ElburuzGurbuz",
+      "name": "Ahmet Elburuz Gürbüz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/65295748?v=4",
+      "profile": "https://github.com/ElburuzGurbuz",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "CSE3063F20P1_GRP3",
+  "projectOwner": "anilsenay",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
