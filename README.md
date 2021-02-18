@@ -1,6 +1,6 @@
 # CSE 3063 Project 1  
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   
 #### Group 3  
@@ -34,6 +34,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://www.linkedin.com/in/kursattacikgoz"><img src="https://avatars.githubusercontent.com/u/37029744?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kürşat Açıkgöz</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=kursatacikgoz" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=kursatacikgoz" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/beyzaaydogan"><img src="https://avatars.githubusercontent.com/u/35075862?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Beyza</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=beyzaaydogan" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=beyzaaydogan" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/onkolahmet"><img src="https://avatars.githubusercontent.com/u/62245004?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ahmet Önkol</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=onkolahmet" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=onkolahmet" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/ElburuzGurbuz"><img src="https://avatars.githubusercontent.com/u/65295748?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ahmet Elburuz Gürbüz</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=ElburuzGurbuz" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=ElburuzGurbuz" title="Code">💻</a></td>
   </tr>
 </table>
 
