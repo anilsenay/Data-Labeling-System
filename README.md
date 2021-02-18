@@ -1,6 +1,6 @@
 # CSE 3063 Project 1  
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   
 #### Group 3  
@@ -29,6 +29,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="http://anilsenay.com"><img src="https://avatars.githubusercontent.com/u/1047345?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anıl Şenay</b></sub></a><br /><a href="#infra-anilsenay" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=anilsenay" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=anilsenay" title="Code">💻</a></td>
+    <td align="center"><a href="http://bilgehangecici.site"><img src="https://avatars.githubusercontent.com/u/33997918?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bilgehan Geçici</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=bilgehangecici" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=bilgehangecici" title="Code">💻</a></td>
   </tr>
 </table>
 
