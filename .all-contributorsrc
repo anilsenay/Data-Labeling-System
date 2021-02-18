@@ -25,6 +25,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "mehmetaliyuksel",
+      "name": "Mehmet Ali Yüksel",
+      "avatar_url": "https://avatars.githubusercontent.com/u/37842979?v=4",
+      "profile": "https://github.com/mehmetaliyuksel",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
