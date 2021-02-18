@@ -18,10 +18,6 @@ In the second iteration, reporting functionality is added for user performance a
 
 In the third iteration, human user interface is added to enable human users to label instances manually, one by one. Each human user has a username and a password validation which are required to enter the system in the beginning. Furthermore, The Relevance Bot, a new bot user, is added and uses Relevance Labeling Mechanism which checks instances' relevance meaning using an API and accordingly labels them.
 
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 ## Contributors ✨
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
