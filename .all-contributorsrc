@@ -15,6 +15,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "bilgehangecici",
+      "name": "Bilgehan Geçici",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33997918?v=4",
+      "profile": "http://bilgehangecici.site",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
