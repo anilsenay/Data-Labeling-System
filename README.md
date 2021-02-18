@@ -1,6 +1,6 @@
 # CSE 3063 Project 1  
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
   
 #### Group 3  
@@ -31,6 +31,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://anilsenay.com"><img src="https://avatars.githubusercontent.com/u/1047345?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Anıl Şenay</b></sub></a><br /><a href="#infra-anilsenay" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=anilsenay" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=anilsenay" title="Code">💻</a></td>
     <td align="center"><a href="http://bilgehangecici.site"><img src="https://avatars.githubusercontent.com/u/33997918?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bilgehan Geçici</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=bilgehangecici" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=bilgehangecici" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mehmetaliyuksel"><img src="https://avatars.githubusercontent.com/u/37842979?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Mehmet Ali Yüksel</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=mehmetaliyuksel" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=mehmetaliyuksel" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.linkedin.com/in/kursattacikgoz"><img src="https://avatars.githubusercontent.com/u/37029744?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kürşat Açıkgöz</b></sub></a><br /><a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=kursatacikgoz" title="Tests">⚠️</a> <a href="https://github.com/anilsenay/CSE3063F20P1_GRP3/commits?author=kursatacikgoz" title="Code">💻</a></td>
   </tr>
 </table>
 
